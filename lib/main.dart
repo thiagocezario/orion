@@ -20,18 +20,44 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Orion Login Page'),
+      home: LoginPage(title: 'Orion Login'),
     );
   }
 }
 
 class LoginPage extends StatefulWidget {
-  
-  
+  LoginPage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return null;
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Orion'),
+            TextFormField(),
+            TextFormField(),
+            ButtonBar()
+          ],
+        ),
+      ),
+    );
   }
 }
 
