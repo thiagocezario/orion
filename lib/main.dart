@@ -7,10 +7,10 @@ class FirstApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Orion',
-        home: Scaffold(
-          body: LoginPage()
-        )
+      title: 'Orion',
+      home: Scaffold(
+        body: LoginPage()
+      )
     );
   }
 }
