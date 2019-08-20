@@ -9,9 +9,9 @@ class LoginPage extends StatelessWidget {
     return Container(
         alignment: Alignment.center,
         width: 230.0,
-        height: 300.0,
+        height: 350.0,
         child: Material(
-          color: Colors.white,
+          color: Colors.transparent,
           child: Center(child: LoginForm()),
         ));
   }
@@ -26,12 +26,25 @@ class LoginForm extends StatelessWidget {
         // asset
         Text(
           'Orion',
-          style: TextStyle(color: Colors.black, fontSize: 50.0),
+          style: TextStyle(
+            color: Colors.teal, 
+            fontSize: 50.0
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 30.0, bottom: 15.0),
+        ),
+        TextFormField(
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
         ),
         TextFormField(),
-        TextFormField(),
+        Padding(
+          padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
+        ),
         RaisedButton(
-          color: Colors.white,
+          color: Colors.white54,
           elevation: 10.0,
           child: Text('Login'),
           onPressed: () => runApp(HomePage())
@@ -70,5 +83,4 @@ class ForgotPasswordSection extends StatelessWidget {
       ],
     );
   }
-  
 }
