@@ -9,7 +9,6 @@ class LoginPage extends StatelessWidget {
     return Container(
         alignment: Alignment.center,
         width: 230.0,
-        height: 350.0,
         child: Material(
           color: Colors.transparent,
           child: Center(child: LoginForm()),
@@ -32,21 +31,30 @@ class LoginForm extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 30.0, bottom: 15.0),
+          padding: EdgeInsets.only(top: 20.0, bottom: 10.0),
         ),
         TextFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Usuário'
+          ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+          padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
         ),
-        TextFormField(),
+        TextFormField(
+          decoration: InputDecoration(
+            labelText: 'Senha',
+            border: OutlineInputBorder()
+          ),
+        ),
         Padding(
-          padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
+          padding: EdgeInsets.only(top: 5.0, bottom: 15.0),
         ),
         RaisedButton(
           color: Colors.white54,
           elevation: 10.0,
-          child: Text('Login'),
+          child: Text('Logar'),
           onPressed: () => runApp(HomePage())
         ),
         ForgotPasswordSection()
