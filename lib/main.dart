@@ -7,9 +7,13 @@ class FirstApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Orion',
       home: Scaffold(
-        body: LoginPage()
+        backgroundColor: Colors.white,
+        body: Center(
+          child: LoginPage()
+        )
       )
     );
   }
