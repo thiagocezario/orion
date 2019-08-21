@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-class NewAccount extends StatelessWidget {
+class NewAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return null;

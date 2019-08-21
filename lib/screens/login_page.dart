@@ -57,38 +57,30 @@ class LoginForm extends StatelessWidget {
           child: Text('Logar'),
           onPressed: () => runApp(HomePage())
         ),
-        ForgotPasswordSection()
+        getFlatButtonsSection()
       ],
     );
   }
 }
 
-class ForgotPasswordSection extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
+Widget getFlatButtonsSection() {
+  return Row(
       children: <Widget>[
-        FlatButton(
-          child: Text(
-            'Criar conta',
-            style: TextStyle(
-              fontSize: 12.0,
-              color: Colors.lightBlueAccent
-            ),
-          ),
-          onPressed: () => runApp(NewAccount()),
-        ),
-        FlatButton(
-          child: Text(
-            'Esqueceu a senha?',
-            style: TextStyle(
-              fontSize: 12.0,
-              color: Colors.lightBlueAccent
-            ),
-          ),
-          onPressed: () => runApp(RecoverPasswordPage()),
-        )
+        getFlatButton('Criar conta', NewAccountPage()),
+        getFlatButton('Esqueceu a senha?', RecoverPasswordPage())
       ],
     );
-  }
+}
+
+FlatButton getFlatButton(String text, Widget page) {
+  TextStyle textStyle = TextStyle(
+    fontSize: 12.0,
+    color: Colors.lightBlueAccent
+  );
+
+  FlatButton flatButton = FlatButton(
+    child: Text(text, style: textStyle), onPressed: () => runApp(page),
+  );
+
+  return flatButton;
 }
