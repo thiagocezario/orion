@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orion/screens/home_page.dart';
-import 'package:orion/screens/new_account.dart';
-import 'package:orion/screens/recover_password.dart';
+import 'package:orion/screens/new_account_page.dart';
+import 'package:orion/screens/recover_password_page.dart';
 
 class LoginForm extends StatelessWidget {
   @override
