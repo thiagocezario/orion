@@ -7,13 +7,10 @@ class HomePage extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          actions: <Widget>[
-            BackButton()
-          ],
-          title: Text(
-            'Home Page'
-          ),
-        ),  
+          automaticallyImplyLeading: true,
+          centerTitle: true,
+          title: Text('Home Page'),
+        ),
       ),
     );
   }

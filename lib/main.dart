@@ -17,20 +17,13 @@ class InitialCustomization extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-            image: getBackgroundImage()
-        ),
-        child: Center(
-          child: LoginPage()
-        )
-    );
+        decoration: BoxDecoration(image: getBackgroundImage()),
+        child: Center(child: LoginPage()));
   }
 }
 
 DecorationImage getBackgroundImage() {
   AssetImage background = AssetImage('assets/background/orion.jpg');
-  
-  return DecorationImage(
-                image: background,
-                fit: BoxFit.cover);
+
+  return DecorationImage(image: background, fit: BoxFit.cover);
 }
