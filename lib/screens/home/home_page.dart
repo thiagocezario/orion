@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:orion/main.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -10,6 +11,10 @@ class HomePage extends StatelessWidget {
           automaticallyImplyLeading: true,
           centerTitle: true,
           title: Text('Home Page'),
+          leading: IconButton(
+            icon: BackButton(),
+            onPressed: () => runApp(Orion()),
+          ),
         ),
       ),
     );
