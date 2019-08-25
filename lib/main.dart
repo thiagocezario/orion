@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orion/screens/login_page.dart';
+import 'package:orion/screens/login/login_page.dart';
 
 void main() => runApp(Orion());
 
@@ -7,9 +7,13 @@ class Orion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Orion',
-        home: Scaffold(body: InitialCustomization()));
+      debugShowCheckedModeBanner: false,
+      title: 'Orion',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: LoginPage(title: 'Login'),
+    );
   }
 }
 
