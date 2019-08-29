@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
-    final passwordField = TextField(
+    final passwordField = TextFormField(
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -38,14 +38,14 @@ class _LoginPageState extends State<LoginPage> {
     final loginButon = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: Colors.blue,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           runApp(HomePage());
         },
-        child: Text("Logar",
+        child: Text("Entrar",
             textAlign: TextAlign.center,
             style: style.copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
@@ -75,9 +75,10 @@ class _LoginPageState extends State<LoginPage> {
                         height: 15.0,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           newAccountButton(),
-                          SizedBox(width: 10.0),
                           forgotPasswordButton()
                         ],
                       ),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../main.dart';
 import '../login_page.dart';
 
 class NewAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Orion',
       home: NewAccountForm(title: 'Nova conta'),
     );
@@ -26,7 +28,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
 
   @override
   Widget build(BuildContext context) {
-    final emailField = TextField(
+    final emailField = TextFormField(
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -35,7 +37,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
-    final passwordField = TextField(
+    final passwordField = TextFormField(
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -45,7 +47,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
 
-    final confirmPasswordField = TextField(
+    final confirmPasswordField = TextFormField(
       obscureText: true,
       style: style,
       decoration: InputDecoration(
@@ -58,7 +60,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
     final createAccountButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: Colors.blue,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -76,7 +78,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
           title: Text('Nova conta'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(true),
+            onPressed: () => runApp(Orion()),
           ),
         ),
         body: ListView(
