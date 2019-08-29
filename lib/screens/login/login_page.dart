@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orion/screens/home/home_page.dart';
 import 'package:orion/screens/login/account/new_account_page.dart';
 import 'package:orion/screens/login/account/recover_password_page.dart';
-
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final emailField = TextField(
+    final emailField = TextFormField(
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -42,7 +42,9 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: () {
+          runApp(HomePage());
+        },
         child: Text("Logar",
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -51,38 +53,41 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     return Scaffold(
-      body: Center(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                getLogo(),
-                emailField,
-                SizedBox(height: 5.0),
-                passwordField,
-                SizedBox(
-                  height: 25.0,
+        body: ListView(
+          children: <Widget>[
+            Center(
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      getLogo(),
+                      emailField,
+                      SizedBox(height: 5.0),
+                      passwordField,
+                      SizedBox(
+                        height: 25.0,
+                      ),
+                      loginButon,
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          newAccountButton(),
+                          SizedBox(width: 10.0),
+                          forgotPasswordButton()
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                loginButon,
-                SizedBox(
-                  height: 15.0,
-                ),
-                Row(
-                  children: <Widget>[
-                    newAccountButton(),
-                    SizedBox(width: 30.0),
-                    forgotPasswordButton()
-                  ],
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          ],
+        ));
   }
 }
 
@@ -111,11 +116,11 @@ FlatButton forgotPasswordButton() {
 }
 
 Widget getLogo() {
-    return SizedBox(
-      height: 150.0,
-      child: Image.asset(
-        'assets/logo/orionlogo.png',
-        fit: BoxFit.contain,
-      ),
-    );
-  }
+  return SizedBox(
+    height: 150.0,
+    child: Image.asset(
+      'assets/logo/orionlogo.png',
+      fit: BoxFit.contain,
+    ),
+  );
+}

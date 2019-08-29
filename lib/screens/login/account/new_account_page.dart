@@ -71,39 +71,42 @@ class _NewAccountFormState extends State<NewAccountForm> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: Text('Nova conta'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(true),
-        ),
-      ),
-      body: Center(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                getLogo(),
-                emailField,
-                SizedBox(height: 5.0),
-                passwordField,
-                SizedBox(
-                  height: 5.0,
-                ),
-                confirmPasswordField,
-                SizedBox(
-                  height: 25.0,
-                ),
-                createAccountButton,
-              ],
-            ),
+        appBar: AppBar(
+          automaticallyImplyLeading: true,
+          title: Text('Nova conta'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(true),
           ),
         ),
-      ),
-    );
+        body: ListView(
+          children: <Widget>[
+            Center(
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(36.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      getLogo(),
+                      emailField,
+                      SizedBox(height: 5.0),
+                      passwordField,
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      confirmPasswordField,
+                      SizedBox(
+                        height: 25.0,
+                      ),
+                      createAccountButton,
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }
