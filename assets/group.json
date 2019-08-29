@@ -1,0 +1,47 @@
+[
+    {
+      "id": 3,
+      "name": "TCC 1 - Fight Club",
+      "institution_name": "UFPR",
+      "institution_id": 7,
+      "course_id": 3,
+      "discipline_id": 11,
+      "members": [
+        {
+          "id": 1,
+          "name": "Thiago"
+        },
+        {
+          "id": 2,
+          "name": "Luiz"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "TCC 2 - Agora vai",
+      "institution_id": 7,
+      "institution_name": "UFSC",
+      "course_id": 4,
+      "discipline_id": 11,
+      "members": [
+        {
+          "id": 1,
+          "name": "Thiago"
+        },
+        {
+          "id": 2,
+          "name": "Luiz"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        }
+      ]
+    }
+]
+  
