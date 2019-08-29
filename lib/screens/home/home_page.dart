@@ -16,11 +16,11 @@ class HomePage extends StatelessWidget {
             automaticallyImplyLeading: true,
             centerTitle: true,
             title: Text('Grupos'),
-            leading: IconButton(
-              icon: BackButton(),
-              onPressed: () => runApp(Orion()),
-            ),
-            actions: <Widget>[Icon(Icons.search)],
+            actions: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(right: 15.0),
+                  child: Icon(Icons.search))
+            ],
           ),
           body: getListOfGroups(context),
           bottomNavigationBar: BottomNavigationBar(
@@ -32,6 +32,9 @@ class HomePage extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(Icons.people, color: Color.fromARGB(255, 0, 0, 0)),
                   title: Text('Grupos')),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.question_answer, color: Color.fromARGB(255, 0, 0, 0)),
+                  title: Text('Comunidade')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
                   title: Text('Perfil'))
@@ -85,11 +88,11 @@ Widget buildGroupCell(GroupCell group) {
             boxShadow: [
               BoxShadow(
                 color: Colors.grey,
-                blurRadius: 20.0, // has the effect of softening the shadow
-                spreadRadius: 5.0, // has the effect of extending the shadow
+                blurRadius: 20.0,
+                spreadRadius: 5.0,
                 offset: Offset(
-                  10.0, // horizontal, move right 10
-                  10.0, // vertical, move down 10
+                  10.0,
+                  10.0,
                 ),
               )
             ],
