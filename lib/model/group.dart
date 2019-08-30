@@ -158,6 +158,128 @@ String getJsonData()  {
           "name": "Luiz"
         }
       ]
+    },
+    {
+      "id": 12,
+      "name": "Tópicos especiais em bancos de dados",
+      "institution_id": 7,
+      "institution_name": "Universidade Estadual de Ponta Grossa",
+      "course_id": 4,
+      "discipline_id": 11,
+      "members": [
+        {
+          "id": 1,
+          "name": "Thiago"
+        },
+        {
+          "id": 2,
+          "name": "Luiz"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Arquitetura de computadores",
+      "institution_id": 7,
+      "institution_name": "Universidade Federal do Paraná",
+      "course_id": 4,
+      "discipline_id": 11,
+      "members": [
+        {
+          "id": 1,
+          "name": "Thiago"
+        },
+        {
+          "id": 2,
+          "name": "Luiz"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Direito Aplicado",
+      "institution_id": 7,
+      "institution_name": "Universidade Federal do Paraná",
+      "course_id": 4,
+      "discipline_id": 11,
+      "members": [
+        {
+          "id": 1,
+          "name": "Thiago"
+        },
+        {
+          "id": 2,
+          "name": "Luiz"
+        },
+        {
+          "id": 3,
+          "name": "Marcos"
+        }
+      ]
     }
 ]
   """;

@@ -26,9 +26,10 @@ class NewAccountPage extends StatelessWidget {
         home: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: true,
-              title: Text('Nova conta'),
+              backgroundColor: Colors.white,
+              title: Text('Nova conta', style: TextStyle(color: Colors.black),),
               leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: Icon(Icons.arrow_back, color: Colors.black,),
                 onPressed: () => Navigator.pop(context),
               ),
             ),

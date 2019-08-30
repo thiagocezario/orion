@@ -1,35 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/login/login_components.dart';
 import 'package:orion/pages/home/home_page.dart';
-import 'package:orion/pages/login/recover_password_page.dart';
-
-import 'new_account_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key key, this.title}) : super(key: key);
 
   final String title;
-  final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
   Widget build(BuildContext context) {
-    final emailField = TextFormField(
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-
-    final passwordField = TextFormField(
-      obscureText: true,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Senha",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-
     final loginButon = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -42,7 +20,7 @@ class LoginPage extends StatelessWidget {
         },
         child: Text("Entrar",
             textAlign: TextAlign.center,
-            style: style.copyWith(
+            style: getTextStyle().copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
@@ -59,9 +37,9 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   getLogo(),
-                  emailField,
+                  getEmailField(),
                   SizedBox(height: 5.0),
-                  passwordField,
+                  getPasswordField('Senha'),
                   SizedBox(
                     height: 25.0,
                   ),
@@ -85,46 +63,4 @@ class LoginPage extends StatelessWidget {
       ],
     ));
   }
-}
-
-FlatButton newAccountButton(BuildContext context) {
-  TextStyle textStyle =
-      TextStyle(fontSize: 12.0, color: Colors.lightBlueAccent);
-
-  FlatButton flatButton = FlatButton(
-      child: Text('Criar nova conta', style: textStyle),
-      onPressed: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => NewAccountPage()),
-            )
-          });
-
-  return flatButton;
-}
-
-FlatButton forgotPasswordButton(BuildContext context) {
-  TextStyle textStyle =
-      TextStyle(fontSize: 12.0, color: Colors.lightBlueAccent);
-
-  FlatButton flatButton = FlatButton(
-      child: Text('Esqueceu a senha?', style: textStyle),
-      onPressed: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => RecoverPasswordPage()),
-            )
-          });
-
-  return flatButton;
-}
-
-Widget getLogo() {
-  return SizedBox(
-    height: 150.0,
-    child: Image.asset(
-      'assets/logo/orionlogo.png',
-      fit: BoxFit.contain,
-    ),
-  );
 }

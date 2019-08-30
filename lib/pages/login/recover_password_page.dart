@@ -10,10 +10,11 @@ class RecoverPasswordPage extends StatelessWidget {
         home: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: true,
+              backgroundColor: Colors.white,
               centerTitle: true,
-              title: Text('Redefinir Senha'),
+              title: Text('Redefinir Senha', style: TextStyle(color: Colors.black),),
               leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: Icon(Icons.arrow_back, color: Colors.black,),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
