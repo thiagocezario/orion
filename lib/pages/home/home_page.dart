@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
             actions: <Widget>[
               Padding(
                   padding: EdgeInsets.only(right: 15.0),
-                  child: Icon(Icons.search, color: Colors.black,))
+                  child: Icon(Icons.filter_list, color: Colors.black,))
             ],
           ),
           body: getListOfGroups(context),
@@ -35,6 +35,9 @@ class HomePage extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(Icons.question_answer, color: Color.fromARGB(255, 0, 0, 0)),
                   title: Text('Comunidade')),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0)),
+                  title: Text('Grupos')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
                   title: Text('Perfil'))
