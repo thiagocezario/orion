@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../login_page.dart';
+import 'package:orion/components/login/login_components.dart';
 
 class RecoverPasswordPage extends StatelessWidget {
   @override
@@ -10,13 +10,14 @@ class RecoverPasswordPage extends StatelessWidget {
         home: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: true,
-              title: Text('Recuperar Senha'),
+              centerTitle: true,
+              title: Text('Redefinir Senha'),
               leading: IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
-            body: EmailForm(title: 'Recuperar senha')));
+            body: EmailForm(title: 'Redefinir senha')));
   }
 }
 
@@ -29,19 +30,9 @@ class EmailForm extends StatefulWidget {
 }
 
 class _EmailFormState extends State<EmailForm> {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
   @override
   Widget build(BuildContext context) {
-    final emailField = TextField(
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-
     final recoverPasswordButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
@@ -50,9 +41,9 @@ class _EmailFormState extends State<EmailForm> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {},
-        child: Text("Recuperar",
+        child: Text("Redefinir senha",
             textAlign: TextAlign.center,
-            style: style.copyWith(
+            style: getTextStyle().copyWith(
                 color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
@@ -68,7 +59,7 @@ class _EmailFormState extends State<EmailForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   getLogo(),
-                  emailField,
+                  getEmailField(),
                   SizedBox(
                     height: 25.0,
                   ),
@@ -81,12 +72,4 @@ class _EmailFormState extends State<EmailForm> {
       ],
     );
   }
-}
-
-RaisedButton getRaisedButton() {
-  return RaisedButton(
-      color: Colors.white54,
-      elevation: 10.0,
-      child: Text('Logar'),
-      onPressed: () => runApp(LoginPage()));
 }

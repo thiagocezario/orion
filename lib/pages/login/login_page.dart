@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:orion/screens/home/home_page.dart';
-import 'package:orion/screens/login/account/new_account_page.dart';
-import 'package:orion/screens/login/account/recover_password_page.dart';
+import 'package:orion/pages/home/home_page.dart';
+import 'package:orion/pages/login/recover_password_page.dart';
+
+import 'new_account_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -95,7 +96,7 @@ FlatButton newAccountButton(BuildContext context) {
       onPressed: () => {
             Navigator.push(
               context,
-              new MaterialPageRoute(builder: (context) => NewAccountPage()),
+              MaterialPageRoute(builder: (context) => NewAccountPage()),
             )
           });
 
@@ -111,7 +112,7 @@ FlatButton forgotPasswordButton(BuildContext context) {
       onPressed: () => {
             Navigator.push(
               context,
-               MaterialPageRoute(builder: (context) => RecoverPasswordPage()),
+              MaterialPageRoute(builder: (context) => RecoverPasswordPage()),
             )
           });
 

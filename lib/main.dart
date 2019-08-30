@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orion/screens/login/login_page.dart';
+import 'package:orion/pages/login/login_page.dart';
 
 void main() => runApp(Orion());
 
@@ -15,19 +15,4 @@ class Orion extends StatelessWidget {
       home: LoginPage(title: 'Login'),
     );
   }
-}
-
-class InitialCustomization extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(image: getBackgroundImage()),
-        child: Center(child: LoginPage()));
-  }
-}
-
-DecorationImage getBackgroundImage() {
-  AssetImage background = AssetImage('assets/background/orion.jpg');
-
-  return DecorationImage(image: background, fit: BoxFit.cover);
 }

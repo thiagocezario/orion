@@ -1,51 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'group.dart';
+import 'package:orion/model/group.dart';
 
-class HomePage extends StatelessWidget {
-  final List<Widget> items;
-  HomePage({Key key, this.items}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: true,
-            centerTitle: true,
-            title: Text('Grupos'),
-            actions: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(right: 15.0),
-                  child: Icon(Icons.search))
-            ],
-          ),
-          body: getListOfGroups(context),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Início')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.people, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Grupos')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.question_answer, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Comunidade')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Perfil'))
-            ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () => {},
-          ),
-        ));
-  }
-}
 
 ListView getListOfGroups(BuildContext context) {
   String json = getJsonData();
