@@ -1,34 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../../main.dart';
 import '../login_page.dart';
 
 class NewAccountPage extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Orion',
-      home: NewAccountForm(title: 'Nova conta'),
-    );
-  }
-}
-
-class NewAccountForm extends StatefulWidget {
-  NewAccountForm({Key key, this.title}) : super(key: key);
-
-  final String title;
-  @override
-  _NewAccountFormState createState() => _NewAccountFormState();
-}
-
-class _NewAccountFormState extends State<NewAccountForm> {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-
-  @override
-  Widget build(BuildContext context) {
-    final emailField = TextFormField(
+    final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  
+  final emailField = TextFormField(
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -71,14 +52,17 @@ class _NewAccountFormState extends State<NewAccountForm> {
                 color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
-
-    return Scaffold(
+    
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Orion',
+      home: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: true,
           title: Text('Nova conta'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () => runApp(Orion()),
+            onPressed: () => Navigator.pop(context),
           ),
         ),
         body: ListView(
@@ -109,6 +93,7 @@ class _NewAccountFormState extends State<NewAccountForm> {
               ),
             ),
           ],
-        ));
+        ))
+    );
   }
 }

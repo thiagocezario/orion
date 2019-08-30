@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
-import '../../../main.dart';
 import '../login_page.dart';
 
 class RecoverPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Orion',
-      home: EmailForm(title: 'Recuperar senha'),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Orion',
+        home: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: true,
+              title: Text('Recuperar Senha'),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+            body: EmailForm(title: 'Recuperar senha')));
   }
 }
-
 
 class EmailForm extends StatefulWidget {
   EmailForm({Key key, this.title}) : super(key: key);
@@ -51,38 +57,29 @@ class _EmailFormState extends State<EmailForm> {
       ),
     );
 
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: true,
-          title: Text('Recuperar Senha'),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => runApp(Orion()),
-          ),
-        ),
-        body: ListView(
-          children: <Widget>[
-            Center(
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(36.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      getLogo(),
-                      emailField,
-                      SizedBox(
-                        height: 25.0,
-                      ),
-                      recoverPasswordButton
-                    ],
+    return ListView(
+      children: <Widget>[
+        Center(
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(36.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  getLogo(),
+                  emailField,
+                  SizedBox(
+                    height: 25.0,
                   ),
-                ),
+                  recoverPasswordButton
+                ],
               ),
             ),
-          ],
-        ));
+          ),
+        ),
+      ],
+    );
   }
 }
 

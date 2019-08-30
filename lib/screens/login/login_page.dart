@@ -3,18 +3,12 @@ import 'package:orion/screens/home/home_page.dart';
 import 'package:orion/screens/login/account/new_account_page.dart';
 import 'package:orion/screens/login/account/recover_password_page.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   LoginPage({Key key, this.title}) : super(key: key);
 
   final String title;
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
+  final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
-class _LoginPageState extends State<LoginPage> {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-
-  @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
       style: style,
@@ -54,64 +48,72 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
         body: ListView(
-          children: <Widget>[
-            Center(
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(36.0),
-                  child: Column(
+      children: <Widget>[
+        Center(
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(36.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  getLogo(),
+                  emailField,
+                  SizedBox(height: 5.0),
+                  passwordField,
+                  SizedBox(
+                    height: 25.0,
+                  ),
+                  loginButon,
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      getLogo(),
-                      emailField,
-                      SizedBox(height: 5.0),
-                      passwordField,
-                      SizedBox(
-                        height: 25.0,
-                      ),
-                      loginButon,
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          newAccountButton(),
-                          forgotPasswordButton()
-                        ],
-                      ),
+                      newAccountButton(context),
+                      forgotPasswordButton(context)
                     ],
                   ),
-                ),
+                ],
               ),
             ),
-          ],
-        ));
+          ),
+        ),
+      ],
+    ));
   }
 }
 
-FlatButton newAccountButton() {
+FlatButton newAccountButton(BuildContext context) {
   TextStyle textStyle =
       TextStyle(fontSize: 12.0, color: Colors.lightBlueAccent);
 
   FlatButton flatButton = FlatButton(
-    child: Text('Criar nova conta', style: textStyle),
-    onPressed: () => runApp(new NewAccountPage()),
-  );
+      child: Text('Criar nova conta', style: textStyle),
+      onPressed: () => {
+            Navigator.push(
+              context,
+              new MaterialPageRoute(builder: (context) => NewAccountPage()),
+            )
+          });
 
   return flatButton;
 }
 
-FlatButton forgotPasswordButton() {
+FlatButton forgotPasswordButton(BuildContext context) {
   TextStyle textStyle =
       TextStyle(fontSize: 12.0, color: Colors.lightBlueAccent);
 
   FlatButton flatButton = FlatButton(
-    child: Text('Esqueceu a senha?', style: textStyle),
-    onPressed: () => runApp(RecoverPasswordPage()),
-  );
+      child: Text('Esqueceu a senha?', style: textStyle),
+      onPressed: () => {
+            Navigator.push(
+              context,
+               MaterialPageRoute(builder: (context) => RecoverPasswordPage()),
+            )
+          });
 
   return flatButton;
 }
