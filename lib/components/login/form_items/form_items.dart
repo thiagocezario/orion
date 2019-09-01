@@ -18,7 +18,10 @@ TextStyle getTextStyle() {
 }
 
 TextFormField getTextField(String placeholder) {
+  TextEditingController textController = TextEditingController();
+
   return TextFormField(
+    controller: textController,
     style: getTextStyle(),
     decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -29,7 +32,10 @@ TextFormField getTextField(String placeholder) {
 }
 
 TextFormField getPasswordField(String placeholder) {
+  TextEditingController passwordController = TextEditingController();
+
   return TextFormField(
+    controller: passwordController,
     obscureText: true,
     style: getTextStyle(),
     decoration: InputDecoration(
@@ -65,8 +71,8 @@ Widget getMessage(String title, String message) {
   );
 }
 
-Widget getMaterialButton(
-    BuildContext context, GlobalKey<FormState> _formKey, String label, Function action) {
+Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey,
+    String label, Function action) {
   return Material(
     elevation: 5.0,
     borderRadius: BorderRadius.circular(30.0),
@@ -91,14 +97,14 @@ Widget getMaterialButton(
 
 AppBar getAppBar(BuildContext context) {
   return AppBar(
-              backgroundColor: Color(0xff8893f2),
-              elevation: 0.0,
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-                onPressed: () => Navigator.pop(context),
-              ),
-            );
+    backgroundColor: Color(0xff8893f2),
+    elevation: 0.0,
+    leading: IconButton(
+      icon: Icon(
+        Icons.arrow_back,
+        color: Colors.black,
+      ),
+      onPressed: () => Navigator.pop(context),
+    ),
+  );
 }
