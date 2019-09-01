@@ -60,7 +60,7 @@ class _EmailFormState extends State<EmailForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   getLogo(),
-                  getEmailField(),
+                  getTextField('Email'),
                   SizedBox(
                     height: 25.0,
                   ),

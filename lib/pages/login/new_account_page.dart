@@ -44,7 +44,7 @@ class NewAccountPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           getLogo(),
-                          getEmailField(),
+                          getTextField('Email'),
                           SizedBox(height: 5.0),
                           getPasswordField('Senha'),
                           SizedBox(
