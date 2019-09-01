@@ -1,6 +1,17 @@
-
-
 import 'package:flutter/material.dart';
+
+enum CustomColors { mainBackgroundColor, mainActionButtonColor}
+
+_customColors(CustomColors color){
+  switch (color) {
+    case CustomColors.mainBackgroundColor:
+      return Color(0xff8893f2);
+    case CustomColors.mainActionButtonColor:
+      return Color(0xff192376);
+      default:
+      return Color(0xffffffff);
+  }
+}
 
 TextStyle getTextStyle() {
   return TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
