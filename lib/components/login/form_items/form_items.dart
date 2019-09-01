@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-enum CustomColors { mainBackgroundColor, mainActionButtonColor}
+enum CustomColors { mainBackgroundColor, mainActionButtonColor }
 
-_customColors(CustomColors color){
+_customColors(CustomColors color) {
   switch (color) {
     case CustomColors.mainBackgroundColor:
       return Color(0xff8893f2);
     case CustomColors.mainActionButtonColor:
       return Color(0xff192376);
-      default:
+    default:
       return Color(0xffffffff);
   }
 }
@@ -49,21 +49,24 @@ Widget getMessage(String title, String message) {
         Text(
           title,
           style: TextStyle(
-              fontSize: 35.0, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
         ),
         SizedBox(
           height: 10.0,
         ),
         Text(
           message,
-          style: TextStyle(fontSize: 17.0, color: Colors.white),
+          style: TextStyle(fontSize: 15.0, color: Colors.white),
+          textAlign: TextAlign.center,
         )
       ],
     ),
   );
 }
 
-Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey, String label) {
+Widget getMaterialButton(
+    BuildContext context, GlobalKey<FormState> _formKey, String label) {
   return Material(
     elevation: 5.0,
     borderRadius: BorderRadius.circular(30.0),
@@ -74,8 +77,7 @@ Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey, St
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
       elevation: 50.0,
       onPressed: () {
-        if(_formKey.currentState.validate()) {
-        }
+        if (_formKey.currentState.validate()) {}
       },
       child: Text(label,
           textAlign: TextAlign.center,

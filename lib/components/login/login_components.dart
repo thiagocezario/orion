@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:orion/pages/home/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
 
@@ -9,7 +8,7 @@ Form getLoginForm(BuildContext context, GlobalKey<FormState> _formKey) {
   return Form(
     key: _formKey,
     child: Padding(
-      padding: EdgeInsets.all(36.0),
+      padding: EdgeInsets.only(left: 36.0, right: 36.0),
       child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +88,7 @@ FlatButton forgotPasswordButton(BuildContext context) {
 
 Widget getLogo() {
   return SizedBox(
-    height: 150.0,
+    height: 120.0,
     child: Image.asset(
       'assets/logo/orionlogo.png',
       fit: BoxFit.contain,

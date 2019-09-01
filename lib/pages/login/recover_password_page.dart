@@ -1,76 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:orion/components/login/form_items/form_items.dart';
-import 'package:orion/components/login/login_components.dart';
+import 'package:orion/components/login/recover_password_components.dart';
 
-class RecoverPasswordPage extends StatelessWidget {
+class RecoverPasswordPage extends StatefulWidget {
+  RecoverPasswordPage({Key key}) : super(key: key);
+
+  @override
+  _RecoverPasswordPageState createState() => _RecoverPasswordPageState();
+}
+
+class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Orion',
         home: Scaffold(
+          backgroundColor: Color(0xff8893f2),
             appBar: AppBar(
-              automaticallyImplyLeading: true,
-              backgroundColor: Colors.white,
-              centerTitle: true,
-              title: Text('Redefinir Senha', style: TextStyle(color: Colors.black),),
+              backgroundColor: Color(0xff8893f2),
+              elevation: 0.0,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.black,),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
-            body: EmailForm()));
-  }
-}
-
-class EmailForm extends StatefulWidget {
-  EmailForm({Key key}) : super(key: key);
-
-  @override
-  _EmailFormState createState() => _EmailFormState();
-}
-
-class _EmailFormState extends State<EmailForm> {
-
-  @override
-  Widget build(BuildContext context) {
-    final recoverPasswordButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.blue,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
-        child: Text("Redefinir senha",
-            textAlign: TextAlign.center,
-            style: getTextStyle().copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-
-    return ListView(
-      children: <Widget>[
-        Center(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  getLogo(),
-                  getTextField('Email'),
-                  SizedBox(
-                    height: 25.0,
-                  ),
-                  recoverPasswordButton
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+            body: ListView(
+              children: <Widget>[
+                getRecoverPasswordEmailForm(context, _formKey)
+              ],
+            )));
   }
 }

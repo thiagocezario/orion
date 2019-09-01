@@ -7,7 +7,7 @@ Form getNewAccountForm(BuildContext context, GlobalKey<FormState> _formKey) {
   return Form(
     key: _formKey,
     child: Padding(
-      padding: EdgeInsets.all(36.0),
+      padding: EdgeInsets.only(left: 36.0, right: 36.0),
       child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +43,7 @@ Form getNewAccountForm(BuildContext context, GlobalKey<FormState> _formKey) {
         SizedBox(
           height: 25.0,
         ),
-        getMaterialButton(context, _formKey, 'Criar'),
+        getMaterialButton(context, _formKey, 'Criar conta'),
       ],
     ),)
   );
