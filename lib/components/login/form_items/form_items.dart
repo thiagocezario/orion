@@ -66,7 +66,7 @@ Widget getMessage(String title, String message) {
 }
 
 Widget getMaterialButton(
-    BuildContext context, GlobalKey<FormState> _formKey, String label) {
+    BuildContext context, GlobalKey<FormState> _formKey, String label, Function action) {
   return Material(
     elevation: 5.0,
     borderRadius: BorderRadius.circular(30.0),
@@ -77,7 +77,9 @@ Widget getMaterialButton(
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
       elevation: 50.0,
       onPressed: () {
-        if (_formKey.currentState.validate()) {}
+        if (_formKey.currentState.validate()) {
+          action();
+        }
       },
       child: Text(label,
           textAlign: TextAlign.center,
@@ -85,4 +87,18 @@ Widget getMaterialButton(
               .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
     ),
   );
+}
+
+AppBar getAppBar(BuildContext context) {
+  return AppBar(
+              backgroundColor: Color(0xff8893f2),
+              elevation: 0.0,
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
+            );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/login/form_items/form_items.dart';
 import 'package:orion/components/login/recover_password_components.dart';
 
 class RecoverPasswordPage extends StatefulWidget {
@@ -13,26 +14,19 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Orion',
-        home: Scaffold(
+    return Scaffold(
           backgroundColor: Color(0xff8893f2),
-            appBar: AppBar(
-              backgroundColor: Color(0xff8893f2),
-              elevation: 0.0,
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ),
+            appBar: getAppBar(context),
             body: ListView(
               children: <Widget>[
-                getRecoverPasswordEmailForm(context, _formKey)
+                _buildForm(context)
               ],
-            )));
+            ));
+  }
+
+  Widget _buildForm(context) {
+    return Builder(
+      builder: (context) => getRecoverPasswordEmailForm(context, _formKey),
+    );
   }
 }

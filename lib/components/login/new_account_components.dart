@@ -43,7 +43,9 @@ Form getNewAccountForm(BuildContext context, GlobalKey<FormState> _formKey) {
         SizedBox(
           height: 25.0,
         ),
-        getMaterialButton(context, _formKey, 'Criar conta'),
+        getMaterialButton(context, _formKey, 'Criar conta', () {
+          // Alert with message and call back to login page
+        }),
       ],
     ),)
   );

@@ -27,8 +27,19 @@ Form getRecoverPasswordEmailForm(BuildContext context, GlobalKey<FormState> _for
         SizedBox(
           height: 25.0,
         ),
-        getMaterialButton(context, _formKey, 'Redefinir Senha'),
+        getMaterialButton(context, _formKey, 'Redefinir Senha', () {
+          Scaffold.of(context).showSnackBar(emailSentConfirmation());
+        }),
       ],
     ),)
+  );
+}
+
+SnackBar emailSentConfirmation() {
+  return SnackBar(
+    content: Text("Email para redefinição de senha enviado"),
+    duration: Duration(
+      seconds: 5
+    ),
   );
 }

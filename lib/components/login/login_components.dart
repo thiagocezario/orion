@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/pages/home/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
 
@@ -36,7 +37,9 @@ Form getLoginForm(BuildContext context, GlobalKey<FormState> _formKey) {
         SizedBox(
           height: 25.0,
         ),
-        getMaterialButton(context, _formKey, 'Entrar'),
+        getMaterialButton(context, _formKey, 'Entrar', () {
+          runApp(HomePage());
+        }),
         SizedBox(
           height: 15.0,
         ),
