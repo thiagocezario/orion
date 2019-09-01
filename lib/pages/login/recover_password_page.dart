@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/login/form_items/form_items.dart';
 import 'package:orion/components/login/login_components.dart';
 
 class RecoverPasswordPage extends StatelessWidget {
@@ -18,14 +19,13 @@ class RecoverPasswordPage extends StatelessWidget {
                 onPressed: () => Navigator.pop(context),
               ),
             ),
-            body: EmailForm(title: 'Redefinir senha')));
+            body: EmailForm()));
   }
 }
 
 class EmailForm extends StatefulWidget {
-  EmailForm({Key key, this.title}) : super(key: key);
+  EmailForm({Key key}) : super(key: key);
 
-  final String title;
   @override
   _EmailFormState createState() => _EmailFormState();
 }

@@ -12,7 +12,7 @@ class Orion extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Login(),
+      home: LoginPage(),
     );
   }
 }

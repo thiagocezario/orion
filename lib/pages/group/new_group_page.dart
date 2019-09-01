@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orion/components/login/login_components.dart';
+import 'package:orion/components/login/form_items/form_items.dart';
 
 class NewGroupPage extends StatelessWidget {
   @override
@@ -19,7 +19,6 @@ class NewGroupPage extends StatelessWidget {
     );
   }
 }
-
 
 Widget getNewGroupForm(BuildContext context) {
   final createButton = Material(
