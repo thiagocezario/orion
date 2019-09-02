@@ -18,7 +18,10 @@ TextStyle getTextStyle() {
 }
 
 TextFormField getTextField(String placeholder) {
+  TextEditingController textController = TextEditingController();
+
   return TextFormField(
+    controller: textController,
     style: getTextStyle(),
     decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -29,7 +32,10 @@ TextFormField getTextField(String placeholder) {
 }
 
 TextFormField getPasswordField(String placeholder) {
+  TextEditingController passwordController = TextEditingController();
+
   return TextFormField(
+    controller: passwordController,
     obscureText: true,
     style: getTextStyle(),
     decoration: InputDecoration(
