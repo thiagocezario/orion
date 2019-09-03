@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
           appBar: AppBar(
             automaticallyImplyLeading: true,
             backgroundColor: Colors.white,
-            elevation: 5.0,
+            elevation: 0.0,
             centerTitle: true,
             title: Text(
               'Meus Grupos',

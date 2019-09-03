@@ -43,11 +43,11 @@ Widget buildGroupCell(GroupCell group) {
             boxShadow: [
               BoxShadow(
                 color: Colors.grey,
-                blurRadius: 20.0,
-                spreadRadius: 5.0,
+                blurRadius: 5.0,
+                spreadRadius: 0.0,
                 offset: Offset(
-                  10.0,
-                  10.0,
+                  3.0,
+                  3.0,
                 ),
               )
             ],

@@ -59,7 +59,7 @@ Form getLoginForm(BuildContext context, GlobalKey<FormState> _formKey) {
 
 FlatButton newAccountButton(BuildContext context) {
   TextStyle textStyle =
-      TextStyle(fontSize: 12.0, color: Colors.lightBlueAccent);
+      TextStyle(fontSize: 12.0, color: Colors.white);
 
   FlatButton flatButton = FlatButton(
       child: Text('Criar nova conta', style: textStyle),
@@ -75,7 +75,7 @@ FlatButton newAccountButton(BuildContext context) {
 
 FlatButton forgotPasswordButton(BuildContext context) {
   TextStyle textStyle =
-      TextStyle(fontSize: 12.0, color: Colors.lightBlueAccent);
+      TextStyle(fontSize: 12.0, color: Colors.white);
 
   FlatButton flatButton = FlatButton(
       child: Text('Esqueceu a senha?', style: textStyle),
