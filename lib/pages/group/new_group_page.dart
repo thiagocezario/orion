@@ -14,20 +14,23 @@ class _NewGroupPageState extends State<NewGroupPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
           backgroundColor: Colors.white,
-          elevation: 0.0,
-          leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-                onPressed: () => Navigator.pop(context),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0.0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
               ),
-        ),
-        body: getNewGroupForm(context, _formKey),
-      ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+          body: ListView(
+            children: <Widget>[
+              getNewGroupForm(context, _formKey),
+            ],
+          )),
     );
   }
 }
