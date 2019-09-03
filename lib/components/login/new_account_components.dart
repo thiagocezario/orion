@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'form_items/form_items.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
 import 'login_components.dart';
 
 Form getNewAccountForm(BuildContext context, GlobalKey<FormState> _formKey) {

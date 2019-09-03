@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/pages/home/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
-
-import 'form_items/form_items.dart';
 
 Form getLoginForm(BuildContext context, GlobalKey<FormState> _formKey) {
   return Form(
