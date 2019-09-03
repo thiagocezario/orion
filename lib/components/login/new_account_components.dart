@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'login_components.dart';
 
-Form getNewAccountForm(BuildContext context, GlobalKey<FormState> _formKey) {
+Form getNewAccountForm(BuildContext context, GlobalKey<FormState> _formKey, TextEditingController controller) {
   return Form(
     key: _formKey,
     child: Padding(
@@ -16,11 +16,11 @@ Form getNewAccountForm(BuildContext context, GlobalKey<FormState> _formKey) {
         SizedBox(
           height: 35.0,
         ),
-        getTextField('Email', _formKey),
+        getTextField('Email', controller),
         SizedBox(height: 10.0),
-        getPasswordField('Senha', _formKey),
+        getPasswordField('Senha', controller),
         SizedBox(height: 10.0),
-        getPasswordField('Confirmar senha', _formKey),
+        getPasswordField('Confirmar senha', controller),
         SizedBox(
           height: 25.0,
         ),

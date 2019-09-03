@@ -17,16 +17,14 @@ TextStyle getTextStyle() {
   return TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 }
 
-TextFormField getTextField(String placeholder, GlobalKey<FormState> _formKey) {
-  TextEditingController textController = TextEditingController();
-
+TextFormField getTextField(String placeholder, TextEditingController controller) {
   return TextFormField(
         validator: (value) {
           if (value.isEmpty) {
             return "O campo de $placeholder deve ser preenchido";
           }
         },
-        controller: textController,
+        controller: controller,
         style: getTextStyle(),
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -38,11 +36,9 @@ TextFormField getTextField(String placeholder, GlobalKey<FormState> _formKey) {
       );
 }
 
-TextFormField getPasswordField(String placeholder, GlobalKey<FormState> _formKey) {
-  TextEditingController passwordController = TextEditingController();
-
+TextFormField getPasswordField(String placeholder, TextEditingController controller) {
   return TextFormField(
-        controller: passwordController,
+        controller: controller,
         validator: (value) {
           if (value.isEmpty) {
             return "Campo de senha deve ser preenchido";

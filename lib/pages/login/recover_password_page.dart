@@ -3,13 +3,14 @@ import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/login/recover_password_components.dart';
 
 class RecoverPasswordPage extends StatefulWidget {
-  RecoverPasswordPage({Key key}) : super(key: key);
-
   @override
   _RecoverPasswordPageState createState() => _RecoverPasswordPageState();
 }
 
 class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +25,7 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
 
   Widget _buildForm(context) {
     return Builder(
-      builder: (context) => getRecoverPasswordEmailForm(context),
+      builder: (context) => getRecoverPasswordEmailForm(context, _formKey, _controller),
     );
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 
 Widget getNewGroupForm(BuildContext context, GlobalKey<FormState> _formKey) {
+  final controller = TextEditingController();
+
   return Form(
     key: _formKey,
     child: Padding(
@@ -11,13 +13,13 @@ Widget getNewGroupForm(BuildContext context, GlobalKey<FormState> _formKey) {
       children: <Widget>[
         getTitleMessage('Novo grupo', Colors.black),
         SizedBox(height: 50.0,),
-        getTextField('Nome do grupo', _formKey),
+        getTextField('Nome do grupo', controller),
         SizedBox(height: 10.0,),
-        getTextField('Instituição', _formKey),
+        getTextField('Instituição', controller),
         SizedBox(height: 10.0,),
-        getTextField('Curso', _formKey),
+        getTextField('Curso', controller),
         SizedBox(height: 10.0,),
-        getTextField('Disciplina', _formKey),
+        getTextField('Disciplina', controller),
         SizedBox(height: 25.0,),
         getMaterialButton(context, _formKey, 'Criar', () {}),
       ],

@@ -4,7 +4,7 @@ import 'package:orion/pages/home/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
 
-Form getLoginForm(BuildContext context, GlobalKey<FormState> _formKey) {
+Form getLoginForm(BuildContext context, GlobalKey<FormState> _formKey, TextEditingController controller) {
   return Form(
     key: _formKey,
     child: Padding(
@@ -18,9 +18,9 @@ Form getLoginForm(BuildContext context, GlobalKey<FormState> _formKey) {
         SizedBox(
           height: 35.0,
         ),
-        getTextField('Email', _formKey),
+        getTextField('Email', controller),
         SizedBox(height: 10.0),
-        getPasswordField('Senha', _formKey),
+        getPasswordField('Senha', controller),
         SizedBox(
           height: 25.0,
         ),
@@ -55,6 +55,7 @@ FlatButton newAccountButton(BuildContext context) {
           context,
           MaterialPageRoute(builder: (context) => NewAccountPage()),
         );
+        // Navigator.pushNamed(context, '/new_account');
       });
 
   return flatButton;
@@ -71,6 +72,7 @@ FlatButton forgotPasswordButton(BuildContext context) {
           context,
           MaterialPageRoute(builder: (context) => RecoverPasswordPage()),
         );
+        // Navigator.pushNamed(context, '/recover_password');
       });
 
   return flatButton;
