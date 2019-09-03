@@ -17,40 +17,47 @@ TextStyle getTextStyle() {
   return TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 }
 
-Container getTextField(String placeholder) {
+TextFormField getTextField(String placeholder, GlobalKey<FormState> _formKey) {
   TextEditingController textController = TextEditingController();
 
-  return Container(
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(5.0)),
-      child: TextFormField(
+  return TextFormField(
+        validator: (value) {
+          if (value.isEmpty) {
+            return "O campo de $placeholder deve ser preenchido";
+          }
+        },
         controller: textController,
         style: getTextStyle(),
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: placeholder,
             fillColor: Colors.white,
+            filled: true,
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-      ));
+      );
 }
 
-Container getPasswordField(String placeholder) {
+TextFormField getPasswordField(String placeholder, GlobalKey<FormState> _formKey) {
   TextEditingController passwordController = TextEditingController();
 
-  return Container(
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(5.0)),
-      child: TextFormField(
+  return TextFormField(
         controller: passwordController,
+        validator: (value) {
+          if (value.isEmpty) {
+            return "Campo de senha deve ser preenchido";
+          }
+        },
         obscureText: true,
         style: getTextStyle(),
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: placeholder,
+            fillColor: Colors.white,
+            filled: true,
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-      ));
+      );
 }
 
 Widget getMessage(String title, String message) {

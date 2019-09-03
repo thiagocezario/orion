@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orion/components/login/form_items/form_items.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
 
 Widget getNewGroupForm(BuildContext context, GlobalKey<FormState> _formKey) {
   return Form(
@@ -11,13 +11,13 @@ Widget getNewGroupForm(BuildContext context, GlobalKey<FormState> _formKey) {
       children: <Widget>[
         getTitleMessage('Novo grupo', Colors.black),
         SizedBox(height: 50.0,),
-        getTextField('Nome do grupo'),
+        getTextField('Nome do grupo', _formKey),
         SizedBox(height: 10.0,),
-        getTextField('Instituição'),
+        getTextField('Instituição', _formKey),
         SizedBox(height: 10.0,),
-        getTextField('Curso'),
+        getTextField('Curso', _formKey),
         SizedBox(height: 10.0,),
-        getTextField('Disciplina'),
+        getTextField('Disciplina', _formKey),
         SizedBox(height: 25.0,),
         getMaterialButton(context, _formKey, 'Criar', () {}),
       ],

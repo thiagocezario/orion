@@ -18,9 +18,9 @@ Form getLoginForm(BuildContext context, GlobalKey<FormState> _formKey) {
         SizedBox(
           height: 35.0,
         ),
-        getTextField('Email'),
+        getTextField('Email', _formKey),
         SizedBox(height: 10.0),
-        getPasswordField('Senha'),
+        getPasswordField('Senha', _formKey),
         SizedBox(
           height: 25.0,
         ),

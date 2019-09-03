@@ -10,8 +10,6 @@ class RecoverPasswordPage extends StatefulWidget {
 }
 
 class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +24,7 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
 
   Widget _buildForm(context) {
     return Builder(
-      builder: (context) => getRecoverPasswordEmailForm(context, _formKey),
+      builder: (context) => getRecoverPasswordEmailForm(context),
     );
   }
 }

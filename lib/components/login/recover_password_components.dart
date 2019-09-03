@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'login_components.dart';
 
-Form getRecoverPasswordEmailForm(BuildContext context, GlobalKey<FormState> _formKey) {
+Form getRecoverPasswordEmailForm(BuildContext context) {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   return Form(
     key: _formKey,
     child: Padding(
@@ -16,7 +17,7 @@ Form getRecoverPasswordEmailForm(BuildContext context, GlobalKey<FormState> _for
         SizedBox(
           height: 35.0,
         ),
-        getTextField('Email'),
+        getTextField('Email', _formKey),
         SizedBox(
           height: 25.0,
         ),

@@ -14,9 +14,8 @@ class _NewGroupPageState extends State<NewGroupPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Color(0xff8893f2),
           appBar: AppBar(
-            backgroundColor: Colors.white,
             elevation: 0.0,
             leading: IconButton(
               icon: Icon(
