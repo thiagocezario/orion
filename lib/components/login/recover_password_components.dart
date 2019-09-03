@@ -17,13 +17,7 @@ Form getRecoverPasswordEmailForm(BuildContext context, GlobalKey<FormState> _for
         SizedBox(
           height: 35.0,
         ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5.0)
-          ),
-          child: getTextField('Email'),
-        ),
+        getTextField('Email'),
         SizedBox(
           height: 25.0,
         ),

@@ -1,54 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:orion/components/login/form_items/form_items.dart';
+import 'package:orion/components/groups/new_group_components.dart';
 
-class NewGroupPage extends StatelessWidget {
+class NewGroupPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text(
-          'Novo Grupo',
-          style: TextStyle(
-            color: Colors.black
-          ),
-          ),
-      ),
-      body: getNewGroupForm(context),
-    );
-  }
+  _NewGroupPageState createState() => _NewGroupPageState();
 }
 
-Widget getNewGroupForm(BuildContext context) {
-  final createButton = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.blue,
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-        },
-        child: Text("Criar",
-            textAlign: TextAlign.center,
-            style: getTextStyle().copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+class _NewGroupPageState extends State<NewGroupPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
+        ),
+        body: getNewGroupForm(context, _formKey),
       ),
     );
-  
-  return Container(
-    alignment: Alignment.center,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        getTextField('Instituição'),
-        getTextField('Curso'),
-        getTextField('Disciplina'),
-        getTextField('Grupo'),
-        createButton,
-      ],
-    ),
-  );
+  }
 }

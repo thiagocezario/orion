@@ -19,21 +19,9 @@ Form getLoginForm(BuildContext context, GlobalKey<FormState> _formKey) {
         SizedBox(
           height: 35.0,
         ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5.0)
-          ),
-          child: getTextField('Email'),
-        ),
+        getTextField('Email'),
         SizedBox(height: 10.0),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5.0)
-          ),
-          child: getPasswordField('Senha')
-        ),
+        getPasswordField('Senha'),
         SizedBox(
           height: 25.0,
         ),

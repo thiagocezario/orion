@@ -25,21 +25,9 @@ Form getNewAccountForm(BuildContext context, GlobalKey<FormState> _formKey) {
           child: getTextField('Email'),
         ),
         SizedBox(height: 10.0),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5.0)
-          ),
-          child: getPasswordField('Senha')
-        ),
+        getPasswordField('Senha'),
         SizedBox(height: 10.0),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5.0)
-          ),
-          child: getPasswordField('Confirmar senha')
-        ),
+        getPasswordField('Confirmar senha'),
         SizedBox(
           height: 25.0,
         ),

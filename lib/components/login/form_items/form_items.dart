@@ -17,32 +17,40 @@ TextStyle getTextStyle() {
   return TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 }
 
-TextFormField getTextField(String placeholder) {
+Container getTextField(String placeholder) {
   TextEditingController textController = TextEditingController();
 
-  return TextFormField(
-    controller: textController,
-    style: getTextStyle(),
-    decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: placeholder,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-  );
+  return Container(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(5.0)),
+      child: TextFormField(
+        controller: textController,
+        style: getTextStyle(),
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            hintText: placeholder,
+            fillColor: Colors.white,
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+      ));
 }
 
-TextFormField getPasswordField(String placeholder) {
+Container getPasswordField(String placeholder) {
   TextEditingController passwordController = TextEditingController();
 
-  return TextFormField(
-    controller: passwordController,
-    obscureText: true,
-    style: getTextStyle(),
-    decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: placeholder,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-  );
+  return Container(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(5.0)),
+      child: TextFormField(
+        controller: passwordController,
+        obscureText: true,
+        style: getTextStyle(),
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            hintText: placeholder,
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+      ));
 }
 
 Widget getMessage(String title, String message) {
@@ -71,6 +79,23 @@ Widget getMessage(String title, String message) {
   );
 }
 
+Widget getTitleMessage(String title, Color color) {
+  return Container(
+    alignment: Alignment.center,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          title,
+          style: TextStyle(
+              fontSize: 30.0, color: color, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        )
+      ],
+    ),
+  );
+}
 Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey,
     String label, Function action) {
   return Material(
