@@ -28,7 +28,8 @@ TextFormField getTextField(String placeholder, TextEditingController controller)
         style: getTextStyle(),
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: placeholder,
+            // hintText: placeholder,
+            labelText: placeholder,
             fillColor: Colors.white,
             filled: true,
             border:
@@ -136,3 +137,13 @@ AppBar getAppBar(BuildContext context) {
     ),
   );
 }
+
+Widget getLogo() {
+    return SizedBox(
+      height: 120.0,
+      child: Image.asset(
+        'assets/logo/orionlogo.png',
+        fit: BoxFit.contain,
+      ),
+    );
+  }

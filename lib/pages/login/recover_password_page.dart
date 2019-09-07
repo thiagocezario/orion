@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
-import 'package:orion/components/login/recover_password_components.dart';
 
 class RecoverPasswordPage extends StatefulWidget {
   @override
@@ -14,18 +13,50 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: Color(0xff8893f2),
-            appBar: getAppBar(context),
-            body: ListView(
-              children: <Widget>[
-                _buildForm(context)
-              ],
-            ));
+        backgroundColor: Color(0xff8893f2),
+        appBar: getAppBar(context),
+        body: ListView(
+          children: <Widget>[_buildForm(context)],
+        ));
   }
 
-  Widget _buildForm(context) {
+  Builder _buildForm(context) {
     return Builder(
-      builder: (context) => getRecoverPasswordEmailForm(context, _formKey, _controller),
+      builder: (context) => _buildRecoverEmailForm(context),
+    );
+  }
+
+  Form _buildRecoverEmailForm(BuildContext context) {
+    return Form(
+        key: _formKey,
+        child: Padding(
+          padding: EdgeInsets.only(left: 36.0, right: 36.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              getLogo(),
+              getMessage('Esqueceu a senha?',
+                  'Só precisamos do seu email de cadastro para redefinir a senha.'),
+              SizedBox(
+                height: 35.0,
+              ),
+              getTextField('Email', _controller),
+              SizedBox(
+                height: 25.0,
+              ),
+              getMaterialButton(context, _formKey, 'Redefinir Senha', () {
+                Scaffold.of(context).showSnackBar(emailSentConfirmation());
+              }),
+            ],
+          ),
+        ));
+  }
+
+  SnackBar emailSentConfirmation() {
+    return SnackBar(
+      content: Text("Email para redefinição de senha enviado"),
+      duration: Duration(seconds: 5),
     );
   }
 }
