@@ -17,44 +17,49 @@ TextStyle getTextStyle() {
   return TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 }
 
-TextFormField getTextField(String placeholder, TextEditingController controller) {
-  return TextFormField(
-        validator: (value) {
-          if (value.isEmpty) {
-            return "O campo de $placeholder deve ser preenchido";
-          }
-        },
-        controller: controller,
-        style: getTextStyle(),
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            // hintText: placeholder,
-            labelText: placeholder,
-            fillColor: Colors.white,
-            filled: true,
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-      );
+TextStyle _errorStyle() {
+  return TextStyle(fontFamily: 'Montserrat', fontSize: 13.0, color: Colors.redAccent);
 }
 
-TextFormField getPasswordField(String placeholder, TextEditingController controller) {
+TextFormField getTextField(
+    String placeholder, TextEditingController controller) {
   return TextFormField(
-        controller: controller,
-        validator: (value) {
-          if (value.isEmpty) {
-            return "Campo de senha deve ser preenchido";
-          }
-        },
-        obscureText: true,
-        style: getTextStyle(),
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            hintText: placeholder,
-            fillColor: Colors.white,
-            filled: true,
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-      );
+    validator: (value) {
+      if (value.isEmpty) {
+        return "O campo de $placeholder deve ser preenchido";
+      }
+    },
+    controller: controller,
+    style: getTextStyle(),
+    decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: placeholder,
+        errorStyle: _errorStyle(),
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+  );
+}
+
+TextFormField getPasswordField(
+    String placeholder, TextEditingController controller) {
+  return TextFormField(
+    controller: controller,
+    validator: (value) {
+      if (value.isEmpty) {
+        return "O campo de senha deve ser preenchido";
+      }
+    },
+    obscureText: true,
+    style: getTextStyle(),
+    decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: placeholder,
+        errorStyle: _errorStyle(),
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+  );
 }
 
 Widget getMessage(String title, String message) {
@@ -100,6 +105,7 @@ Widget getTitleMessage(String title, Color color) {
     ),
   );
 }
+
 Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey,
     String label, Function action) {
   return Material(
@@ -139,11 +145,11 @@ AppBar getAppBar(BuildContext context) {
 }
 
 Widget getLogo() {
-    return SizedBox(
-      height: 120.0,
-      child: Image.asset(
-        'assets/logo/orionlogo.png',
-        fit: BoxFit.contain,
-      ),
-    );
-  }
+  return SizedBox(
+    height: 120.0,
+    child: Image.asset(
+      'assets/logo/orionlogo.png',
+      fit: BoxFit.contain,
+    ),
+  );
+}
