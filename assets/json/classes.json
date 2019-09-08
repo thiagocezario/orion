@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "TCC 1",
+        "members": 7
+    },
+    {
+        "id": 2,
+        "name": "TCC 2",
+        "members": 4
+    },
+    {
+        "id": 3,
+        "name": "Direito Aplicado",
+        "members": 29
+    },
+    {
+        "id": 4,
+        "name": "Lógica de programação",
+        "members": 35
+    },
+    {
+        "id": 4,
+        "name": "Estrutura de dados 1",
+        "members": 34
+    },
+    {
+        "id": 4,
+        "name": "Estrutura de dados 2",
+        "members": 23
+    },
+    {
+        "id": 4,
+        "name": "Metodologia científica",
+        "members": 7
+    }
+]

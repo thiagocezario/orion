@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TabItem currentTab = TabItem.myGroups;
+  GroupCards cards = GroupCards();
 
   void _selectedTab(TabItem tab) {
     setState(() {
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> {
   Widget _buildBody() {
     return Container(
       alignment: Alignment.center,
-      child: getListOfGroups(context),
+      child: cards.getGroupCards(context),
     );
   }
 

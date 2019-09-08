@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/groups/group_cards.dart';
+import 'package:orion/pages/group/new_group_page.dart';
 import 'package:orion/pages/home/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
@@ -45,6 +47,10 @@ class _LoginPageState extends State<LoginPage> {
                 height: 25.0,
               ),
               getMaterialButton(context, _formKey, 'Entrar', () {
+                GroupCards.loadGroupCards();
+                NewGroupPage.loadCourses();
+                NewGroupPage.loadDisciplines();
+                NewGroupPage.loadInstitutions();
                 runApp(HomePage());
               }),
               SizedBox(

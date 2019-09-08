@@ -1,17 +1,52 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/model/course.dart';
+import 'package:orion/model/discipline.dart';
+import 'package:orion/model/institution.dart';
 
 class NewGroupPage extends StatefulWidget {
   @override
   _NewGroupPageState createState() => _NewGroupPageState();
+
+  static Future loadInstitutions() async {
+    try {
+      String json = await rootBundle.loadString('assets/json/institution.json');
+      _NewGroupPageState.institutions = institutionFromJson(json);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future loadDisciplines() async {
+    try {
+      String json = await rootBundle.loadString('assets/json/classes.json');
+      _NewGroupPageState.disciplines = disciplineFromJson(json);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future loadCourses() async {
+    try {
+      String json = await rootBundle.loadString('assets/json/courses.json');
+      _NewGroupPageState.courses = courseFromJson(json);
+    } catch (e) {
+      print(e);
+    }
+  }
 }
 
 class _NewGroupPageState extends State<NewGroupPage> {
+  static List<Institution> institutions = List<Institution>();
+  static List<Course> courses = List<Course>();
+  static List<Discipline> disciplines = List<Discipline>();
+
   final _formKey = GlobalKey<FormState>();
-  final _autoCompleteKey = GlobalKey<AutoCompleteTextFieldState<String>>();
-  final _autoCompleteKey1 = GlobalKey<AutoCompleteTextFieldState<String>>();
-  final _autoCompleteKey2 = GlobalKey<AutoCompleteTextFieldState<String>>();
+  final _institutionKey = GlobalKey<AutoCompleteTextFieldState<Institution>>();
+  final _courseKey = GlobalKey<AutoCompleteTextFieldState<Course>>();
+  final _disciplineKey = GlobalKey<AutoCompleteTextFieldState<Discipline>>();
   final _institutionFieldController = TextEditingController();
   final _courseFieldController = TextEditingController();
   final _classFieldController = TextEditingController();
@@ -35,15 +70,15 @@ class _NewGroupPageState extends State<NewGroupPage> {
   }
 
   Form _buildForm(BuildContext context) {
-    institutionField = AutoCompleteTextField<String>(
+    institutionField = AutoCompleteTextField<Institution>(
       clearOnSubmit: false,
-      key: _autoCompleteKey,
+      key: _institutionKey,
       controller: _institutionFieldController,
       itemFilter: (item, query) {
-        return item.toLowerCase().startsWith(query.toLowerCase());
+        return item.name.toLowerCase().startsWith(query.toLowerCase());
       },
       suggestionsAmount: 4,
-      suggestions: suggestionList(),
+      suggestions: institutions,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: 'Instituição',
@@ -56,30 +91,36 @@ class _NewGroupPageState extends State<NewGroupPage> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(item,
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0))
+            Text(item.name,
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
+                Spacer(),
+            Icon(Icons.person),
+            Text(
+              item.members.toString(),
+              style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
+            )
           ],
         );
       },
       itemSorter: (a, b) {
-        return a.compareTo(b);
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
       },
       itemSubmitted: (item) {
         setState(() {
-          institutionField.textField.controller.text = item;
+          institutionField.textField.controller.text = item.name;
         });
       },
     );
 
-    courseField = AutoCompleteTextField<String>(
+    courseField = AutoCompleteTextField<Course>(
       clearOnSubmit: false,
-      key: _autoCompleteKey1,
+      key: _courseKey,
       controller: _courseFieldController,
       itemFilter: (item, query) {
-        return item.toLowerCase().startsWith(query.toLowerCase());
+        return item.name.toLowerCase().startsWith(query.toLowerCase());
       },
       suggestionsAmount: 4,
-      suggestions: suggestionList(),
+      suggestions: courses,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: 'Curso',
@@ -90,32 +131,37 @@ class _NewGroupPageState extends State<NewGroupPage> {
       style: getTextStyle(),
       itemBuilder: (context, item) {
         return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(item,
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0))
+            Text(item.name,
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
+                Spacer(),
+            Icon(Icons.person),
+            Text(
+              item.members.toString(),
+              style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
+            )
           ],
         );
       },
       itemSorter: (a, b) {
-        return a.compareTo(b);
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
       },
       itemSubmitted: (item) {
         setState(() {
-          courseField.textField.controller.text = item;
+          courseField.textField.controller.text = item.name;
         });
       },
     );
 
-    classField = AutoCompleteTextField<String>(
+    classField = AutoCompleteTextField<Discipline>(
       clearOnSubmit: false,
-      key: _autoCompleteKey2,
+      key: _disciplineKey,
       controller: _classFieldController,
       itemFilter: (item, query) {
-        return item.toLowerCase().startsWith(query.toLowerCase());
+        return item.name.toLowerCase().startsWith(query.toLowerCase());
       },
       suggestionsAmount: 4,
-      suggestions: suggestionList(),
+      suggestions: disciplines,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: 'Classe',
@@ -128,17 +174,23 @@ class _NewGroupPageState extends State<NewGroupPage> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(item,
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0))
+            Text(item.name,
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
+                Spacer(),
+            Icon(Icons.person),
+            Text(
+              item.members.toString(),
+              style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
+            )
           ],
         );
       },
       itemSorter: (a, b) {
-        return a.compareTo(b);
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
       },
       itemSubmitted: (item) {
         setState(() {
-          classField.textField.controller.text = item;
+          classField.textField.controller.text = item.name;
         });
       },
     );
@@ -170,7 +222,6 @@ class _NewGroupPageState extends State<NewGroupPage> {
             Material(
               elevation: 5.0,
               borderRadius: BorderRadius.circular(30.0),
-              // color: Color(0xff606fe1),
               color: Color(0xff192376),
               child: MaterialButton(
                 minWidth: MediaQuery.of(context).size.width,
@@ -191,23 +242,5 @@ class _NewGroupPageState extends State<NewGroupPage> {
         ),
       ),
     );
-  }
-
-  List<String> suggestionList() {
-    List<String> suggestionlist = List();
-
-    suggestionlist.add("UFPR");
-    suggestionlist.add("Universidade Federal do Paraná");
-    suggestionlist.add("UFSC");
-    suggestionlist.add("Universidade Federal de Santa Catarina");
-    suggestionlist.add("UFPG");
-    suggestionlist.add("Universidade Federal de Ponta Grossa");
-    suggestionlist.add("UEL");
-    suggestionlist.add("Universidade Estadual de Londrina");
-    suggestionlist.add("Panelinha");
-    suggestionlist.add("Test");
-    suggestionlist.add("aeHOOOOO");
-
-    return suggestionlist;
   }
 }
