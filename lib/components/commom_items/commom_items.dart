@@ -119,9 +119,9 @@ Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
       elevation: 50.0,
       onPressed: () {
-        if (_formKey.currentState.validate()) {
+        // if (_formKey.currentState.validate()) {
           action();
-        }
+        // }
       },
       child: Text(label,
           textAlign: TextAlign.center,

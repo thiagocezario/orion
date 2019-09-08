@@ -10,6 +10,8 @@ class NewGroupPage extends StatefulWidget {
 class _NewGroupPageState extends State<NewGroupPage> {
   final _formKey = GlobalKey<FormState>();
   final _autoCompleteKey = GlobalKey<AutoCompleteTextFieldState<String>>();
+  final _autoCompleteKey1 = GlobalKey<AutoCompleteTextFieldState<String>>();
+  final _autoCompleteKey2 = GlobalKey<AutoCompleteTextFieldState<String>>();
   final _institutionFieldController = TextEditingController();
   final _courseFieldController = TextEditingController();
   final _classFieldController = TextEditingController();
@@ -33,9 +35,113 @@ class _NewGroupPageState extends State<NewGroupPage> {
   }
 
   Form _buildForm(BuildContext context) {
-    institutionField = getAutoCompleteField(context, _institutionFieldController, 'Instituição', institutionField);
-    courseField = getAutoCompleteField(context, _courseFieldController, 'Curso', courseField);
-    classField = getAutoCompleteField(context, _classFieldController, 'Classe', classField);
+    institutionField = AutoCompleteTextField<String>(
+      clearOnSubmit: false,
+      key: _autoCompleteKey,
+      controller: _institutionFieldController,
+      itemFilter: (item, query) {
+        return item.toLowerCase().startsWith(query.toLowerCase());
+      },
+      suggestionsAmount: 4,
+      suggestions: suggestionList(),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: 'Instituição',
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+      ),
+      style: getTextStyle(),
+      itemBuilder: (context, item) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(item,
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0))
+          ],
+        );
+      },
+      itemSorter: (a, b) {
+        return a.compareTo(b);
+      },
+      itemSubmitted: (item) {
+        setState(() {
+          institutionField.textField.controller.text = item;
+        });
+      },
+    );
+
+    courseField = AutoCompleteTextField<String>(
+      clearOnSubmit: false,
+      key: _autoCompleteKey1,
+      controller: _courseFieldController,
+      itemFilter: (item, query) {
+        return item.toLowerCase().startsWith(query.toLowerCase());
+      },
+      suggestionsAmount: 4,
+      suggestions: suggestionList(),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: 'Curso',
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+      ),
+      style: getTextStyle(),
+      itemBuilder: (context, item) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(item,
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0))
+          ],
+        );
+      },
+      itemSorter: (a, b) {
+        return a.compareTo(b);
+      },
+      itemSubmitted: (item) {
+        setState(() {
+          courseField.textField.controller.text = item;
+        });
+      },
+    );
+
+    classField = AutoCompleteTextField<String>(
+      clearOnSubmit: false,
+      key: _autoCompleteKey2,
+      controller: _classFieldController,
+      itemFilter: (item, query) {
+        return item.toLowerCase().startsWith(query.toLowerCase());
+      },
+      suggestionsAmount: 4,
+      suggestions: suggestionList(),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: 'Classe',
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+      ),
+      style: getTextStyle(),
+      itemBuilder: (context, item) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(item,
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0))
+          ],
+        );
+      },
+      itemSorter: (a, b) {
+        return a.compareTo(b);
+      },
+      itemSubmitted: (item) {
+        setState(() {
+          classField.textField.controller.text = item;
+        });
+      },
+    );
 
     return Form(
       key: _formKey,
@@ -60,48 +166,30 @@ class _NewGroupPageState extends State<NewGroupPage> {
             SizedBox(
               height: 25.0,
             ),
-            getMaterialButton(context, _formKey, 'Criar', () {}),
+            // getMaterialButton(context, _autoCompleteKey, 'Criar', () {}),
+            Material(
+              elevation: 5.0,
+              borderRadius: BorderRadius.circular(30.0),
+              // color: Color(0xff606fe1),
+              color: Color(0xff192376),
+              child: MaterialButton(
+                minWidth: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                elevation: 50.0,
+                onPressed: () {
+                  // if (_formKey.currentState.validate()) {
+                  // action();
+                  // }
+                },
+                child: Text('Criar',
+                    textAlign: TextAlign.center,
+                    style: getTextStyle().copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
+            )
           ],
         ),
       ),
-    );
-  }
-
-  AutoCompleteTextField getAutoCompleteField(BuildContext context, TextEditingController controller, String placeholder, AutoCompleteTextField field) {
-    return AutoCompleteTextField<String>(
-      clearOnSubmit: false,
-      key: _autoCompleteKey,
-      controller: controller,
-      itemFilter: (item, query) {
-        return item.toLowerCase().startsWith(query.toLowerCase());
-      },
-      suggestionsAmount: 4,
-      suggestions: suggestionList(),
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: placeholder,
-        fillColor: Colors.white,
-        filled: true,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-      ),
-      style: getTextStyle(),
-      itemBuilder: (context, item) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(item,
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0))
-          ],
-        );
-      },
-      itemSorter: (a, b) {
-        return a.compareTo(b);
-      },
-      itemSubmitted: (item) {
-        setState(() {
-          field.textField.controller.text = item;
-        });
-      },
     );
   }
 
