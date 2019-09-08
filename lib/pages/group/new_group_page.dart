@@ -93,7 +93,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
           children: <Widget>[
             Text(item.name,
                 style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
-                Spacer(),
+            Spacer(),
             Icon(Icons.person),
             Text(
               item.members.toString(),
@@ -134,7 +134,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
           children: <Widget>[
             Text(item.name,
                 style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
-                Spacer(),
+            Spacer(),
             Icon(Icons.person),
             Text(
               item.members.toString(),
@@ -176,7 +176,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
           children: <Widget>[
             Text(item.name,
                 style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
-                Spacer(),
+            Spacer(),
             Icon(Icons.person),
             Text(
               item.members.toString(),
