@@ -30,9 +30,13 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.white,
             elevation: 0.0,
             centerTitle: true,
-            title: Text(
-              'Meus Grupos',
-              style: TextStyle(color: Colors.black),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.group, color: Colors.black,),
+                SizedBox(width: 15,),
+                Text('Meus grupos', style: TextStyle(color: Colors.black),)
+              ],
             ),
             actions: <Widget>[
               Padding(
