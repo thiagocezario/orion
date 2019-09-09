@@ -6,6 +6,8 @@ import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/institution.dart';
 
+import 'group_filters.dart';
+
 class NewGroupPage extends StatefulWidget {
   @override
   _NewGroupPageState createState() => _NewGroupPageState();
@@ -240,7 +242,14 @@ class _NewGroupPageState extends State<NewGroupPage> {
             SizedBox(
               height: 25.0,
             ),
-            getMaterialButton(context, _formKey, 'Criar', () {})
+            getMaterialButton(context, _formKey, 'Criar', () {
+              {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewGroupFilter()),
+                );
+              }
+            })
           ],
         ),
       ),
