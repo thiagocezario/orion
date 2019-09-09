@@ -93,12 +93,19 @@ class _NewGroupPageState extends State<NewGroupPage> {
           children: <Widget>[
             Text(item.name,
                 style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
-            Spacer(),
-            Icon(Icons.person),
-            Text(
-              item.members.toString(),
-              style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
-            )
+            Container(
+              width: 60.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Icon(Icons.person),
+                  Text(
+                    item.members.toString(),
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
+                  )
+                ],
+              ),
+            ),
           ],
         );
       },
@@ -131,15 +138,23 @@ class _NewGroupPageState extends State<NewGroupPage> {
       style: getTextStyle(),
       itemBuilder: (context, item) {
         return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(item.name,
                 style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
-            Spacer(),
-            Icon(Icons.person),
-            Text(
-              item.members.toString(),
-              style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
-            )
+            Container(
+              width: 60.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Icon(Icons.person),
+                  Text(
+                    item.members.toString(),
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
+                  )
+                ],
+              ),
+            ),
           ],
         );
       },
@@ -176,12 +191,19 @@ class _NewGroupPageState extends State<NewGroupPage> {
           children: <Widget>[
             Text(item.name,
                 style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
-            Spacer(),
-            Icon(Icons.person),
-            Text(
-              item.members.toString(),
-              style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
-            )
+            Container(
+              width: 60.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Icon(Icons.person),
+                  Text(
+                    item.members.toString(),
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
+                  )
+                ],
+              ),
+            ),
           ],
         );
       },
@@ -218,26 +240,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
             SizedBox(
               height: 25.0,
             ),
-            // getMaterialButton(context, _autoCompleteKey, 'Criar', () {}),
-            Material(
-              elevation: 5.0,
-              borderRadius: BorderRadius.circular(30.0),
-              color: Color(0xff192376),
-              child: MaterialButton(
-                minWidth: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                elevation: 50.0,
-                onPressed: () {
-                  // if (_formKey.currentState.validate()) {
-                  // action();
-                  // }
-                },
-                child: Text('Criar',
-                    textAlign: TextAlign.center,
-                    style: getTextStyle().copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
-              ),
-            )
+            getMaterialButton(context, _formKey, 'Criar', () {})
           ],
         ),
       ),
