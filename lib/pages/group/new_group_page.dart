@@ -92,7 +92,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(item.name,
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
             Container(
               width: 60.0,
               child: Row(
@@ -101,7 +101,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   Icon(Icons.person),
                   Text(
                     item.members.toString(),
-                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                   )
                 ],
               ),
@@ -110,7 +110,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        return b.members.compareTo(a.members);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -141,7 +141,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(item.name,
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
             Container(
               width: 60.0,
               child: Row(
@@ -150,7 +150,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   Icon(Icons.person),
                   Text(
                     item.members.toString(),
-                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                   )
                 ],
               ),
@@ -159,7 +159,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        return b.members.compareTo(a.members);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -190,7 +190,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(item.name,
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0)),
+                style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
             Container(
               width: 60.0,
               child: Row(
@@ -199,7 +199,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   Icon(Icons.person),
                   Text(
                     item.members.toString(),
-                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 15.0),
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                   )
                 ],
               ),
@@ -208,7 +208,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        return b.members.compareTo(a.members);
       },
       itemSubmitted: (item) {
         setState(() {
