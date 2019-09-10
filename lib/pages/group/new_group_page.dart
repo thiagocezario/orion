@@ -58,17 +58,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          backgroundColor: Color(0xff8893f2),
-          appBar: getAppBar(context),
-          body: ListView(
+    return ListView(
             children: <Widget>[
               _buildForm(context),
             ],
-          )),
-    );
+          );
   }
 
   Form _buildForm(BuildContext context) {

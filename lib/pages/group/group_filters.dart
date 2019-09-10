@@ -62,6 +62,26 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
         );
       },
     ),
-  );
+    floatingActionButton: _buildFloatingButton(context));
+  }
+
+  Widget _buildFloatingButton(BuildContext context) {
+    return Builder(
+      builder: (context) {
+        return FloatingActionButton(
+          child: Icon(Icons.add),
+          elevation: 15.0,
+          backgroundColor: Colors.green,
+          onPressed: () {
+            {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => NewGroupPage()),
+              // );
+            }
+          },
+        );
+      },
+    );
   }
 }
