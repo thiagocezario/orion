@@ -2,60 +2,56 @@ import 'package:flutter/material.dart';
 import 'package:orion/components/groups/group_cards.dart';
 import 'package:orion/pages/group/new_group_page.dart';
 
-enum TabItem { myGroups, groups, community, profile }
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
 
-// class Home extends StatefulWidget {
-//   @override
-//   State<StatefulWidget> createState() => HomeState();
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-// }
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  GroupCards cards = GroupCards();
 
-// class HomeState extends State<Home> {
-//   TabItem currentTab = TabItem.myGroups;
-
-//   void _selectedTab(TabItem tab) {
-//     setState(() {
-//       currentTab = tab;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: _buildBody(),
-//       bottomNavigationBar: BottomNavigation(
-//         currentTab: currentTab,
-//         onSelected: _selectTab,
-//       )
-//     );
-//   }
-
-//   Widget _buildBody() {
-//     return Container(
-//       alignment: Alignment.center,
-//       child: getListOfGroups(context),
-//     );
-//   }
-// }
-
-class HomePage extends StatelessWidget {
-  final List<Widget> items;
-  HomePage({Key key, this.items}) : super(key: key);
+  var _title = Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      Icon(
+        Icons.group,
+        color: Colors.black,
+      ),
+      SizedBox(
+        width: 15,
+      ),
+      Text(
+        'Meus grupos',
+        style: TextStyle(color: Colors.black),
+      )
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _children = [
+      _buildMyGroups(),
+      Container(),
+      Container(
+        // color: Color(0xff8893f2),
+        child: NewGroupPage(),
+      ),
+      Container()
+    ];
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: true,
             backgroundColor: Colors.white,
-            elevation: 5.0,
+            // backgroundColor: Color(0xff8893f2),
+            elevation: 0.0,
             centerTitle: true,
-            title: Text(
-              'Meus Grupos',
-              style: TextStyle(color: Colors.black),
-            ),
+            title: _title,
             actions: <Widget>[
               Padding(
                   padding: EdgeInsets.only(right: 15.0),
@@ -65,8 +61,10 @@ class HomePage extends StatelessWidget {
                   ))
             ],
           ),
-          body: getListOfGroups(context),
+          body: _children[_currentIndex],
           bottomNavigationBar: BottomNavigationBar(
+            onTap: onTabTapped,
+            currentIndex: _currentIndex,
             type: BottomNavigationBarType.fixed,
             items: [
               BottomNavigationBarItem(
@@ -84,19 +82,57 @@ class HomePage extends StatelessWidget {
                   title: Text('Perfil'))
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            elevation: 15.0,
-            backgroundColor: Colors.green,
-            onPressed: () {
-              {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NewGroupPage()),
-                );
-              }
-            },
-          ),
         ));
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+
+      if (index == 0) {
+        _title = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.group,
+              color: Colors.black,
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Text(
+              'Meus Grupos',
+              style: TextStyle(color: Colors.black),
+            )
+          ],
+        );
+      }
+
+      if (index == 2) {
+        _title = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.group,
+              color: Colors.black,
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Text(
+              'Pesquisar Grupos',
+              style: TextStyle(color: Colors.black),
+            )
+          ],
+        );
+      }
+    });
+  }
+
+  Widget _buildMyGroups() {
+    return Container(
+      alignment: Alignment.center,
+      child: cards.getGroupCards(context),
+    );
   }
 }

@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "TADS",
+        "members": 170
+    },
+    {
+        "id": 2,
+        "name": "Engenharia Elétrica",
+        "members": 56
+    },
+    {
+        "id": 3,
+        "name": "Educação Física",
+        "members": 17
+    },
+    {
+        "id": 4,
+        "name": "Ciências da computação",
+        "members": 87
+    }
+]
