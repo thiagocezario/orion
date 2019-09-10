@@ -175,7 +175,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
       suggestions: disciplines,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: 'Classe',
+        hintText: 'Disciplina',
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -216,14 +216,10 @@ class _NewGroupPageState extends State<NewGroupPage> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: EdgeInsets.only(left: 36.0, right: 36.0, top: 50.0),
+        padding: EdgeInsets.only(left: 36.0, right: 36.0, top: 120.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            getTitleMessage('Novo grupo', Colors.black),
-            SizedBox(
-              height: 50.0,
-            ),
             institutionField,
             SizedBox(
               height: 10.0,
@@ -236,7 +232,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
             SizedBox(
               height: 25.0,
             ),
-            getMaterialButton(context, _formKey, 'Criar', () {
+            getMaterialButton(context, _formKey, 'Procurar', () {
               {
                 Navigator.push(
                   context,

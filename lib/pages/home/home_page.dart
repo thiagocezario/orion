@@ -13,6 +13,23 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   GroupCards cards = GroupCards();
 
+  var _title = Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      Icon(
+        Icons.group,
+        color: Colors.black,
+      ),
+      SizedBox(
+        width: 15,
+      ),
+      Text(
+        'Meus grupos',
+        style: TextStyle(color: Colors.black),
+      )
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> _children = [
@@ -32,22 +49,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.white,
             elevation: 0.0,
             centerTitle: true,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  Icons.group,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  'Meus grupos',
-                  style: TextStyle(color: Colors.black),
-                )
-              ],
-            ),
+            title: _title,
             actions: <Widget>[
               Padding(
                   padding: EdgeInsets.only(right: 15.0),
@@ -84,6 +86,44 @@ class _HomePageState extends State<HomePage> {
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
+
+      if (index == 0) {
+        _title = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.group,
+              color: Colors.black,
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Text(
+              'Meus Grupos',
+              style: TextStyle(color: Colors.black),
+            )
+          ],
+        );
+      }
+
+      if (index == 2) {
+        _title = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.group,
+              color: Colors.black,
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Text(
+              'Pesquisar Grupos',
+              style: TextStyle(color: Colors.black),
+            )
+          ],
+        );
+      }
     });
   }
 
