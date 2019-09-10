@@ -17,6 +17,7 @@ class GroupCards {
 
   ListView getGroupCards(BuildContext context) {
     return ListView.builder(
+        physics: BouncingScrollPhysics(),
         itemCount: groups.length,
         itemBuilder: (context, index) {
           return _buildGroupCard(groups[index]);

@@ -28,6 +28,7 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
           ),
         ),
         body: ListView.builder(
+          physics: BouncingScrollPhysics(),
           itemCount: groups.length,
           itemBuilder: (context, index) {
             return Card(

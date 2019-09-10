@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
       _buildMyGroups(),
       Container(),
       Container(
+        // color: Color(0xff8893f2),
         child: NewGroupPage(),
       ),
       Container()
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             automaticallyImplyLeading: true,
             backgroundColor: Colors.white,
+            // backgroundColor: Color(0xff8893f2),
             elevation: 0.0,
             centerTitle: true,
             title: _title,

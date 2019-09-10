@@ -59,10 +59,10 @@ class _NewGroupPageState extends State<NewGroupPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-            children: <Widget>[
-              _buildForm(context),
-            ],
-          );
+      children: <Widget>[
+        _buildForm(context),
+      ],
+    );
   }
 
   Form _buildForm(BuildContext context) {
@@ -84,25 +84,29 @@ class _NewGroupPageState extends State<NewGroupPage> {
       ),
       style: getTextStyle(),
       itemBuilder: (context, item) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(item.name,
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
-            Container(
-              width: 60.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Icon(Icons.person),
-                  Text(
-                    item.members.toString(),
-                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
-                  )
-                ],
+        return Padding(
+          padding: EdgeInsets.all(15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(item.name,
+                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              Container(
+                width: 60.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.person),
+                    Text(
+                      item.members.toString(),
+                      style:
+                          TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
       itemSorter: (a, b) {
@@ -133,25 +137,29 @@ class _NewGroupPageState extends State<NewGroupPage> {
       ),
       style: getTextStyle(),
       itemBuilder: (context, item) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(item.name,
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
-            Container(
-              width: 60.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Icon(Icons.person),
-                  Text(
-                    item.members.toString(),
-                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
-                  )
-                ],
+        return Padding(
+          padding: EdgeInsets.all(15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(item.name,
+                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              Container(
+                width: 60.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.person),
+                    Text(
+                      item.members.toString(),
+                      style:
+                          TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
       itemSorter: (a, b) {
@@ -182,25 +190,29 @@ class _NewGroupPageState extends State<NewGroupPage> {
       ),
       style: getTextStyle(),
       itemBuilder: (context, item) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(item.name,
-                style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
-            Container(
-              width: 60.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Icon(Icons.person),
-                  Text(
-                    item.members.toString(),
-                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
-                  )
-                ],
+        return Padding(
+          padding: EdgeInsets.all(15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(item.name,
+                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              Container(
+                width: 60.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.person),
+                    Text(
+                      item.members.toString(),
+                      style:
+                          TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
       itemSorter: (a, b) {
