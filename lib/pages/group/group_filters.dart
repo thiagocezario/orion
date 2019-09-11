@@ -33,9 +33,8 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
           itemBuilder: (context, index) {
             return Card(
               elevation: 15.0,
-              margin: EdgeInsets.all(15.0),
+              margin: EdgeInsets.all(7.5),
               child: Container(
-                margin: EdgeInsets.all(15.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,

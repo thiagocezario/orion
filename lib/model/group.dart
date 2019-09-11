@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
-
 List<Group> groupFromJson(String str) => new List<Group>.from(json.decode(str).map((x) => Group.fromJson(x)));
 
 String groupToJson(List<Group> data) => json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
