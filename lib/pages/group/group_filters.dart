@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:orion/components/groups/group_cards.dart';
 import 'package:orion/model/group.dart';
 
 class NewGroupFilter extends StatefulWidget {
+  List<Group> groups = List();
+
+  NewGroupFilter({Key key, this.groups}) : super(key: key);
   @override
-  _NewGroupFilterState createState() => _NewGroupFilterState();
+  _NewGroupFilterState createState() => _NewGroupFilterState(groups);
 }
 
 class _NewGroupFilterState extends State<NewGroupFilter> {
-  List<Group> groups = GroupCards.groups;
+  List<Group> groups = List();
+
+  _NewGroupFilterState(this.groups);
 
   @override
   Widget build(BuildContext context) {

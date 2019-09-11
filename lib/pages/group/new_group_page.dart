@@ -1,9 +1,11 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:orion/api/groups/group_filters.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
+import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 
 import 'group_filters.dart';
@@ -246,10 +248,15 @@ class _NewGroupPageState extends State<NewGroupPage> {
             ),
             getMaterialButton(context, _formKey, 'Procurar', () {
               {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NewGroupFilter()),
-                );
+                Group group = new Group();
+                group.institutionName = _institutionFieldController.text;
+                GroupServices.filterGroups(group).then((response) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NewGroupFilter(groups: response)),
+                  );
+                });
               }
             })
           ],
