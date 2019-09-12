@@ -5,7 +5,6 @@ import 'package:orion/api/groups/group_filters.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
-import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 
 import 'group_filters.dart';
@@ -58,6 +57,9 @@ class _NewGroupPageState extends State<NewGroupPage> {
   AutoCompleteTextField courseField;
   AutoCompleteTextField classField;
 
+  static Institution institution = Institution();
+  static Course course = Course();
+  static Discipline discipline = Discipline();
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -117,6 +119,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
       itemSubmitted: (item) {
         setState(() {
           institutionField.textField.controller.text = item.name;
+          institution = item;
         });
       },
     );
@@ -170,6 +173,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
       itemSubmitted: (item) {
         setState(() {
           courseField.textField.controller.text = item.name;
+          course = item;
         });
       },
     );
@@ -223,6 +227,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
       itemSubmitted: (item) {
         setState(() {
           classField.textField.controller.text = item.name;
+          discipline = item;
         });
       },
     );
@@ -248,9 +253,9 @@ class _NewGroupPageState extends State<NewGroupPage> {
             ),
             getMaterialButton(context, _formKey, 'Procurar', () {
               {
-                Group group = new Group();
-                group.institutionName = _institutionFieldController.text;
-                GroupServices.filterGroups(group).then((response) {
+                GroupServices.filterGroups(
+                        institution.id, course.id, discipline.id)
+                    .then((response) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -2,12 +2,14 @@ import 'package:orion/components/groups/group_cards.dart';
 import 'package:orion/model/group.dart';
 
 class GroupServices {
-  static Future filterGroups(Group groupInfo) async {
+  static Future filterGroups(int institutionId, int courseId, int disciplineId) async {
     List<Group> groupsFound = List();
     List<Group> allGroups = GroupCards.groups;
 
     for (var group in allGroups) {
-      if (group.institutionName == groupInfo.institutionName) {
+      if (group.institutionId == institutionId &&
+          group.courseId == courseId &&
+          group.disciplineId == disciplineId) {
             groupsFound.add(group);
           }
     }
@@ -15,9 +17,3 @@ class GroupServices {
     return groupsFound;
   }
 }
-
-/**
- * group.institutionId == groupInfo.institutionId &&
-          group.courseId == groupInfo.courseId &&
-          group.disciplineId == groupInfo.disciplineId
- */
