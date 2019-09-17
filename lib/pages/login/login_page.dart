@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:orion/api/authentication/auth_provider.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/groups/group_cards.dart';
+import 'package:orion/model/user.dart';
 import 'package:orion/pages/group/new_group_page.dart';
 import 'package:orion/pages/home/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,6 +18,32 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
+  User _user = User();
+
+  void _signIn(BuildContext context) {
+    Provider.of<AuthProvider>(context).signIn(_user).then((response) {
+      String token = Provider.of<AuthProvider>(context).accessToken;
+      if (token != null && token != '') {
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => TabBarDemo(),
+        //   ),
+        // );
+        GroupCards.loadGroupCards();
+        NewGroupPage.loadCourses();
+        NewGroupPage.loadDisciplines();
+        NewGroupPage.loadInstitutions();
+        runApp(HomePage());
+      } else {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Credenciais inválidas.'),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +75,35 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 25.0,
               ),
-              getMaterialButton(context, _formKey, 'Entrar', () {
-                GroupCards.loadGroupCards();
-                NewGroupPage.loadCourses();
-                NewGroupPage.loadDisciplines();
-                NewGroupPage.loadInstitutions();
-                runApp(HomePage());
-              }),
+              // Builder(
+              //   builder: (context) =>
+              //       getMaterialButton(context, _formKey, 'Entrar', () {
+              //     // runApp(HomePage());
+              //     _signIn(context);
+              //   }),
+              // ),
+              Builder(
+                builder: (context) => Material(
+                  elevation: 5.0,
+                  borderRadius: BorderRadius.circular(30.0),
+                  // color: Color(0xff606fe1),
+                  color: Color(0xff192376),
+                  child: MaterialButton(
+                    minWidth: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    elevation: 50.0,
+                    onPressed: () {
+                      // if (_formKey.currentState.validate()) {
+                      _signIn(context);
+                      // }
+                    },
+                    child: Text('Entrar',
+                        textAlign: TextAlign.center,
+                        style: getTextStyle().copyWith(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 15.0,
               ),
