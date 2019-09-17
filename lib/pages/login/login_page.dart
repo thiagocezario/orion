@@ -61,6 +61,8 @@ class _LoginPageState extends State<LoginPage> {
         if (value.isEmpty) {
           return "O campo de email deve ser preenchido";
         }
+
+        return null;
       },
       controller: _emailFieldController,
       style: getTextStyle(),
@@ -79,6 +81,8 @@ class _LoginPageState extends State<LoginPage> {
         if (value.isEmpty) {
           return "O campo de senha deve ser preenchido";
         }
+
+        return null;
       },
       controller: _passwordFieldController,
       obscureText: true,
