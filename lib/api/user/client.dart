@@ -13,8 +13,10 @@ class Client {
 
     return http.post('$_baseUrl/sessions',
       body: json.encode(data),
-      headers: headers
-    );
+      headers: headers,
+    ).timeout(Duration(
+      seconds: 5
+    ));
   }
 
   static Future createUser(User user) async {

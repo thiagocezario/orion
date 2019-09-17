@@ -24,12 +24,6 @@ class _LoginPageState extends State<LoginPage> {
     Provider.of<AuthProvider>(context).signIn(_user).then((response) {
       String token = Provider.of<AuthProvider>(context).accessToken;
       if (token != null && token != '') {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => TabBarDemo(),
-        //   ),
-        // );
         GroupCards.loadGroupCards();
         NewGroupPage.loadCourses();
         NewGroupPage.loadDisciplines();
@@ -42,6 +36,12 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
       }
+    }).catchError((e) {
+      Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Ocorreu um erro. Tente novamente em alguns minutos.'),
+          ),
+        );
     });
   }
 
@@ -56,6 +56,43 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Form _buildForm(BuildContext context) {
+    final userField = TextFormField(
+      validator: (value) {
+        if (value.isEmpty) {
+          return "O campo de email deve ser preenchido";
+        }
+      },
+      controller: _emailFieldController,
+      style: getTextStyle(),
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: 'Email',
+          errorStyle: errorStyle(),
+          fillColor: Colors.white,
+          filled: true,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+      onChanged: (text) => _user.email = text,
+    );
+
+    final passwordField = TextFormField(
+      validator: (value) {
+        if (value.isEmpty) {
+          return "O campo de senha deve ser preenchido";
+        }
+      },
+      controller: _passwordFieldController,
+      obscureText: true,
+      style: getTextStyle(),
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: 'Senha',
+          errorStyle: errorStyle(),
+          fillColor: Colors.white,
+          filled: true,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+      onChanged: (text) => _user.password = text,
+    );
+
     return Form(
         key: _formKey,
         child: Padding(
@@ -69,9 +106,9 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 35.0,
               ),
-              getTextField('Email', _emailFieldController),
+              userField,
               SizedBox(height: 10.0),
-              getPasswordField('Senha', _passwordFieldController),
+              passwordField,
               SizedBox(
                 height: 25.0,
               ),
@@ -93,9 +130,9 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                     elevation: 50.0,
                     onPressed: () {
-                      // if (_formKey.currentState.validate()) {
-                      _signIn(context);
-                      // }
+                      if (_formKey.currentState.validate()) {
+                        _signIn(context);
+                      }
                     },
                     child: Text('Entrar',
                         textAlign: TextAlign.center,

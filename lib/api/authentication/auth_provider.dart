@@ -13,7 +13,6 @@ class AuthProvider extends ChangeNotifier {
 
   Future signIn(User user) {
     return Client.signIn(user).then((response) {
-      
       var data = jsonDecode(response.body);
       _accessToken = data['token'];
       notifyListeners();

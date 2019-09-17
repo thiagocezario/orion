@@ -18,7 +18,7 @@ TextStyle getTextStyle() {
   return TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 }
 
-TextStyle _errorStyle() {
+TextStyle errorStyle() {
   return TextStyle(fontFamily: 'Montserrat', fontSize: 13.0, color: Colors.redAccent);
 }
 
@@ -35,7 +35,7 @@ TextFormField getTextField(
     decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: placeholder,
-        errorStyle: _errorStyle(),
+        errorStyle: errorStyle(),
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -56,7 +56,7 @@ TextFormField getPasswordField(
     decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: placeholder,
-        errorStyle: _errorStyle(),
+        errorStyle: errorStyle(),
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
