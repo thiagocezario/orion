@@ -14,9 +14,7 @@ class Client {
     return http.post('$_baseUrl/sessions',
       body: json.encode(data),
       headers: headers,
-    ).timeout(Duration(
-      seconds: 5
-    ));
+    ).timeout(Duration(seconds: 5));
   }
 
   static Future createUser(User user) async {
@@ -26,7 +24,7 @@ class Client {
     return http.post('$_baseUrl/users',
       body: json.encode(data),
       headers: headers
-    );
+    ).timeout(Duration(seconds: 5));
   }
 
   static Future listGroups(User user) async {
