@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +17,7 @@ class GroupCards {
     }
   }
 
-  ListView getGroupCards(BuildContext context) {
+  ListView getGroupCards(BuildContext context, List<Group> groups) {
     return ListView.builder(
         physics: BouncingScrollPhysics(),
         itemCount: groups.length,

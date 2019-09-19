@@ -40,7 +40,9 @@ class Client {
   static Future listGroups(User user) async {
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
 
-    return http.get('$_baseUrl/api/groups', headers: headers);
+    return await http.get('$_baseUrl/api/groups', headers: headers).timeout(Duration(seconds: 5)).catchError((e) {
+      print(e);
+    });
   }
 
   static Future listInstitutions(name) async {

@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:orion/api/authentication/auth_provider.dart';
+import 'package:orion/api/client.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/groups/group_cards.dart';
+import 'package:orion/model/group.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/group/new_group_page.dart';
 import 'package:orion/pages/home/home_page.dart';
@@ -24,11 +28,24 @@ class _LoginPageState extends State<LoginPage> {
     Provider.of<AuthProvider>(context).signIn(_user).then((response) {
       String token = Provider.of<AuthProvider>(context).accessToken;
       if (token != null && token != '') {
-        GroupCards.loadGroupCards();
+        var singleton = Singleton(user: _user);
+        singleton.user = _user;
+        var groups = List<Group>();
+
+        Client.listGroups(singleton.user).then((response) {
+          Iterable decodedResponse = json.decode(response.body);
+          groups =
+              decodedResponse.map((model) => Group.fromJson(model)).toList();
+        }).catchError((e) {
+          print(e);
+        });
+        // GroupCards.loadGroupCards();
         NewGroupPage.loadCourses();
         NewGroupPage.loadDisciplines();
         NewGroupPage.loadInstitutions();
-        runApp(HomePage());
+        runApp(HomePage(
+          myGroups: groups,
+        ));
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -38,10 +55,10 @@ class _LoginPageState extends State<LoginPage> {
       }
     }).catchError((e) {
       Scaffold.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Ocorreu um erro. Tente novamente em alguns minutos.'),
-          ),
-        );
+        SnackBar(
+          content: Text('Ocorreu um erro. Tente novamente em alguns minutos.'),
+        ),
+      );
     });
   }
 
@@ -56,6 +73,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Form _buildForm(BuildContext context) {
+    _emailFieldController.text = "admin@admin.com";
+    _passwordFieldController.text = "123123";
+    _user.email = "admin@admin.com";
+    _user.password = "123123";
+
     final userField = TextFormField(
       validator: (value) {
         if (value.isEmpty) {

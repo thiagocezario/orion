@@ -5,12 +5,15 @@ import 'package:orion/pages/login/recover_password_page.dart';
 import 'package:provider/provider.dart';
 
 import 'api/authentication/auth_provider.dart';
+import 'model/user.dart';
 
 void main() => runApp(Orion());
 
 class Orion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Singleton();
+
     return ChangeNotifierProvider(
         builder: (context) => AuthProvider(),
         child: MaterialApp(
