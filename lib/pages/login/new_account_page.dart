@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:orion/api/user/client.dart';
+import 'package:orion/api/client.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/user.dart';
 
@@ -18,13 +18,12 @@ class _NewAccountPageState extends State<NewAccountPage> {
 
   void _createAccount(BuildContext context) {
     Client.createUser(_user).then((response) {
-      if (response) {
+      if (response != null) {
         Scaffold.of(context).showSnackBar(
           SnackBar(
-            content: Text('Usuário criado com sucesso'),
+            content: Text(response.toString()),
           ),
         );
-        Navigator.of(context).pop();
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -34,6 +33,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
         );
       }
     }).catchError((e) {
+      print(e);
       Scaffold.of(context).showSnackBar(
         SnackBar(
           content: Text('Ocorreu um erro. Tente novamente em alguns minutos.'),
@@ -152,6 +152,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
                   elevation: 50.0,
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
+                      _user.name = "Root";
                       _createAccount(context);
                     }
                   },

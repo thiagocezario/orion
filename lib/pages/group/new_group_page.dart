@@ -253,6 +253,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
             ),
             getMaterialButton(context, _formKey, 'Procurar', () {
               {
+                
                 GroupServices.filterGroups(
                         institution.id, course.id, discipline.id)
                     .then((response) {
