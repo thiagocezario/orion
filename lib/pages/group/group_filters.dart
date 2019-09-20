@@ -87,7 +87,7 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
                                   Client.subscribe(
                                           singleton.jwtToken, groups[index].id)
                                       .then((response) {
-                                    if (response.statusCode == 201) {
+                                    if (response.statusCode == 200) {
                                       Scaffold.of(context)
                                           .showSnackBar(SnackBar(
                                         content: Text('Grupo ingressado'),
