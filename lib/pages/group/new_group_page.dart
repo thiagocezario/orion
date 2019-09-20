@@ -366,8 +366,10 @@ class _NewGroupPageState extends State<NewGroupPage> {
                         content: Text('Grupo criado com sucesso!'),
                       ),
                     );
-                    var groupResponse = groupFromJson(response.body);
-                    Client.subscribe(_singleton.jwtToken, groupResponse.first.id);
+                    String jsonResponse = response.body;
+                    var groupResponse = Group.fromJson(json.decode(jsonResponse));
+                    // var groupResponse = groupFromJson(response.body);
+                    Client.subscribe(_singleton.jwtToken, groupResponse.id);
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
