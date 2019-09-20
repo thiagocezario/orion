@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:orion/api/client.dart';
 import 'package:orion/api/groups/group_filters.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/institution.dart';
+import 'package:orion/model/user.dart';
 
 import 'group_filters.dart';
 
@@ -21,8 +25,14 @@ class NewGroupPage extends StatefulWidget {
 
   static Future loadInstitutions() async {
     try {
-      String json = await rootBundle.loadString('assets/json/institution.json');
-      _NewGroupPageState.institutions = institutionFromJson(json);
+      // String json = await rootBundle.loadString('assets/json/institution.json');
+      // _NewGroupPageState.institutions = institutionFromJson(json);
+
+      Client.listInstitutions().then((response) {
+        _NewGroupPageState.institutions = institutionFromJson(json.encode(response));
+      }).catchError((e) {
+        print(e);
+      });
     } catch (e) {
       print(e);
     }
@@ -30,8 +40,14 @@ class NewGroupPage extends StatefulWidget {
 
   static Future loadDisciplines() async {
     try {
-      String json = await rootBundle.loadString('assets/json/classes.json');
-      _NewGroupPageState.disciplines = disciplineFromJson(json);
+      // String json = await rootBundle.loadString('assets/json/classes.json');
+      // _NewGroupPageState.disciplines = disciplineFromJson(json);
+
+      Client.listDisciplines().then((response) {
+        _NewGroupPageState.disciplines = disciplineFromJson(json.encode(response));
+      }).catchError((e) {
+        print(e);
+      });
     } catch (e) {
       print(e);
     }
@@ -39,8 +55,14 @@ class NewGroupPage extends StatefulWidget {
 
   static Future loadCourses() async {
     try {
-      String json = await rootBundle.loadString('assets/json/courses.json');
-      _NewGroupPageState.courses = courseFromJson(json);
+      // String json = await rootBundle.loadString('assets/json/courses.json');
+      // _NewGroupPageState.courses = courseFromJson(json);
+
+      Client.listCourses().then((response) {
+        _NewGroupPageState.courses = courseFromJson(json.encode(response));
+      }).catchError((e) {
+        print(e);
+      });
     } catch (e) {
       print(e);
     }

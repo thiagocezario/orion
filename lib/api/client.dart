@@ -25,10 +25,15 @@ class Client {
   }
 
   static Future createUser(User user) async {
-    var data = {'name': user.name, 'email': user.email, 'password': user.password};
+    var data = {
+      'name': user.name,
+      'email': user.email,
+      'password': user.password
+    };
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
     var response = await http
-        .post('$_baseUrl/api/students', body: json.encode(data), headers: headers)
+        .post('$_baseUrl/api/students',
+            body: json.encode(data), headers: headers)
         .timeout(Duration(seconds: 500))
         .catchError((e) {
       print(e);
@@ -39,28 +44,46 @@ class Client {
 
   static Future listGroups(User user) async {
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
-    var response = await http.get('$_baseUrl/api/groups', headers: headers).timeout(Duration(seconds: 5)).catchError((e) {
+    var response = await http
+        .get('$_baseUrl/api/groups', headers: headers)
+        .timeout(Duration(seconds: 5))
+        .catchError((e) {
       print(e);
     });
 
     return response;
   }
 
-  static Future listInstitutions(name) async {
+  static Future listInstitutions() async {
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
+    var response = await http
+        .get('$_baseUrl/api/institutions', headers: headers)
+        .catchError((e) {
+      print(e);
+    });
 
-    return await http.get('$_baseUrl/api/institutions', headers: headers);
+    return response;
   }
 
-  static Future listCourses(name, institutionId) async {
+  static Future listCourses() async {
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
+    var response = await http
+        .get('$_baseUrl/api/courses', headers: headers)
+        .catchError((e) {
+      print(e);
+    });
 
-    return await http.get('$_baseUrl/api/courses', headers: headers);
+    return response;
   }
 
-  static Future listDisciplines(name, institutionId, courseId) async {
+  static Future listDisciplines() async {
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
+    var response = await http
+        .get('$_baseUrl/api/disciplines', headers: headers)
+        .catchError((e) {
+      print(e);
+    });
 
-    return await http.get('$_baseUrl/api/disciplines', headers: headers);
+    return response;
   }
 }
