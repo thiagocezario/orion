@@ -10,37 +10,37 @@ class Group {
     int institutionId;
     int courseId;
     int disciplineId;
-    String institutionName;
-    List<Member> members;
+    String institutionName = "Nome inst";
+    List<Member> members = List();
 
     Group({
         this.id,
         this.name,
         this.institutionId,
-        this.institutionName,
+        // this.institutionName,
         this.courseId,
         this.disciplineId,
-        this.members,
+        // this.members,
     });
 
     factory Group.fromJson(Map<String, dynamic> json) => new Group(
         id: json["id"],
         name: json["name"],
         institutionId: json["institution_id"],
-        institutionName: json["institution_name"],
+        // institutionName: json["institution_name"],
         courseId: json["course_id"],
         disciplineId: json["discipline_id"],
-        members: new List<Member>.from(json["members"].map((x) => Member.fromJson(x))),
+        // members: new List<Member>.from(json["members"].map((x) => Member.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "institution_id": institutionId,
-        "institution_name": institutionName,
+        // "institution_name": institutionName,
         "course_id": courseId,
         "discipline_id": disciplineId,
-        "members": new List<dynamic>.from(members.map((x) => x.toJson())),
+        // "members": new List<dynamic>.from(members.map((x) => x.toJson())),
     };
 }
 

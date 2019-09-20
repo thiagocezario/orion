@@ -7,6 +7,7 @@ import 'package:orion/api/groups/group_filters.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
+import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/model/user.dart';
 
@@ -28,9 +29,9 @@ class SearchGroupPage extends StatefulWidget {
       // _NewGroupPageState.institutions = institutionFromJson(json);
       var singleton = Singleton();
 
-      Client.listInstitutions(singleton.jwtToken).then((response) {
+      Client.listInstitutions(singleton.jwtToken, "").then((response) {
         _SearchGroupPageState.institutions =
-            institutionFromJson(json.encode(response));
+            institutionFromJson(response.body);
       }).catchError((e) {
         print(e);
       });
@@ -45,9 +46,9 @@ class SearchGroupPage extends StatefulWidget {
       // _NewGroupPageState.disciplines = disciplineFromJson(json);
       var singleton = Singleton();
       
-      Client.listDisciplines(singleton.jwtToken).then((response) {
+      Client.listDisciplines(singleton.jwtToken, "").then((response) {
         _SearchGroupPageState.disciplines =
-            disciplineFromJson(json.encode(response));
+            disciplineFromJson(response.body);
       }).catchError((e) {
         print(e);
       });
@@ -62,8 +63,8 @@ class SearchGroupPage extends StatefulWidget {
       // _NewGroupPageState.courses = courseFromJson(json);
       var singleton = Singleton();
 
-      Client.listCourses(singleton.jwtToken).then((response) {
-        _SearchGroupPageState.courses = courseFromJson(json.encode(response));
+      Client.listCourses(singleton.jwtToken, "").then((response) {
+        _SearchGroupPageState.courses = courseFromJson(response.body);
       }).catchError((e) {
         print(e);
       });
@@ -92,6 +93,28 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
   static Institution institution = Institution();
   static Course course = Course();
   static Discipline discipline = Discipline();
+var _singleton = Singleton();
+
+  void searchInstitutions(String text) {
+    Client.listInstitutions(_singleton.jwtToken, text).then((response) {
+        _SearchGroupPageState.institutions =
+            institutionFromJson(response.body);
+    });
+  }
+
+  void searchCourses(String text) {
+    Client.listCourses(_singleton.jwtToken, text).then((response) {
+        _SearchGroupPageState.courses =
+            courseFromJson(response.body);
+    });
+  }
+
+  void searchDisciplines(String text) {
+    Client.listDisciplines(_singleton.jwtToken, text).then((response) {
+        _SearchGroupPageState.disciplines =
+            disciplineFromJson(response.body);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +135,13 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       },
       suggestionsAmount: 4,
       suggestions: institutions,
+      textChanged: (text) => {
+        setState(() {
+          this.searchInstitutions(text);
+          _institutionKey.currentState.updateSuggestions(institutions);
+          _institutionKey.currentState.updateOverlay(text);
+        })
+      },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: 'Instituição',
@@ -147,7 +177,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.members.compareTo(a.members);
+        return b.name.compareTo(a.name);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -166,6 +196,13 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       },
       suggestionsAmount: 4,
       suggestions: courses,
+      textChanged: (text) => {
+        setState(() {
+          this.searchCourses(text);
+          _courseKey.currentState.updateSuggestions(courses);
+          _courseKey.currentState.updateOverlay(text);
+        })
+      },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: 'Curso',
@@ -201,7 +238,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.members.compareTo(a.members);
+        return b.name.compareTo(a.name);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -220,6 +257,13 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       },
       suggestionsAmount: 4,
       suggestions: disciplines,
+      textChanged: (text) => {
+        setState(() {
+          this.searchDisciplines(text);
+          _disciplineKey.currentState.updateSuggestions(disciplines);
+          _disciplineKey.currentState.updateOverlay(text);
+        })
+      },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: 'Disciplina',
@@ -255,7 +299,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.members.compareTo(a.members);
+        return b.name.compareTo(a.name);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -286,16 +330,24 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
             ),
             getMaterialButton(context, _formKey, 'Procurar', () {
               {
-                
-                GroupServices.filterGroups(
-                        institution.id, course.id, discipline.id)
-                    .then((response) {
+                var singleton = Singleton();
+                Client.searchGroups(singleton.jwtToken, institution.id, course.id, discipline.id).then((response) {
+                  List<Group> list = groupFromJson(response.body);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => NewGroupFilter(groups: response)),
+                        builder: (context) => NewGroupFilter(groups: list)),
                   );
                 });
+                // GroupServices.filterGroups(
+                //         institution.id, course.id, discipline.id)
+                //     .then((response) {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => NewGroupFilter(groups: response)),
+                  // );
+                // });
               }
             })
           ],

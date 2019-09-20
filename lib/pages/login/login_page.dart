@@ -33,12 +33,12 @@ class _LoginPageState extends State<LoginPage> {
         var groups = List<Group>();
 
         Client.listGroups(singleton.jwtToken).then((response) {
-          String jsonResponse = json.decode(response.body);
+          String jsonResponse = response.body;
           groups = groupFromJson(jsonResponse);
               
-          SearchGroupPage.loadCourses();
-          SearchGroupPage.loadDisciplines();
-          SearchGroupPage.loadInstitutions();
+          // SearchGroupPage.loadCourses();
+          // SearchGroupPage.loadDisciplines();
+          // SearchGroupPage.loadInstitutions();
           runApp(HomePage(
             myGroups: groups,
           ));

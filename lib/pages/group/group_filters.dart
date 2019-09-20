@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/api/client.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/pages/group/search_group_page.dart';
+import 'package:orion/model/user.dart';
 
 import 'new_group_page.dart';
 
@@ -75,9 +75,27 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
+
                             children: <Widget>[
                               Icon(Icons.person),
-                              Text(groups[index].members.length.toString())
+                              Text(groups[index].members.length.toString()),
+                              SizedBox(width: 240,),
+                              RaisedButton(
+                                child: Text('Ingressar'),
+                                onPressed: () {
+                                  var singleton = Singleton();
+                                  Client.subscribe(
+                                          singleton.jwtToken, groups[index].id)
+                                      .then((response) {
+                                    if (response.statusCode == 201) {
+                                      Scaffold.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text('Grupo ingressado'),
+                                      ));
+                                    }
+                                  });
+                                },
+                              ),
                             ],
                           ),
                         ),

@@ -11,23 +11,23 @@ String courseToJson(List<Course> data) => json.encode(new List<dynamic>.from(dat
 class Course {
     int id;
     String name;
-    int members;
+    int members = 0;
 
     Course({
         this.id,
         this.name,
-        this.members,
+        // this.members,
     });
 
     factory Course.fromJson(Map<String, dynamic> json) => new Course(
         id: json["id"],
         name: json["name"],
-        members: json["members"],
+        // members: json["members"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "members": members,
+        // "members": members,
     };
 }

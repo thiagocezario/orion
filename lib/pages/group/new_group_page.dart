@@ -6,6 +6,7 @@ import 'package:orion/api/client.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
+import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/model/user.dart';
 
@@ -26,7 +27,7 @@ class NewGroupPage extends StatefulWidget {
       // _NewGroupPageState.institutions = institutionFromJson(json);
       var singleton = Singleton();
 
-      Client.listInstitutions(singleton.jwtToken).then((response) {
+      Client.listInstitutions(singleton.jwtToken, "").then((response) {
         _NewGroupPageState.institutions =
             institutionFromJson(json.encode(response));
       }).catchError((e) {
@@ -42,8 +43,8 @@ class NewGroupPage extends StatefulWidget {
       // String json = await rootBundle.loadString('assets/json/classes.json');
       // _NewGroupPageState.disciplines = disciplineFromJson(json);
       var singleton = Singleton();
-      
-      Client.listDisciplines(singleton.jwtToken).then((response) {
+
+      Client.listDisciplines(singleton.jwtToken, "").then((response) {
         _NewGroupPageState.disciplines =
             disciplineFromJson(json.encode(response));
       }).catchError((e) {
@@ -60,7 +61,7 @@ class NewGroupPage extends StatefulWidget {
       // _NewGroupPageState.courses = courseFromJson(json);
       var singleton = Singleton();
 
-      Client.listCourses(singleton.jwtToken).then((response) {
+      Client.listCourses(singleton.jwtToken, "").then((response) {
         _NewGroupPageState.courses = courseFromJson(json.encode(response));
       }).catchError((e) {
         print(e);
@@ -96,6 +97,26 @@ class _NewGroupPageState extends State<NewGroupPage> {
   static Course course = Course();
   static Discipline discipline = Discipline();
 
+  var _singleton = Singleton();
+
+  void searchInstitutions(String text) {
+    Client.listInstitutions(_singleton.jwtToken, text).then((response) {
+      _NewGroupPageState.institutions = institutionFromJson(response.body);
+    });
+  }
+
+  void searchCourses(String text) {
+    Client.listCourses(_singleton.jwtToken, text).then((response) {
+      _NewGroupPageState.courses = courseFromJson(response.body);
+    });
+  }
+
+  void searchDisciplines(String text) {
+    Client.listDisciplines(_singleton.jwtToken, text).then((response) {
+      _NewGroupPageState.disciplines = disciplineFromJson(response.body);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -115,6 +136,13 @@ class _NewGroupPageState extends State<NewGroupPage> {
       },
       suggestionsAmount: 4,
       suggestions: institutions,
+      textChanged: (text) => {
+        setState(() {
+          this.searchInstitutions(text);
+          _institutionKey.currentState.updateSuggestions(institutions);
+          _institutionKey.currentState.updateOverlay(text);
+        })
+      },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: 'Instituição',
@@ -150,7 +178,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.members.compareTo(a.members);
+        return b.name.compareTo(a.name);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -169,6 +197,13 @@ class _NewGroupPageState extends State<NewGroupPage> {
       },
       suggestionsAmount: 4,
       suggestions: courses,
+      textChanged: (text) => {
+        setState(() {
+          this.searchCourses(text);
+          _courseKey.currentState.updateSuggestions(courses);
+          _courseKey.currentState.updateOverlay(text);
+        })
+      },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: 'Curso',
@@ -204,7 +239,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.members.compareTo(a.members);
+        return b.name.compareTo(a.name);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -223,6 +258,13 @@ class _NewGroupPageState extends State<NewGroupPage> {
       },
       suggestionsAmount: 4,
       suggestions: disciplines,
+      textChanged: (text) => {
+        setState(() {
+          this.searchDisciplines(text);
+          _disciplineKey.currentState.updateSuggestions(disciplines);
+          _disciplineKey.currentState.updateOverlay(text);
+        })
+      },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: 'Disciplina',
@@ -258,7 +300,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.members.compareTo(a.members);
+        return b.name.compareTo(a.name);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -315,11 +357,25 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 //         builder: (context) => NewGroupFilter(groups: response)),
                 //   );
                 // });
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Grupo criado com sucesso!'),
-                  ),
-                );
+                Client.createGroup(_singleton.jwtToken, institution.id,
+                        course.id, discipline.id, _groupNameController.text)
+                    .then((response) {
+                  if (response.statusCode == 201) {
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Grupo criado com sucesso!'),
+                      ),
+                    );
+                    var groupResponse = groupFromJson(response.body);
+                    Client.subscribe(_singleton.jwtToken, groupResponse.first.id);
+                  } else {
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('O Grupo não foi criado!'),
+                      ),
+                    );
+                  }
+                });
               }
             })
           ],
