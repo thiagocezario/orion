@@ -8,6 +8,7 @@ import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/institution.dart';
+import 'package:orion/model/user.dart';
 
 import 'group_filters.dart';
 
@@ -25,9 +26,11 @@ class SearchGroupPage extends StatefulWidget {
     try {
       // String json = await rootBundle.loadString('assets/json/institution.json');
       // _NewGroupPageState.institutions = institutionFromJson(json);
+      var singleton = Singleton();
 
-      Client.listInstitutions().then((response) {
-        _SearchGroupPageState.institutions = institutionFromJson(json.encode(response));
+      Client.listInstitutions(singleton.jwtToken).then((response) {
+        _SearchGroupPageState.institutions =
+            institutionFromJson(json.encode(response));
       }).catchError((e) {
         print(e);
       });
@@ -40,9 +43,11 @@ class SearchGroupPage extends StatefulWidget {
     try {
       // String json = await rootBundle.loadString('assets/json/classes.json');
       // _NewGroupPageState.disciplines = disciplineFromJson(json);
-
-      Client.listDisciplines().then((response) {
-        _SearchGroupPageState.disciplines = disciplineFromJson(json.encode(response));
+      var singleton = Singleton();
+      
+      Client.listDisciplines(singleton.jwtToken).then((response) {
+        _SearchGroupPageState.disciplines =
+            disciplineFromJson(json.encode(response));
       }).catchError((e) {
         print(e);
       });
@@ -55,8 +60,9 @@ class SearchGroupPage extends StatefulWidget {
     try {
       // String json = await rootBundle.loadString('assets/json/courses.json');
       // _NewGroupPageState.courses = courseFromJson(json);
+      var singleton = Singleton();
 
-      Client.listCourses().then((response) {
+      Client.listCourses(singleton.jwtToken).then((response) {
         _SearchGroupPageState.courses = courseFromJson(json.encode(response));
       }).catchError((e) {
         print(e);

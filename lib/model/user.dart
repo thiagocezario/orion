@@ -20,12 +20,13 @@ class User {
 
 class Singleton {
   static Singleton _instance;
-  factory Singleton({User user}) {
-    _instance ??= Singleton._internalConstructor(user);
+  factory Singleton({User user, String jwtToken}) {
+    _instance ??= Singleton._internalConstructor(user, jwtToken);
     return _instance;
   }
 
-  Singleton._internalConstructor(this.user);
+  Singleton._internalConstructor(this.user, this.jwtToken);
 
   User user;
+  String jwtToken;
 }

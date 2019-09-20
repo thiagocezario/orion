@@ -7,13 +7,15 @@ import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/institution.dart';
+import 'package:orion/model/user.dart';
 
 class NewGroupPage extends StatefulWidget {
   var institution = Institution();
   var course = Course();
   var discipline = Discipline();
 
-  NewGroupPage({Key key, this.institution, this.course, this.discipline}) : super(key: key);
+  NewGroupPage({Key key, this.institution, this.course, this.discipline})
+      : super(key: key);
 
   @override
   _NewGroupPageState createState() => _NewGroupPageState();
@@ -22,9 +24,11 @@ class NewGroupPage extends StatefulWidget {
     try {
       // String json = await rootBundle.loadString('assets/json/institution.json');
       // _NewGroupPageState.institutions = institutionFromJson(json);
+      var singleton = Singleton();
 
-      Client.listInstitutions().then((response) {
-        _NewGroupPageState.institutions = institutionFromJson(json.encode(response));
+      Client.listInstitutions(singleton.jwtToken).then((response) {
+        _NewGroupPageState.institutions =
+            institutionFromJson(json.encode(response));
       }).catchError((e) {
         print(e);
       });
@@ -37,9 +41,11 @@ class NewGroupPage extends StatefulWidget {
     try {
       // String json = await rootBundle.loadString('assets/json/classes.json');
       // _NewGroupPageState.disciplines = disciplineFromJson(json);
-
-      Client.listDisciplines().then((response) {
-        _NewGroupPageState.disciplines = disciplineFromJson(json.encode(response));
+      var singleton = Singleton();
+      
+      Client.listDisciplines(singleton.jwtToken).then((response) {
+        _NewGroupPageState.disciplines =
+            disciplineFromJson(json.encode(response));
       }).catchError((e) {
         print(e);
       });
@@ -52,8 +58,9 @@ class NewGroupPage extends StatefulWidget {
     try {
       // String json = await rootBundle.loadString('assets/json/courses.json');
       // _NewGroupPageState.courses = courseFromJson(json);
+      var singleton = Singleton();
 
-      Client.listCourses().then((response) {
+      Client.listCourses(singleton.jwtToken).then((response) {
         _NewGroupPageState.courses = courseFromJson(json.encode(response));
       }).catchError((e) {
         print(e);
@@ -273,7 +280,6 @@ class _NewGroupPageState extends State<NewGroupPage> {
       ),
       style: getTextStyle(),
     );
-
 
     return Form(
       key: _formKey,

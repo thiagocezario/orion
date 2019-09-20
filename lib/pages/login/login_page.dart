@@ -29,22 +29,24 @@ class _LoginPageState extends State<LoginPage> {
       if (token != null && token != '') {
         var singleton = Singleton(user: _user);
         singleton.user = _user;
+        singleton.jwtToken = token;
         var groups = List<Group>();
 
-        Client.listGroups(singleton.user).then((response) {
-          Iterable decodedResponse = json.decode(response.body);
-          groups =
-              decodedResponse.map((model) => Group.fromJson(model)).toList();
+        Client.listGroups(singleton.jwtToken).then((response) {
+          String jsonResponse = json.decode(response.body);
+          groups = groupFromJson(jsonResponse);
+              
+          SearchGroupPage.loadCourses();
+          SearchGroupPage.loadDisciplines();
+          SearchGroupPage.loadInstitutions();
+          runApp(HomePage(
+            myGroups: groups,
+          ));
         }).catchError((e) {
           print(e);
         });
         // GroupCards.loadGroupCards();
-        SearchGroupPage.loadCourses();
-        SearchGroupPage.loadDisciplines();
-        SearchGroupPage.loadInstitutions();
-        runApp(HomePage(
-          myGroups: groups,
-        ));
+
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(

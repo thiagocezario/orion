@@ -42,8 +42,8 @@ class Client {
     return response;
   }
 
-  static Future listGroups(User user) async {
-    var headers = {'Content-Type': 'application/json; charset=UTF-8'};
+  static Future listGroups(String token) async {
+    var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
     var response = await http
         .get('$_baseUrl/api/groups', headers: headers)
         .timeout(Duration(seconds: 5))
@@ -54,8 +54,8 @@ class Client {
     return response;
   }
 
-  static Future listInstitutions() async {
-    var headers = {'Content-Type': 'application/json; charset=UTF-8'};
+  static Future listInstitutions(String token) async {
+    var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
     var response = await http
         .get('$_baseUrl/api/institutions', headers: headers)
         .catchError((e) {
@@ -65,8 +65,8 @@ class Client {
     return response;
   }
 
-  static Future listCourses() async {
-    var headers = {'Content-Type': 'application/json; charset=UTF-8'};
+  static Future listCourses(String token) async {
+    var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
     var response = await http
         .get('$_baseUrl/api/courses', headers: headers)
         .catchError((e) {
@@ -76,8 +76,8 @@ class Client {
     return response;
   }
 
-  static Future listDisciplines() async {
-    var headers = {'Content-Type': 'application/json; charset=UTF-8'};
+  static Future listDisciplines(String token) async {
+    var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
     var response = await http
         .get('$_baseUrl/api/disciplines', headers: headers)
         .catchError((e) {
