@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orion/components/groups/group_cards.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/pages/group/group_page.dart';
+import 'package:orion/pages/group/search_group_page.dart';
 
 class HomePage extends StatefulWidget {
   var myGroups = List<Group>();
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       Container(),
       Container(
         // color: Color(0xff8893f2),
-        child: NewGroupPage(),
+        child: SearchGroupPage(),
       ),
       Container()
     ];

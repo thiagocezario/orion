@@ -2,16 +2,11 @@ import 'dart:convert';
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:orion/api/client.dart';
-import 'package:orion/api/groups/group_filters.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/institution.dart';
-import 'package:orion/model/user.dart';
-
-import 'group_filters.dart';
 
 class NewGroupPage extends StatefulWidget {
   var institution = Institution();
@@ -78,16 +73,22 @@ class _NewGroupPageState extends State<NewGroupPage> {
   final _institutionKey = GlobalKey<AutoCompleteTextFieldState<Institution>>();
   final _courseKey = GlobalKey<AutoCompleteTextFieldState<Course>>();
   final _disciplineKey = GlobalKey<AutoCompleteTextFieldState<Discipline>>();
+  final _groupNameKey = GlobalKey<FormState>();
+
   final _institutionFieldController = TextEditingController();
   final _courseFieldController = TextEditingController();
   final _classFieldController = TextEditingController();
+  final _groupNameController = TextEditingController();
+
   AutoCompleteTextField institutionField;
   AutoCompleteTextField courseField;
   AutoCompleteTextField classField;
+  TextFormField groupField;
 
   static Institution institution = Institution();
   static Course course = Course();
   static Discipline discipline = Discipline();
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -260,6 +261,20 @@ class _NewGroupPageState extends State<NewGroupPage> {
       },
     );
 
+    groupField = TextFormField(
+      key: _groupNameKey,
+      controller: _groupNameController,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: 'Grupo',
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+      ),
+      style: getTextStyle(),
+    );
+
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -277,20 +292,28 @@ class _NewGroupPageState extends State<NewGroupPage> {
             ),
             classField,
             SizedBox(
+              height: 10.0,
+            ),
+            groupField,
+            SizedBox(
               height: 25.0,
             ),
-            getMaterialButton(context, _formKey, 'Procurar', () {
+            getMaterialButton(context, _formKey, 'Criar', () {
               {
-                
-                GroupServices.filterGroups(
-                        institution.id, course.id, discipline.id)
-                    .then((response) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NewGroupFilter(groups: response)),
-                  );
-                });
+                // GroupServices.filterGroups(
+                //         institution.id, course.id, discipline.id)
+                //     .then((response) {
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => NewGroupFilter(groups: response)),
+                //   );
+                // });
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Grupo criado com sucesso!'),
+                  ),
+                );
               }
             })
           ],
