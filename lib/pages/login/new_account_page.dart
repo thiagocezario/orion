@@ -13,7 +13,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
-  final _confirmPasswordFieldController = TextEditingController();
+  final _nameTextFieldController = TextEditingController();
   final _user = User();
 
   void _createAccount(BuildContext context) {
@@ -70,7 +70,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: 'Email',
-          // errorStyle: errorStyle(),
+          errorStyle: errorStyle(),
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -91,20 +91,18 @@ class _NewAccountPageState extends State<NewAccountPage> {
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: 'Senha',
-          // errorStyle: errorStyle(),
+          errorStyle: errorStyle(),
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
       onChanged: (text) => _user.password = text,
     );
 
-    final _confirmPasswordField = TextFormField(
-      controller: _confirmPasswordFieldController,
+    final _nameField = TextFormField(
+      controller: _nameTextFieldController,
       validator: (value) {
         if (value.isEmpty) {
-          return "O campo de confirme a senha deve ser preenchido";
-        } else if (value != _passwordFieldController.text) {
-          return "O campo de confirme a senha deve ser igual ao campo de senha";
+          return "O campo de nome deve ser preenchido";
         }
 
         return null;
@@ -113,11 +111,12 @@ class _NewAccountPageState extends State<NewAccountPage> {
       style: getTextStyle(),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: 'Confirme a senha',
-          // errorStyle: errorStyle(),
+          hintText: 'Nome',
+          errorStyle: errorStyle(),
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+          onChanged: (text) => _user.name = text,
     );
 
     return Form(
@@ -129,15 +128,14 @@ class _NewAccountPageState extends State<NewAccountPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               getLogo(),
-              getMessage('Criar conta', 'Seja mais um membro!'),
               SizedBox(
                 height: 35.0,
               ),
+              _nameField,
+              SizedBox(height: 10.0),
               _emailField,
               SizedBox(height: 10.0),
               _passwordField,
-              SizedBox(height: 10.0),
-              _confirmPasswordField,
               SizedBox(
                 height: 25.0,
               ),

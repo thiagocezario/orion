@@ -39,27 +39,28 @@ class Client {
 
   static Future listGroups(User user) async {
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
-
-    return await http.get('$_baseUrl/api/groups', headers: headers).timeout(Duration(seconds: 5)).catchError((e) {
+    var response = await http.get('$_baseUrl/api/groups', headers: headers).timeout(Duration(seconds: 5)).catchError((e) {
       print(e);
     });
+
+    return response;
   }
 
   static Future listInstitutions(name) async {
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
 
-    return http.get('$_baseUrl/api/institutions', headers: headers);
+    return await http.get('$_baseUrl/api/institutions', headers: headers);
   }
 
   static Future listCourses(name, institutionId) async {
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
 
-    return http.get('$_baseUrl/api/courses', headers: headers);
+    return await http.get('$_baseUrl/api/courses', headers: headers);
   }
 
   static Future listDisciplines(name, institutionId, courseId) async {
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
 
-    return http.get('$_baseUrl/api/disciplines', headers: headers);
+    return await http.get('$_baseUrl/api/disciplines', headers: headers);
   }
 }
