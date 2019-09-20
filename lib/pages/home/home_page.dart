@@ -54,8 +54,8 @@ class _HomePageState extends State<HomePage> {
         home: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: true,
-            backgroundColor: Colors.white,
-            // backgroundColor: Color(0xff8893f2),
+            // backgroundColor: Colors.white,
+            backgroundColor: Color(0xff8893f2),
             elevation: 0.0,
             centerTitle: true,
             title: _title,
@@ -72,21 +72,22 @@ class _HomePageState extends State<HomePage> {
           bottomNavigationBar: BottomNavigationBar(
             onTap: onTabTapped,
             currentIndex: _currentIndex,
+            backgroundColor: Color(0xff8893f2),
             type: BottomNavigationBarType.fixed,
             items: [
               BottomNavigationBarItem(
                   icon: Icon(Icons.home, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Início')),
+                  title: Text('Início', style: TextStyle(color: Colors.white),)),
               BottomNavigationBarItem(
                   icon: Icon(Icons.question_answer,
                       color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Comunidade')),
+                  title: Text('Comunidade', style: TextStyle(color: Colors.white),)),
               BottomNavigationBarItem(
                   icon: Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Grupos')),
+                  title: Text('Grupos', style: TextStyle(color: Colors.white),)),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Perfil'))
+                  title: Text('Perfil', style: TextStyle(color: Colors.white),))
             ],
           ),
         ));

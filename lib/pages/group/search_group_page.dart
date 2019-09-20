@@ -339,15 +339,6 @@ var _singleton = Singleton();
                         builder: (context) => NewGroupFilter(groups: list)),
                   );
                 });
-                // GroupServices.filterGroups(
-                //         institution.id, course.id, discipline.id)
-                //     .then((response) {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => NewGroupFilter(groups: response)),
-                  // );
-                // });
               }
             })
           ],
