@@ -42,13 +42,14 @@ class Client {
     return response;
   }
 
-  static Future listGroups(String token) async {
+  static Future listGroups(String token, int userId) async {
+    var uri = Uri.http('10.0.2.2:3000', '/api/groups/', {"user_id": userId.toString()});
     var headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $token'
     };
     var response = await http
-        .get('$_baseUrl/api/groups', headers: headers)
+        .get(uri, headers: headers)
         .timeout(Duration(seconds: 5))
         .catchError((e) {
       print(e);
