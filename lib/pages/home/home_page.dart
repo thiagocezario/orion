@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orion/components/groups/group_cards.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/pages/group/new_group_page.dart';
+import 'package:orion/pages/group/group_page.dart';
 
 class HomePage extends StatefulWidget {
   var myGroups = List<Group>();

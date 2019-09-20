@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/group.dart';
+
+import 'group_page.dart';
 
 class NewGroupFilter extends StatefulWidget {
   final List<Group> groups;
@@ -97,10 +100,13 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
           backgroundColor: Colors.green,
           onPressed: () {
             {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => NewGroupPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Scaffold(
+                  appBar: getAppBar(context),
+                  body: NewGroupPage(),
+                )),
+              );
             }
           },
         );

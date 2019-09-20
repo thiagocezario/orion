@@ -28,7 +28,7 @@ class Client {
     var data = {'name': user.name, 'email': user.email, 'password': user.password};
     var headers = {'Content-Type': 'application/json; charset=UTF-8'};
     var response = await http
-        .post('$_baseUrl/api/users', body: json.encode(data), headers: headers)
+        .post('$_baseUrl/api/students', body: json.encode(data), headers: headers)
         .timeout(Duration(seconds: 500))
         .catchError((e) {
       print(e);
