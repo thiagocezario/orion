@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:orion/api/authentication/auth_provider.dart';
 import 'package:orion/api/client.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/user.dart';
-import 'package:orion/pages/group/search_group_page.dart';
 import 'package:orion/pages/home/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
@@ -27,17 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     Provider.of<AuthProvider>(context).signIn(_user).then((response) {
       String token = Provider.of<AuthProvider>(context).accessToken;
       if (token != null && token != '') {
-        var groups = List<Group>();
-
-        Client.listGroups(token, Singleton().user.id).then((response) {
-          String jsonResponse = response.body;
-          groups = groupFromJson(jsonResponse);
-          runApp(HomePage(
-            myGroups: groups,
-          ));
-        }).catchError((e) {
-          print(e);
-        });
+        runApp(HomePage());
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(

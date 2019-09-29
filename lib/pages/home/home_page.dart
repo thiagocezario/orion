@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:orion/components/groups/group_cards.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/pages/group/search_group_page.dart';
 
+import 'my_groups/my_groups_page.dart';
+
 class HomePage extends StatefulWidget {
   var myGroups = List<Group>();
-  HomePage({Key key, this.myGroups}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState(myGroups);
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  GroupCards cards = GroupCards();
-  List<Group> _myGroups;
-
-  _HomePageState(List<Group> groups) {
-    this._myGroups = groups;
-  }
 
   var _title = Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +34,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _children = [
-      _buildMyGroups(_myGroups),
+      Container(
+        child: MyGroups(),
+      ),
       Container(),
       Container(
         // color: Color(0xff8893f2),
@@ -135,12 +131,5 @@ class _HomePageState extends State<HomePage> {
         );
       }
     });
-  }
-
-  Widget _buildMyGroups(List<Group> groups) {
-    return Container(
-      alignment: Alignment.center,
-      child: cards.getGroupCards(context, groups),
-    );
   }
 }
