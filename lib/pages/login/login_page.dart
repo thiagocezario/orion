@@ -27,12 +27,9 @@ class _LoginPageState extends State<LoginPage> {
     Provider.of<AuthProvider>(context).signIn(_user).then((response) {
       String token = Provider.of<AuthProvider>(context).accessToken;
       if (token != null && token != '') {
-        var singleton = Singleton(user: _user);
-        singleton.user = _user;
-        singleton.jwtToken = token;
         var groups = List<Group>();
 
-        Client.listGroups(singleton.jwtToken, 1).then((response) {
+        Client.listGroups(token, Singleton().user.id).then((response) {
           String jsonResponse = response.body;
           groups = groupFromJson(jsonResponse);
           runApp(HomePage(
@@ -41,8 +38,6 @@ class _LoginPageState extends State<LoginPage> {
         }).catchError((e) {
           print(e);
         });
-        // GroupCards.loadGroupCards();
-
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(
