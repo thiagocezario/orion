@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:orion/api/client.dart';
-import 'package:orion/api/groups/group_filters.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
