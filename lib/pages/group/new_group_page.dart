@@ -9,6 +9,9 @@ import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/model/user.dart';
+import 'package:orion/pages/home/my_groups/groups_state.dart';
+import 'package:orion/pages/home/my_groups/my_groups_page.dart';
+import 'package:provider/provider.dart';
 
 class NewGroupPage extends StatefulWidget {
   var institution = Institution();
@@ -166,7 +169,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   children: <Widget>[
                     Icon(Icons.person),
                     Text(
-                      item.members.toString(),
+                      item.metadata.subscriptions.toString(),
                       style:
                           TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                     )
@@ -227,7 +230,8 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   children: <Widget>[
                     Icon(Icons.person),
                     Text(
-                      item.members.toString(),
+                      // item.members.toString(),
+                      '0',
                       style:
                           TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                     )
@@ -288,7 +292,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   children: <Widget>[
                     Icon(Icons.person),
                     Text(
-                      item.members.toString(),
+                      item.metadata.subscriptions.toString(),
                       style:
                           TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                     )
@@ -348,15 +352,6 @@ class _NewGroupPageState extends State<NewGroupPage> {
             ),
             getMaterialButton(context, _formKey, 'Criar', () {
               {
-                // GroupServices.filterGroups(
-                //         institution.id, course.id, discipline.id)
-                //     .then((response) {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => NewGroupFilter(groups: response)),
-                //   );
-                // });
                 Client.createGroup(_singleton.jwtToken, institution.id,
                         course.id, discipline.id, _groupNameController.text)
                     .then((response) {
@@ -367,9 +362,10 @@ class _NewGroupPageState extends State<NewGroupPage> {
                       ),
                     );
                     String jsonResponse = response.body;
-                    var groupResponse = Group.fromJson(json.decode(jsonResponse));
-                    // var groupResponse = groupFromJson(response.body);
+                    var groupResponse =
+                        Group.fromJson(json.decode(jsonResponse));
                     Client.subscribe(_singleton.jwtToken, groupResponse.id);
+                    MyGroups().updateMyGroups();
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(

@@ -7,9 +7,9 @@ class GroupServices {
     List<Group> allGroups = GroupCards.groups;
 
     for (var group in allGroups) {
-      if (group.institutionId == institutionId &&
-          group.courseId == courseId &&
-          group.disciplineId == disciplineId) {
+      if (group.institution.id == institutionId &&
+          group.course.id == courseId &&
+          group.discipline.id == disciplineId) {
             groupsFound.add(group);
           }
     }

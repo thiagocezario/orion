@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:orion/model/group.dart';
 import 'package:orion/pages/group/search_group_page.dart';
 
 import 'my_groups/my_groups_page.dart';
 
 class HomePage extends StatefulWidget {
-  var myGroups = List<Group>();
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -94,6 +91,8 @@ class _HomePageState extends State<HomePage> {
       _currentIndex = index;
 
       if (index == 0) {
+        MyGroups().updateMyGroups();
+        
         _title = Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

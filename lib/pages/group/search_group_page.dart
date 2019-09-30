@@ -162,7 +162,7 @@ var _singleton = Singleton();
                   children: <Widget>[
                     Icon(Icons.person),
                     Text(
-                      item.members.toString(),
+                      item.metadata.subscriptions.toString(),
                       style:
                           TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                     )
@@ -223,7 +223,7 @@ var _singleton = Singleton();
                   children: <Widget>[
                     Icon(Icons.person),
                     Text(
-                      item.members.toString(),
+                      item.metadata.subscriptions.toString(),
                       style:
                           TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                     )
@@ -284,7 +284,7 @@ var _singleton = Singleton();
                   children: <Widget>[
                     Icon(Icons.person),
                     Text(
-                      item.members.toString(),
+                      item.metadata.subscriptions.toString(),
                       style:
                           TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                     )

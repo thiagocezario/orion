@@ -66,7 +66,7 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
                           child: Row(
                             children: <Widget>[
                               Icon(Icons.place),
-                              Text(groups[index].institutionName)
+                              Text(groups[index].institution.name)
                             ],
                           ),
                         ),
@@ -78,7 +78,7 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
 
                             children: <Widget>[
                               Icon(Icons.person),
-                              Text(groups[index].members.length.toString()),
+                              Text(groups[index].metadata.subscriptions.toString()),
                               SizedBox(width: 240,),
                               RaisedButton(
                                 child: Text('Ingressar'),

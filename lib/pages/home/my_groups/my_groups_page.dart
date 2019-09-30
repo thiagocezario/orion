@@ -5,31 +5,32 @@ import 'package:orion/model/group.dart';
 import 'package:orion/model/user.dart';
 
 class MyGroups extends StatefulWidget {
+  void updateMyGroups() {
+    _MyGroupsState().listGroups();
+  }
+
   @override
   _MyGroupsState createState() => _MyGroupsState();
 }
 
 class _MyGroupsState extends State<MyGroups> {
-  GroupCards cards = GroupCards();
-  List<Group> _myGroups;
+  static List<Group> _myGroups = List();
 
-  Widget _buildMyGroups() {
-    Client.listGroups(Singleton().jwtToken, Singleton().user.id)
+  void listGroups() async {
+    await Client.listGroups(Singleton().jwtToken, Singleton().user.id)
         .then((response) {
-      String jsonResponse = response.body;
-      _myGroups = groupFromJson(jsonResponse);
-
-      return Container(
-        alignment: Alignment.center,
-        child: cards.getGroupCards(context, _myGroups),
-      );
+      setState(() {
+        String jsonResponse = response.body;
+        _myGroups = groupFromJson(jsonResponse);
+      });
     });
-
-    return Container();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _buildMyGroups();
+    return Container(
+      alignment: Alignment.center,
+      child: GroupCards().getGroupCards(context, _myGroups),
+    );
   }
 }

@@ -1,21 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:orion/model/group.dart';
 
 class GroupCards {
   static List<Group> groups = List<Group>();
-
-  static Future loadGroupCards() async {
-    try {
-      String json = await rootBundle.loadString('assets/json/groups.json');
-      groups = groupFromJson(json);
-    } catch (e) {
-      print(e);
-    }
-  }
 
   ListView getGroupCards(BuildContext context, List<Group> groups) {
     return ListView.builder(
@@ -34,23 +22,6 @@ class GroupCards {
             margin: EdgeInsets.all(7.5),
             elevation: 5.0,
             child: Container(
-              // decoration: BoxDecoration(
-              //     boxShadow: [
-              //       BoxShadow(
-              //         color: Colors.grey,
-              //         blurRadius: 5.0,
-              //         spreadRadius: 0.0,
-              //         offset: Offset(
-              //           3.0,
-              //           3.0,
-              //         ),
-              //       )
-              //     ],
-              //     borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              //     gradient: LinearGradient(
-              //         begin: Alignment.topLeft,
-              //         end: Alignment.bottomRight,
-              //         colors: [Colors.lightBlueAccent, Colors.blueAccent])),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -68,7 +39,7 @@ class GroupCards {
                     child: Row(
                       children: <Widget>[
                         Icon(Icons.place),
-                        Text(group.institutionName)
+                        Text(group.institution.name)
                       ],
                     ),
                   ),
@@ -79,7 +50,7 @@ class GroupCards {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Icon(Icons.person),
-                        Text(group.members.length.toString())
+                        Text(group.metadata.subscriptions.toString())
                       ],
                     ),
                   ),

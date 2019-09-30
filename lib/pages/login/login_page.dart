@@ -117,13 +117,6 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 25.0,
               ),
-              // Builder(
-              //   builder: (context) =>
-              //       getMaterialButton(context, _formKey, 'Entrar', () {
-              //     // runApp(HomePage());
-              //     _signIn(context);
-              //   }),
-              // ),
               Builder(
                 builder: (context) => Material(
                   elevation: 5.0,
