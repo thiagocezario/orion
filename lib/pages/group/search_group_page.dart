@@ -4,7 +4,6 @@ import 'package:orion/api/client.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
-import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/model/user.dart';
 
