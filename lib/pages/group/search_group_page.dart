@@ -15,7 +15,8 @@ class SearchGroupPage extends StatefulWidget {
   var course = Course();
   var discipline = Discipline();
 
-  SearchGroupPage({Key key, this.institution, this.course, this.discipline}) : super(key: key);
+  SearchGroupPage({Key key, this.institution, this.course, this.discipline})
+      : super(key: key);
 
   @override
   _SearchGroupPageState createState() => _SearchGroupPageState();
@@ -27,8 +28,7 @@ class SearchGroupPage extends StatefulWidget {
       var singleton = Singleton();
 
       Client.listInstitutions(singleton.jwtToken, "").then((response) {
-        _SearchGroupPageState.institutions =
-            institutionFromJson(response.body);
+        _SearchGroupPageState.institutions = institutionFromJson(response.body);
       }).catchError((e) {
         print(e);
       });
@@ -42,10 +42,9 @@ class SearchGroupPage extends StatefulWidget {
       // String json = await rootBundle.loadString('assets/json/classes.json');
       // _NewGroupPageState.disciplines = disciplineFromJson(json);
       var singleton = Singleton();
-      
+
       Client.listDisciplines(singleton.jwtToken, "").then((response) {
-        _SearchGroupPageState.disciplines =
-            disciplineFromJson(response.body);
+        _SearchGroupPageState.disciplines = disciplineFromJson(response.body);
       }).catchError((e) {
         print(e);
       });
@@ -90,26 +89,23 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
   static Institution institution = Institution();
   static Course course = Course();
   static Discipline discipline = Discipline();
-var _singleton = Singleton();
+  var _singleton = Singleton();
 
   void searchInstitutions(String text) {
     Client.listInstitutions(_singleton.jwtToken, text).then((response) {
-        _SearchGroupPageState.institutions =
-            institutionFromJson(response.body);
+      _SearchGroupPageState.institutions = institutionFromJson(response.body);
     });
   }
 
   void searchCourses(String text) {
     Client.listCourses(_singleton.jwtToken, text).then((response) {
-        _SearchGroupPageState.courses =
-            courseFromJson(response.body);
+      _SearchGroupPageState.courses = courseFromJson(response.body);
     });
   }
 
   void searchDisciplines(String text) {
     Client.listDisciplines(_singleton.jwtToken, text).then((response) {
-        _SearchGroupPageState.disciplines =
-            disciplineFromJson(response.body);
+      _SearchGroupPageState.disciplines = disciplineFromJson(response.body);
     });
   }
 
@@ -327,15 +323,14 @@ var _singleton = Singleton();
             ),
             getMaterialButton(context, _formKey, 'Procurar', () {
               {
-                var singleton = Singleton();
-                Client.searchGroups(singleton.jwtToken, institution.id, course.id, discipline.id).then((response) {
-                  List<Group> list = groupFromJson(response.body);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NewGroupFilter(groups: list)),
-                  );
-                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NewGroupFilter(
+                          institutionId: institution.id,
+                          courseId: course.id,
+                          disciplineId: discipline.id)),
+                );
               }
             })
           ],

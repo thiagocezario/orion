@@ -6,12 +6,8 @@ import 'package:orion/api/client.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
-import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/model/user.dart';
-import 'package:orion/pages/home/my_groups/groups_state.dart';
-import 'package:orion/pages/home/my_groups/my_groups_page.dart';
-import 'package:provider/provider.dart';
 
 class NewGroupPage extends StatefulWidget {
   var institution = Institution();
@@ -361,11 +357,9 @@ class _NewGroupPageState extends State<NewGroupPage> {
                         content: Text('Grupo criado com sucesso!'),
                       ),
                     );
-                    String jsonResponse = response.body;
-                    var groupResponse =
-                        Group.fromJson(json.decode(jsonResponse));
-                    Client.subscribe(_singleton.jwtToken, groupResponse.id);
-                    MyGroups().updateMyGroups();
+                    var jsonResponse = json.decode(response.body);
+                    var groupId = jsonResponse["id"];
+                    Client.subscribe(_singleton.jwtToken, groupId);
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(

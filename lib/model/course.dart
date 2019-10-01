@@ -30,7 +30,7 @@ class Course {
         name: json["name"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        metadata: Metadata.fromJson(json["metadata"])
+        metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -38,6 +38,6 @@ class Course {
         "name": name,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "metadata": metadata.toJson()
+        "metadata": metadata == null ? null : metadata.toJson(),
     };
 }

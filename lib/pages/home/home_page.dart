@@ -91,8 +91,6 @@ class _HomePageState extends State<HomePage> {
       _currentIndex = index;
 
       if (index == 0) {
-        MyGroups().updateMyGroups();
-        
         _title = Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
