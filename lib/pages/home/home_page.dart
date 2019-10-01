@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/main.dart';
 import 'package:orion/pages/group/search_group_page.dart';
 
 import 'my_groups/my_groups_page.dart';
@@ -55,9 +56,12 @@ class _HomePageState extends State<HomePage> {
             actions: <Widget>[
               Padding(
                   padding: EdgeInsets.only(right: 15.0),
-                  child: Icon(
-                    Icons.filter_list,
-                    color: Colors.black,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.exit_to_app,
+                      color: Colors.black,
+                    ),
+                    onPressed: () => runApp(Orion()),
                   ))
             ],
           ),
@@ -70,17 +74,29 @@ class _HomePageState extends State<HomePage> {
             items: [
               BottomNavigationBarItem(
                   icon: Icon(Icons.home, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Início', style: TextStyle(color: Colors.white),)),
+                  title: Text(
+                    'Início',
+                    style: TextStyle(color: Colors.white),
+                  )),
               BottomNavigationBarItem(
                   icon: Icon(Icons.question_answer,
                       color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Comunidade', style: TextStyle(color: Colors.white),)),
+                  title: Text(
+                    'Comunidade',
+                    style: TextStyle(color: Colors.white),
+                  )),
               BottomNavigationBarItem(
                   icon: Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Grupos', style: TextStyle(color: Colors.white),)),
+                  title: Text(
+                    'Grupos',
+                    style: TextStyle(color: Colors.white),
+                  )),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Perfil', style: TextStyle(color: Colors.white),))
+                  title: Text(
+                    'Perfil',
+                    style: TextStyle(color: Colors.white),
+                  ))
             ],
           ),
         ));
