@@ -14,7 +14,22 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xff8893f2),
-        appBar: getAppBar(context),
+        appBar: AppBar(
+          backgroundColor: Color(0xff8893f2),
+          elevation: 0.0,
+          title: Text(
+            'Recuperar Senha',
+            style: TextStyle(color: Colors.black),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
         body: ListView(
           children: <Widget>[_buildForm(context)],
         ));
@@ -30,14 +45,12 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
     return Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.only(left: 36.0, right: 36.0),
+          padding: EdgeInsets.all(36.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               getLogo(),
-              getMessage('Esqueceu a senha?',
-                  'Só precisamos do seu email de cadastro para redefinir a senha.'),
               SizedBox(
                 height: 35.0,
               ),

@@ -1,18 +1,5 @@
 import 'package:flutter/material.dart';
 
-enum CustomColors { mainBackgroundColor, mainActionButtonColor }
-
-// _customColors(CustomColors color) {
-//   switch (color) {
-//     case CustomColors.mainBackgroundColor:
-//       return Color(0xff8893f2);
-//     case CustomColors.mainActionButtonColor:
-//       return Color(0xff192376);
-//     default:
-//       return Color(0xffffffff);
-//   }
-// }
-
 TextStyle getTextStyle() {
   return TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 }
@@ -66,50 +53,6 @@ TextFormField getPasswordField(
   );
 }
 
-Widget getMessage(String title, String message) {
-  return Container(
-    alignment: Alignment.center,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          title,
-          style: TextStyle(
-              fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        Text(
-          message,
-          style: TextStyle(fontSize: 15.0, color: Colors.white),
-          textAlign: TextAlign.center,
-        )
-      ],
-    ),
-  );
-}
-
-Widget getTitleMessage(String title, Color color) {
-  return Container(
-    alignment: Alignment.center,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          title,
-          style: TextStyle(
-              fontSize: 30.0, color: color, fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        )
-      ],
-    ),
-  );
-}
-
 Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey,
     String label, Function action) {
   return Material(
@@ -134,23 +77,9 @@ Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey,
   );
 }
 
-AppBar getAppBar(BuildContext context) {
-  return AppBar(
-    backgroundColor: Color(0xff8893f2),
-    elevation: 0.0,
-    leading: IconButton(
-      icon: Icon(
-        Icons.arrow_back,
-        color: Colors.black,
-      ),
-      onPressed: () => Navigator.pop(context),
-    ),
-  );
-}
-
 Widget getLogo() {
   return SizedBox(
-    height: 120.0,
+    height: 100.0,
     child: Image.asset(
       'assets/logo/orionlogo.png',
       fit: BoxFit.contain,

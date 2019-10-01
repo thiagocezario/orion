@@ -19,56 +19,6 @@ class NewGroupPage extends StatefulWidget {
 
   @override
   _NewGroupPageState createState() => _NewGroupPageState();
-
-  static Future loadInstitutions() async {
-    try {
-      // String json = await rootBundle.loadString('assets/json/institution.json');
-      // _NewGroupPageState.institutions = institutionFromJson(json);
-      var singleton = Singleton();
-
-      Client.listInstitutions(singleton.jwtToken, "").then((response) {
-        _NewGroupPageState.institutions =
-            institutionFromJson(json.encode(response));
-      }).catchError((e) {
-        print(e);
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  static Future loadDisciplines() async {
-    try {
-      // String json = await rootBundle.loadString('assets/json/classes.json');
-      // _NewGroupPageState.disciplines = disciplineFromJson(json);
-      var singleton = Singleton();
-
-      Client.listDisciplines(singleton.jwtToken, "").then((response) {
-        _NewGroupPageState.disciplines =
-            disciplineFromJson(json.encode(response));
-      }).catchError((e) {
-        print(e);
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  static Future loadCourses() async {
-    try {
-      // String json = await rootBundle.loadString('assets/json/courses.json');
-      // _NewGroupPageState.courses = courseFromJson(json);
-      var singleton = Singleton();
-
-      Client.listCourses(singleton.jwtToken, "").then((response) {
-        _NewGroupPageState.courses = courseFromJson(json.encode(response));
-      }).catchError((e) {
-        print(e);
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
 }
 
 class _NewGroupPageState extends State<NewGroupPage> {
@@ -177,7 +127,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.name.compareTo(a.name);
+        return b.metadata.subscriptions.compareTo(a.metadata.subscriptions);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -226,8 +176,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   children: <Widget>[
                     Icon(Icons.person),
                     Text(
-                      // item.members.toString(),
-                      '0',
+                      item.metadata.subscriptions.toString(),
                       style:
                           TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                     )
@@ -239,7 +188,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.name.compareTo(a.name);
+        return b.metadata.subscriptions.compareTo(a.metadata.subscriptions);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -300,7 +249,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.name.compareTo(a.name);
+        return b.metadata.subscriptions.compareTo(a.metadata.subscriptions);
       },
       itemSubmitted: (item) {
         setState(() {

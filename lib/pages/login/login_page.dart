@@ -99,13 +99,12 @@ class _LoginPageState extends State<LoginPage> {
     return Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.only(left: 36.0, right: 36.0),
+          padding: EdgeInsets.only(left: 36.0, right: 36.0, top: 50),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               getLogo(),
-              getMessage('Login', 'Seja bem vindo'),
               SizedBox(
                 height: 35.0,
               ),

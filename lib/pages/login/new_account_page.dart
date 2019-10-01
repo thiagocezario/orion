@@ -21,7 +21,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
       if (response != null) {
         Scaffold.of(context).showSnackBar(
           SnackBar(
-            content: Text(response.toString()),
+            content: Text('Conta criada com sucesso!'),
           ),
         );
       } else {
@@ -46,7 +46,22 @@ class _NewAccountPageState extends State<NewAccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xff8893f2),
-        appBar: getAppBar(context),
+        appBar: AppBar(
+          backgroundColor: Color(0xff8893f2),
+          elevation: 0.0,
+          title: Text(
+            'Nova Conta',
+            style: TextStyle(color: Colors.black),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
         body: Builder(
           builder: (context) {
             return ListView(
@@ -107,7 +122,6 @@ class _NewAccountPageState extends State<NewAccountPage> {
 
         return null;
       },
-      obscureText: true,
       style: getTextStyle(),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -116,13 +130,13 @@ class _NewAccountPageState extends State<NewAccountPage> {
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-          onChanged: (text) => _user.name = text,
+      onChanged: (text) => _user.name = text,
     );
 
     return Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.only(left: 36.0, right: 36.0),
+          padding: EdgeInsets.all(36.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
