@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'metadata.dart';
+
 List<Discipline> disciplineFromJson(String str) => new List<Discipline>.from(json.decode(str).map((x) => Discipline.fromJson(x)));
 
 String disciplineToJson(List<Discipline> data) => json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
@@ -11,23 +13,31 @@ String disciplineToJson(List<Discipline> data) => json.encode(new List<dynamic>.
 class Discipline {
     int id;
     String name;
-    int members;
+    DateTime createdAt;
+    DateTime updatedAt;
+    Metadata metadata;
 
     Discipline({
         this.id,
         this.name,
-        this.members,
+        this.createdAt,
+        this.updatedAt,
+        this.metadata
     });
 
     factory Discipline.fromJson(Map<String, dynamic> json) => new Discipline(
         id: json["id"],
         name: json["name"],
-        members: json["members"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "members": members,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "metadata": metadata == null ? null : metadata.toJson(),
     };
 }

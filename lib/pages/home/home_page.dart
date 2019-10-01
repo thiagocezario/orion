@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:orion/components/groups/group_cards.dart';
-import 'package:orion/pages/group/new_group_page.dart';
+import 'package:orion/pages/group/search_group_page.dart';
+
+import 'my_groups/my_groups_page.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  GroupCards cards = GroupCards();
 
   var _title = Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -33,11 +31,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _children = [
-      _buildMyGroups(),
+      Container(
+        child: MyGroups(),
+      ),
       Container(),
       Container(
         // color: Color(0xff8893f2),
-        child: NewGroupPage(),
+        child: SearchGroupPage(),
       ),
       Container()
     ];
@@ -47,8 +47,8 @@ class _HomePageState extends State<HomePage> {
         home: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: true,
-            backgroundColor: Colors.white,
-            // backgroundColor: Color(0xff8893f2),
+            // backgroundColor: Colors.white,
+            backgroundColor: Color(0xff8893f2),
             elevation: 0.0,
             centerTitle: true,
             title: _title,
@@ -65,21 +65,22 @@ class _HomePageState extends State<HomePage> {
           bottomNavigationBar: BottomNavigationBar(
             onTap: onTabTapped,
             currentIndex: _currentIndex,
+            backgroundColor: Color(0xff8893f2),
             type: BottomNavigationBarType.fixed,
             items: [
               BottomNavigationBarItem(
                   icon: Icon(Icons.home, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Início')),
+                  title: Text('Início', style: TextStyle(color: Colors.white),)),
               BottomNavigationBarItem(
                   icon: Icon(Icons.question_answer,
                       color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Comunidade')),
+                  title: Text('Comunidade', style: TextStyle(color: Colors.white),)),
               BottomNavigationBarItem(
                   icon: Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Grupos')),
+                  title: Text('Grupos', style: TextStyle(color: Colors.white),)),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text('Perfil'))
+                  title: Text('Perfil', style: TextStyle(color: Colors.white),))
             ],
           ),
         ));
@@ -127,12 +128,5 @@ class _HomePageState extends State<HomePage> {
         );
       }
     });
-  }
-
-  Widget _buildMyGroups() {
-    return Container(
-      alignment: Alignment.center,
-      child: cards.getGroupCards(context),
-    );
   }
 }

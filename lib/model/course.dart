@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:orion/model/metadata.dart';
+
 List<Course> courseFromJson(String str) => new List<Course>.from(json.decode(str).map((x) => Course.fromJson(x)));
 
 String courseToJson(List<Course> data) => json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
@@ -11,23 +13,31 @@ String courseToJson(List<Course> data) => json.encode(new List<dynamic>.from(dat
 class Course {
     int id;
     String name;
-    int members;
+    DateTime createdAt;
+    DateTime updatedAt;
+    Metadata metadata;
 
     Course({
         this.id,
         this.name,
-        this.members,
+        this.createdAt,
+        this.updatedAt,
+        this.metadata
     });
 
-    factory Course.fromJson(Map<String, dynamic> json) => new Course(
+    factory Course.fromJson(Map<String, dynamic> json) => Course(
         id: json["id"],
         name: json["name"],
-        members: json["members"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "members": members,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "metadata": metadata == null ? null : metadata.toJson(),
     };
 }

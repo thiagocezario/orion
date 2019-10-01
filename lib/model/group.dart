@@ -1,70 +1,64 @@
+// To parse this JSON data, do
+//
+//     final group = groupFromJson(jsonString);
+
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
+import 'package:orion/model/discipline.dart';
+import 'package:orion/model/institution.dart';
 
-List<Group> groupFromJson(String str) => new List<Group>.from(json.decode(str).map((x) => Group.fromJson(x)));
+import 'course.dart';
+import 'metadata.dart';
 
-String groupToJson(List<Group> data) => json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
+List<Group> groupFromJson(String str) => List<Group>.from(json.decode(str).map((x) => Group.fromJson(x)));
+
+String groupToJson(List<Group> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Group {
     int id;
     String name;
-    int institutionId;
-    int courseId;
-    int disciplineId;
-    String institutionName;
-    List<Member> members;
+    DateTime createdAt;
+    DateTime updatedAt;
+    Metadata metadata;
+    Institution institution;
+    Course course;
+    Discipline discipline;
 
     Group({
         this.id,
         this.name,
-        this.institutionId,
-        this.institutionName,
-        this.courseId,
-        this.disciplineId,
-        this.members,
+        this.createdAt,
+        this.updatedAt,
+        this.metadata,
+        this.institution,
+        this.course,
+        this.discipline,
     });
 
-    factory Group.fromJson(Map<String, dynamic> json) => new Group(
+    factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json["id"],
         name: json["name"],
-        institutionId: json["institution_id"],
-        institutionName: json["institution_name"],
-        courseId: json["course_id"],
-        disciplineId: json["discipline_id"],
-        members: new List<Member>.from(json["members"].map((x) => Member.fromJson(x))),
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        metadata: Metadata.fromJson(json["metadata"]),
+        institution: Institution.fromJson(json["institution"]),
+        course: Course.fromJson(json["course"]),
+        discipline: Discipline.fromJson(json["discipline"]),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "institution_id": institutionId,
-        "institution_name": institutionName,
-        "course_id": courseId,
-        "discipline_id": disciplineId,
-        "members": new List<dynamic>.from(members.map((x) => x.toJson())),
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "metadata": metadata.toJson(),
+        "institution": institution.toJson(),
+        "course": course.toJson(),
+        "discipline": discipline.toJson(),
     };
 }
 
-class Member {
-    int id;
-    String name;
 
-    Member({
-        this.id,
-        this.name,
-    });
-
-    factory Member.fromJson(Map<String, dynamic> json) => new Member(
-        id: json["id"],
-        name: json["name"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-    };
-}
 
 
 String getJsonData()  {

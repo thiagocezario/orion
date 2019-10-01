@@ -1,24 +1,23 @@
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 
 enum CustomColors { mainBackgroundColor, mainActionButtonColor }
 
-_customColors(CustomColors color) {
-  switch (color) {
-    case CustomColors.mainBackgroundColor:
-      return Color(0xff8893f2);
-    case CustomColors.mainActionButtonColor:
-      return Color(0xff192376);
-    default:
-      return Color(0xffffffff);
-  }
-}
+// _customColors(CustomColors color) {
+//   switch (color) {
+//     case CustomColors.mainBackgroundColor:
+//       return Color(0xff8893f2);
+//     case CustomColors.mainActionButtonColor:
+//       return Color(0xff192376);
+//     default:
+//       return Color(0xffffffff);
+//   }
+// }
 
 TextStyle getTextStyle() {
   return TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 }
 
-TextStyle _errorStyle() {
+TextStyle errorStyle() {
   return TextStyle(fontFamily: 'Montserrat', fontSize: 13.0, color: Colors.redAccent);
 }
 
@@ -29,13 +28,15 @@ TextFormField getTextField(
       if (value.isEmpty) {
         return "O campo de $placeholder deve ser preenchido";
       }
+
+      return null;
     },
     controller: controller,
     style: getTextStyle(),
     decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: placeholder,
-        errorStyle: _errorStyle(),
+        errorStyle: errorStyle(),
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -50,13 +51,15 @@ TextFormField getPasswordField(
       if (value.isEmpty) {
         return "O campo de senha deve ser preenchido";
       }
+
+      return null;
     },
     obscureText: true,
     style: getTextStyle(),
     decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: placeholder,
-        errorStyle: _errorStyle(),
+        errorStyle: errorStyle(),
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
