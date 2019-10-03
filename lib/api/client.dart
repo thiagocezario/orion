@@ -106,12 +106,9 @@ class Client {
     };
     var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
     var response = await http
-        .post('$_baseUrl/api/subscriptions',
-            body: json.encode(data), headers: headers)
-        .timeout(Duration(seconds: 500))
-        .catchError((e) {
-      print(e);
-    });
+      .post('$_baseUrl/api/subscriptions', body: json.encode(data), headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
 
     return response;
   }
@@ -141,15 +138,69 @@ class Client {
       "discipline_id":disciplineId.toString(),
       "name": name
     };
-    
+
+    var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
+
+    var response = await http
+      .post('$_baseUrl/api/groups', body: json.encode(data), headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future unsubscribe(String token, int subscriptionId) async {
     var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
     var response = await http
-        .post('$_baseUrl/api/groups',
-            body: json.encode(data), headers: headers)
-        .timeout(Duration(seconds: 500))
-        .catchError((e) {
-      print(e);
-    });
+      .delete('$_baseUrl/api/subscriptions/$subscriptionId', headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future createManager(String token, int subscriptionId) async {
+    var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
+    var data = { "subscription_id": subscriptionId.toString() };
+
+    var response = await http
+      .post('$_baseUrl/api/managers', body: json.encode(data), headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future deleteManager(String token, int subscriptionId) async {
+    var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
+
+    var response = await http
+      .delete('$_baseUrl/api/managers/$subscriptionId', headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future createBan(String token, int subscriptionId) async {
+    var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
+    var data = { "subscription_id": subscriptionId.toString() };
+
+    var response = await http
+      .post('$_baseUrl/api/bans', body: json.encode(data), headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future deleteBan(String token, int subscriptionId) async {
+    var headers = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
+
+    var response = await http
+      .delete('$_baseUrl/api/bans/$subscriptionId', headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
 
     return response;
   }
