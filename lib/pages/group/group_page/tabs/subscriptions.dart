@@ -48,7 +48,7 @@ class _GroupUsersState extends State<GroupUsers> {
           // title: Text('Student $index'),
           // subtitle: Text('Email $index'),
           trailing: IconButton(
-            icon: Icon(Icons.menu),
+            icon: Icon(Icons.more_vert),
             onPressed: () {},
           ),
         );
