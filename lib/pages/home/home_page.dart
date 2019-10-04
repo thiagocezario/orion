@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/main.dart';
+import 'package:orion/pages/event/event_index_page.dart';
 import 'package:orion/pages/group/search_group_page.dart';
 
 import 'my_groups/my_groups_page.dart';
@@ -35,7 +36,9 @@ class _HomePageState extends State<HomePage> {
       Container(
         child: MyGroups(),
       ),
-      Container(),
+      Container(
+        child: EventIndexPage(),
+      ),
       Container(
         // color: Color(0xff8893f2),
         child: SearchGroupPage(),
@@ -73,30 +76,27 @@ class _HomePageState extends State<HomePage> {
             type: BottomNavigationBarType.fixed,
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text(
-                    'Início',
-                    style: TextStyle(color: Colors.white),
-                  )),
+                icon: Icon(Icons.home, color: Color.fromARGB(255, 0, 0, 0)),
+                title: Text(
+                  'Início',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.question_answer,
-                      color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text(
-                    'Comunidade',
-                    style: TextStyle(color: Colors.white),
-                  )),
+                icon: Icon(Icons.question_answer,
+                    color: Color.fromARGB(255, 0, 0, 0)),
+                title: Text(
+                  'Eventos',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text(
-                    'Grupos',
-                    style: TextStyle(color: Colors.white),
-                  )),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
-                  title: Text(
-                    'Perfil',
-                    style: TextStyle(color: Colors.white),
-                  ))
+                icon: Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0)),
+                title: Text(
+                  'Grupos',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ],
           ),
         ));
@@ -119,6 +119,25 @@ class _HomePageState extends State<HomePage> {
             ),
             Text(
               'Meus Grupos',
+              style: TextStyle(color: Colors.black),
+            )
+          ],
+        );
+      }
+
+      if (index == 1) {
+        _title = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.group,
+              color: Colors.black,
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Text(
+              'Próximos Eventos',
               style: TextStyle(color: Colors.black),
             )
           ],
