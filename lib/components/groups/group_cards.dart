@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orion/model/group.dart';
+import 'package:orion/pages/group/group_page/group_page.dart';
 
 class GroupCards {
   static List<Group> groups = List<Group>();
@@ -10,14 +11,17 @@ class GroupCards {
         physics: BouncingScrollPhysics(),
         itemCount: groups.length,
         itemBuilder: (context, index) {
-          return _buildGroupCard(groups[index]);
+          return _buildGroupCard(context, groups[index]);
         });
   }
 
-  Widget _buildGroupCard(Group group) {
+  Widget _buildGroupCard(BuildContext context, Group group) {
     return Material(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => GroupPage(group)));
+        },
         child: Card(
             margin: EdgeInsets.all(7.5),
             elevation: 5.0,
