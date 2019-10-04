@@ -12,12 +12,14 @@ class Client {
 
   static final String _baseUrl = 'http://$_base';
 
-  static Map<String, String> defaultHeader(){
-    return { 'Content-Type': 'application/json; charset=UTF-8' };
+  static Map<String, String> defaultHeader() {
+    return {'Content-Type': 'application/json; charset=UTF-8'};
   }
 
-  static Map<String, String> defaultAuthHeader(String token){
-    return {}..addAll(defaultHeader())..addAll({ 'Authorization': 'Bearer $token' });
+  static Map<String, String> defaultAuthHeader(String token) {
+    return {}
+      ..addAll(defaultHeader())
+      ..addAll({'Authorization': 'Bearer $token'});
   }
 
   static Future signIn(User user) async {
@@ -25,9 +27,12 @@ class Client {
     var data = {'email': user.email, 'password': user.password};
 
     var response = await http
-      .post('$_baseUrl/api/sessions', body: json.encode(data), headers: headers)
-      .timeout(Duration(seconds: 5))
-      .catchError((e) { print(e); });
+        .post('$_baseUrl/api/sessions',
+            body: json.encode(data), headers: headers)
+        .timeout(Duration(seconds: 5))
+        .catchError((e) {
+      print(e);
+    });
 
     print(response.toString());
     return response;
@@ -42,9 +47,12 @@ class Client {
     };
 
     var response = await http
-      .post('$_baseUrl/api/students', body: json.encode(data), headers: headers)
-      .timeout(Duration(seconds: 500))
-      .catchError((e) { print(e); });
+        .post('$_baseUrl/api/students',
+            body: json.encode(data), headers: headers)
+        .timeout(Duration(seconds: 500))
+        .catchError((e) {
+      print(e);
+    });
 
     return response;
   }
@@ -54,9 +62,11 @@ class Client {
     var uri = Uri.http(_base, '/api/groups/', {"user_id": userId.toString()});
 
     var response = await http
-      .get(uri, headers: headers)
-      .timeout(Duration(seconds: 5))
-      .catchError((e) { print(e); });
+        .get(uri, headers: headers)
+        .timeout(Duration(seconds: 5))
+        .catchError((e) {
+      print(e);
+    });
 
     return response;
   }
@@ -65,9 +75,9 @@ class Client {
     var headers = defaultAuthHeader(token);
     var uri = Uri.http(_base, '/api/institutions/', {"name": name});
 
-    var response = await http
-      .get(uri, headers: headers)
-      .catchError((e) { print(e); });
+    var response = await http.get(uri, headers: headers).catchError((e) {
+      print(e);
+    });
 
     return response;
   }
@@ -94,11 +104,11 @@ class Client {
     return response;
   }
 
-  static Future listSubscriptions(String token, int groupId, int userId) async {
+  static Future listSubscriptions(String token, String groupId, String userId) async {
     var headers = defaultAuthHeader(token);
-    var data = { 'group_id': groupId.toString(), 'user_id': userId.toString() };
+    var data = {'group_id': groupId.toString(), 'user_id': userId.toString()};
 
-    Uri uri = Uri.http(_base, '/api/disciplines/', data);
+    Uri uri = Uri.http('10.0.2.2:3000', '/api/subscriptions/', data);
     var response = await http.get(uri, headers: headers).catchError((e) {
       print(e);
     });
@@ -108,22 +118,26 @@ class Client {
 
   static Future subscribe(String token, int groupId) async {
     var headers = defaultAuthHeader(token);
-    var data = { 'group_id': groupId };
+    var data = {'group_id': groupId};
 
     var response = await http
-      .post('$_baseUrl/api/subscriptions', body: json.encode(data), headers: headers)
-      .timeout(Duration(seconds: 500))
-      .catchError((e) { print(e); });
+        .post('$_baseUrl/api/subscriptions',
+            body: json.encode(data), headers: headers)
+        .timeout(Duration(seconds: 500))
+        .catchError((e) {
+      print(e);
+    });
 
     return response;
   }
 
-  static Future searchGroups(String token, int institution, int course, int discipline) async {
+  static Future searchGroups(
+      String token, int institution, int course, int discipline) async {
     var headers = defaultAuthHeader(token);
     var uri = Uri.http(_base, '/api/groups/', {
       "institution_id": institution.toString(),
       "course_id": course.toString(),
-      "discipline_id" :discipline.toString()
+      "discipline_id": discipline.toString()
     });
 
     var response = await http.get(uri, headers: headers).catchError((e) {
@@ -133,7 +147,8 @@ class Client {
     return response;
   }
 
-  static Future createGroup(String token, int institutionId, int courseId, int disciplineId, String name) async {
+  static Future createGroup(String token, int institutionId, int courseId,
+      int disciplineId, String name) async {
     var headers = defaultAuthHeader(token);
     var data = {
       "institution_id": institutionId.toString(),
@@ -143,9 +158,11 @@ class Client {
     };
 
     var response = await http
-      .post('$_baseUrl/api/groups', body: json.encode(data), headers: headers)
-      .timeout(Duration(seconds: 500))
-      .catchError((e) { print(e); });
+        .post('$_baseUrl/api/groups', body: json.encode(data), headers: headers)
+        .timeout(Duration(seconds: 500))
+        .catchError((e) {
+      print(e);
+    });
 
     return response;
   }
@@ -154,21 +171,26 @@ class Client {
     var headers = defaultAuthHeader(token);
 
     var response = await http
-      .delete('$_baseUrl/api/subscriptions/$subscriptionId', headers: headers)
-      .timeout(Duration(seconds: 500))
-      .catchError((e) { print(e); });
+        .delete('$_baseUrl/api/subscriptions/$subscriptionId', headers: headers)
+        .timeout(Duration(seconds: 500))
+        .catchError((e) {
+      print(e);
+    });
 
     return response;
   }
 
   static Future createManager(String token, int subscriptionId) async {
     var headers = defaultAuthHeader(token);
-    var data = { "subscription_id": subscriptionId.toString() };
+    var data = {"subscription_id": subscriptionId.toString()};
 
     var response = await http
-      .post('$_baseUrl/api/managers', body: json.encode(data), headers: headers)
-      .timeout(Duration(seconds: 500))
-      .catchError((e) { print(e); });
+        .post('$_baseUrl/api/managers',
+            body: json.encode(data), headers: headers)
+        .timeout(Duration(seconds: 500))
+        .catchError((e) {
+      print(e);
+    });
 
     return response;
   }
@@ -177,21 +199,25 @@ class Client {
     var headers = defaultAuthHeader(token);
 
     var response = await http
-      .delete('$_baseUrl/api/managers/$subscriptionId', headers: headers)
-      .timeout(Duration(seconds: 500))
-      .catchError((e) { print(e); });
+        .delete('$_baseUrl/api/managers/$subscriptionId', headers: headers)
+        .timeout(Duration(seconds: 500))
+        .catchError((e) {
+      print(e);
+    });
 
     return response;
   }
 
   static Future createBan(String token, int subscriptionId) async {
     var headers = defaultAuthHeader(token);
-    var data = { "subscription_id": subscriptionId.toString() };
+    var data = {"subscription_id": subscriptionId.toString()};
 
     var response = await http
-      .post('$_baseUrl/api/bans', body: json.encode(data), headers: headers)
-      .timeout(Duration(seconds: 500))
-      .catchError((e) { print(e); });
+        .post('$_baseUrl/api/bans', body: json.encode(data), headers: headers)
+        .timeout(Duration(seconds: 500))
+        .catchError((e) {
+      print(e);
+    });
 
     return response;
   }
@@ -200,9 +226,11 @@ class Client {
     var headers = defaultAuthHeader(token);
 
     var response = await http
-      .delete('$_baseUrl/api/bans/$subscriptionId', headers: headers)
-      .timeout(Duration(seconds: 500))
-      .catchError((e) { print(e); });
+        .delete('$_baseUrl/api/bans/$subscriptionId', headers: headers)
+        .timeout(Duration(seconds: 500))
+        .catchError((e) {
+      print(e);
+    });
 
     return response;
   }

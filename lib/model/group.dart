@@ -38,12 +38,12 @@ class Group {
     factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json["id"],
         name: json["name"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        metadata: Metadata.fromJson(json["metadata"]),
-        institution: Institution.fromJson(json["institution"]),
-        course: Course.fromJson(json["course"]),
-        discipline: Discipline.fromJson(json["discipline"]),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+        metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
+        institution: json["institution"] == null ? null : Institution.fromJson(json["institution"]),
+        course: json["course"] == null ? null : Course.fromJson(json["course"]),
+        discipline: json["discipline"] == null ? null : Discipline.fromJson(json["discipline"]),
     );
 
     Map<String, dynamic> toJson() => {

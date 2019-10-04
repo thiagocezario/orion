@@ -30,29 +30,6 @@ TextFormField getTextField(
   );
 }
 
-TextFormField getPasswordField(
-    String placeholder, TextEditingController controller) {
-  return TextFormField(
-    controller: controller,
-    validator: (value) {
-      if (value.isEmpty) {
-        return "O campo de senha deve ser preenchido";
-      }
-
-      return null;
-    },
-    obscureText: true,
-    style: getTextStyle(),
-    decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: placeholder,
-        errorStyle: errorStyle(),
-        fillColor: Colors.white,
-        filled: true,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-  );
-}
-
 Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey,
     String label, Function action) {
   return Material(
