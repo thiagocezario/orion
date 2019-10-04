@@ -5,7 +5,12 @@ import 'package:orion/model/user.dart';
 import 'package:http/http.dart' as http;
 
 class Client {
-  static final String _baseUrl = 'http://10.0.2.2:3000';
+
+  // change if you aew running on android emulator
+  // static final String _base = "10.0.2.2:3000";
+  static final String _base = 'localhost:3000';
+
+  static final String _baseUrl = 'http://$_base';
 
   static Map<String, String> defaultHeader(){
     return { 'Content-Type': 'application/json; charset=UTF-8' };
@@ -46,7 +51,7 @@ class Client {
 
   static Future listGroups(String token, int userId) async {
     var headers = defaultAuthHeader(token);
-    var uri = Uri.http('10.0.2.2:3000', '/api/groups/', {"user_id": userId.toString()});
+    var uri = Uri.http(_base, '/api/groups/', {"user_id": userId.toString()});
 
     var response = await http
       .get(uri, headers: headers)
@@ -58,7 +63,7 @@ class Client {
 
   static Future listInstitutions(String token, String name) async {
     var headers = defaultAuthHeader(token);
-    var uri = Uri.http('10.0.2.2:3000', '/api/institutions/', {"name": name});
+    var uri = Uri.http(_base, '/api/institutions/', {"name": name});
 
     var response = await http
       .get(uri, headers: headers)
@@ -69,7 +74,7 @@ class Client {
 
   static Future listCourses(String token, String name) async {
     var headers = defaultAuthHeader(token);
-    var uri = Uri.http('10.0.2.2:3000', '/api/courses/', {"name": name});
+    var uri = Uri.http(_base, '/api/courses/', {"name": name});
 
     var response = await http.get(uri, headers: headers).catchError((e) {
       print(e);
@@ -80,7 +85,7 @@ class Client {
 
   static Future listDisciplines(String token, String name) async {
     var headers = defaultAuthHeader(token);
-    var uri = Uri.http('10.0.2.2:3000', '/api/disciplines/', {"name": name});
+    var uri = Uri.http(_base, '/api/disciplines/', {"name": name});
 
     var response = await http.get(uri, headers: headers).catchError((e) {
       print(e);
@@ -93,7 +98,7 @@ class Client {
     var headers = defaultAuthHeader(token);
     var data = { 'group_id': groupId.toString(), 'user_id': userId.toString() };
 
-    Uri uri = Uri.http('10.0.2.2:3000', '/api/disciplines/', data);
+    Uri uri = Uri.http(_base, '/api/disciplines/', data);
     var response = await http.get(uri, headers: headers).catchError((e) {
       print(e);
     });
@@ -115,7 +120,7 @@ class Client {
 
   static Future searchGroups(String token, int institution, int course, int discipline) async {
     var headers = defaultAuthHeader(token);
-    var uri = Uri.http('10.0.2.2:3000', '/api/groups/', {
+    var uri = Uri.http(_base, '/api/groups/', {
       "institution_id": institution.toString(),
       "course_id": course.toString(),
       "discipline_id" :discipline.toString()
@@ -196,6 +201,63 @@ class Client {
 
     var response = await http
       .delete('$_baseUrl/api/bans/$subscriptionId', headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future listEvents(String token, String groupId, int userId) async {
+    var headers = defaultAuthHeader(token);
+    var data = { 'group_id': groupId.toString(), 'user_id': userId.toString() };
+
+    Uri uri = Uri.http(_base, '/api/events/', data);
+    var response = await http.get(uri, headers: headers).catchError((e) {
+      print(e);
+    });
+
+    return response;
+  }
+
+  static Future createEvent(String token, int groupId, int userId, String title, String content, String date) async {
+    var headers = defaultAuthHeader(token);
+    var data = {
+      "group_id": groupId.toString(),
+      "user_id": userId.toString(),
+      "title": title.toString(),
+      "content": content.toString(),
+      "date": date.toString()
+    };
+
+    var response = await http
+      .post('$_baseUrl/api/events', body: json.encode(data), headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future updateEvent(String token, int eventId, String title, String content, String date) async {
+    var headers = defaultAuthHeader(token);
+    var data = {
+      "title": title.toString(),
+      "content": content.toString(),
+      "date": date.toString()
+    };
+
+    var response = await http
+      .put('$_baseUrl/api/events/$eventId', body: json.encode(data), headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future deleteEvent(String token, int eventId) async {
+    var headers = defaultAuthHeader(token);
+
+    var response = await http
+      .delete('$_baseUrl/api/events/$eventId', headers: headers)
       .timeout(Duration(seconds: 500))
       .catchError((e) { print(e); });
 
