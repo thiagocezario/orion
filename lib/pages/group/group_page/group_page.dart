@@ -27,17 +27,17 @@ class _GroupPageState extends State<GroupPage> {
           centerTitle: true,
           bottom: TabBar(
             tabs: <Widget>[
-              Text('Feed'),
-              Text('Participantes'),
-              Text('Eventos'),
-              Text('Infos'),
+              Icon(Icons.home),
+              Icon(Icons.people),
+              Icon(Icons.event_note),
+              Icon(Icons.info),
             ],
           ),
         ),
         body: TabBarView(
           children: <Widget>[
             Container(),
-            GroupUsers(),
+            GroupUsers(group),
             Container(),
             Container(),
           ],

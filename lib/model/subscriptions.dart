@@ -27,10 +27,10 @@ class Subscriptions {
     });
 
     factory Subscriptions.fromJson(Map<String, dynamic> json) => Subscriptions(
-        id: json["id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-        student: Student.fromJson(json["student"]),
+        id: json["id"] == null ? null : json["id"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+        student: json["student"] == null ? null : Student.fromJson(json["student"]),
         group: json["group"] == null ? null : Group.fromJson(json["group"]),
     );
 
