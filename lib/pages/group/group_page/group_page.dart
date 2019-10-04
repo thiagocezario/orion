@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/model/group.dart';
+import 'package:orion/pages/group/group_page/tabs/subscriptions.dart';
 
 class GroupPage extends StatefulWidget {
   final group;
@@ -36,7 +37,7 @@ class _GroupPageState extends State<GroupPage> {
         body: TabBarView(
           children: <Widget>[
             Container(),
-            Container(),
+            GroupUsers(),
             Container(),
             Container(),
           ],
