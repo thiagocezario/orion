@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.question_answer,
+                icon: Icon(Icons.notifications,
                     color: Color.fromARGB(255, 0, 0, 0)),
                 title: Text(
                   'Eventos',

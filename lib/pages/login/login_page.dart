@@ -50,9 +50,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Form _buildForm(BuildContext context) {
-    _emailFieldController.text = "admin@admin.com";
+    _emailFieldController.text = "t.cezario@gmail.com";
     _passwordFieldController.text = "123123";
-    _user.email = "admin@admin.com";
+    _user.email = "t.cezario@gmail.com";
     _user.password = "123123";
 
     final userField = TextFormField(
