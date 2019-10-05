@@ -45,8 +45,6 @@ class _GroupUsersState extends State<GroupUsers> {
         return ListTile(
           title: Text(subs[index].student.name),
           subtitle: Text(subs[index].student.email),
-          // title: Text('Student $index'),
-          // subtitle: Text('Email $index'),
           trailing: IconButton(
             icon: Icon(Icons.more_vert),
             onPressed: () {},

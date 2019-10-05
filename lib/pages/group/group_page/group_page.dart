@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/model/group.dart';
+import 'package:orion/pages/group/group_page/tabs/group_info.dart';
 import 'package:orion/pages/group/group_page/tabs/subscriptions.dart';
 
 class GroupPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _GroupPageState extends State<GroupPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xff8893f2),
@@ -30,6 +31,7 @@ class _GroupPageState extends State<GroupPage> {
               Icon(Icons.home),
               Icon(Icons.people),
               Icon(Icons.event_note),
+              Icon(Icons.score),
               Icon(Icons.info),
             ],
           ),
@@ -40,6 +42,7 @@ class _GroupPageState extends State<GroupPage> {
             GroupUsers(group),
             Container(),
             Container(),
+            GroupInfo(group.id),
           ],
         ),
       ),
