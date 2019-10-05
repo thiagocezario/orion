@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/model/group.dart';
+import 'package:orion/pages/group/group_page/tabs/group_event.dart';
 import 'package:orion/pages/group/group_page/tabs/group_info.dart';
 import 'package:orion/pages/group/group_page/tabs/subscriptions.dart';
 
@@ -40,7 +41,7 @@ class _GroupPageState extends State<GroupPage> {
           children: <Widget>[
             Container(),
             GroupUsers(group),
-            Container(),
+            GroupEvent(group),
             Container(),
             GroupInfo(group.id),
           ],
