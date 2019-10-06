@@ -5,6 +5,7 @@ import 'package:orion/pages/home/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
 import 'package:orion/provider/auth_provider.dart';
+import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
       String token = Provider.of<AuthProvider>(context).accessToken;
       if (token != null && token != '') {
         Provider.of<MyGroupsProvider>(context).refreshMyGroups();
+        Provider.of<MyEventsProvider>(context).fetchEvents();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
       } else {

@@ -3,6 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:orion/api/client.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/user.dart';
+import 'package:orion/provider/my_events_provider.dart';
+import 'package:orion/provider/my_groups_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'new_group_page.dart';
 
@@ -16,7 +19,8 @@ class NewGroupFilter extends StatefulWidget {
       : super(key: key);
 
   @override
-  _NewGroupFilterState createState() => _NewGroupFilterState(institutionId, courseId, disciplineId);
+  _NewGroupFilterState createState() =>
+      _NewGroupFilterState(institutionId, courseId, disciplineId);
 }
 
 class _NewGroupFilterState extends State<NewGroupFilter> {
@@ -30,7 +34,7 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
     this.institutionId = institutionId;
     this.courseId = courseId;
     this.disciplineId = disciplineId;
-    
+
     _listGroups();
   }
 
@@ -102,6 +106,11 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
                                     Scaffold.of(context).showSnackBar(SnackBar(
                                       content: Text('Grupo ingressado'),
                                     ));
+
+                                    Provider.of<MyGroupsProvider>(context)
+                                        .refreshMyGroups();
+                                    Provider.of<MyEventsProvider>(context)
+                                        .fetchEvents();
                                   }
                                 });
                               },

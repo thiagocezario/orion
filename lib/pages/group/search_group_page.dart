@@ -22,8 +22,6 @@ class SearchGroupPage extends StatefulWidget {
 
   static Future loadInstitutions() async {
     try {
-      // String json = await rootBundle.loadString('assets/json/institution.json');
-      // _NewGroupPageState.institutions = institutionFromJson(json);
       var singleton = Singleton();
 
       Client.listInstitutions(singleton.jwtToken, "").then((response) {
@@ -38,8 +36,6 @@ class SearchGroupPage extends StatefulWidget {
 
   static Future loadDisciplines() async {
     try {
-      // String json = await rootBundle.loadString('assets/json/classes.json');
-      // _NewGroupPageState.disciplines = disciplineFromJson(json);
       var singleton = Singleton();
 
       Client.listDisciplines(singleton.jwtToken, "").then((response) {
@@ -54,8 +50,6 @@ class SearchGroupPage extends StatefulWidget {
 
   static Future loadCourses() async {
     try {
-      // String json = await rootBundle.loadString('assets/json/courses.json');
-      // _NewGroupPageState.courses = courseFromJson(json);
       var singleton = Singleton();
 
       Client.listCourses(singleton.jwtToken, "").then((response) {

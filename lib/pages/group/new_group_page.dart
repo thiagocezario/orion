@@ -8,6 +8,7 @@ import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/model/user.dart';
+import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -312,6 +313,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                     var groupId = jsonResponse["id"];
                     Client.subscribe(_singleton.jwtToken, groupId);
                     Provider.of<MyGroupsProvider>(context).refreshMyGroups();
+                    Provider.of<MyEventsProvider>(context).fetchEvents();
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(

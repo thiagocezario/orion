@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                   Icons.exit_to_app,
                   color: Colors.black,
                 ),
-                onPressed: () => runApp(Orion()),
+                onPressed: () => Navigator.pop(context),
               ))
         ],
       ),
