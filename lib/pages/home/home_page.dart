@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:orion/main.dart';
-import 'package:orion/pages/event/event_index_page.dart';
-import 'package:orion/pages/group/search_group_page.dart';
 
+import 'event/event_index_page.dart';
+import 'group/search_group_page.dart';
 import 'my_groups/my_groups_page.dart';
 
 class HomePage extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/pages/group/group_page/tabs/group_event.dart';
-import 'package:orion/pages/group/group_page/tabs/group_info.dart';
-import 'package:orion/pages/group/group_page/tabs/subscriptions.dart';
+import 'package:orion/pages/home/group/group_page/tabs/group_event.dart';
+import 'package:orion/pages/home/group/group_page/tabs/group_info.dart';
+import 'package:orion/pages/home/group/group_page/tabs/subscriptions.dart';
 
 class GroupPage extends StatefulWidget {
   final group;
