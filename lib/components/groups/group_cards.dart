@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/pages/group/group_page/group_page.dart';
+import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,8 @@ class GroupCards {
       child: InkWell(
         onTap: () {
           Provider.of<SubscriptionsProvider>(context).fetchSubscriptions(group.id.toString());
+          Provider.of<GroupEventsProvider>(context).fetchEvents(group.id.toString());
+          
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => GroupPage(group)));
         },
