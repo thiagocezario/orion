@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:orion/model/event.dart';
 
 class EventCards {
-  static List<Event> events = List<Event>();
-
   ListView getEventCards(BuildContext context, List<Event> events) {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
@@ -16,10 +14,14 @@ class EventCards {
   }
 
   Widget _buildEventCard(Event event) {
-    Icon eventActions(Event event) {
+    IconButton eventActions(Event event) {
       if (event.student.id == 2) {
-        return Icon(Icons.more_vert);
+        return IconButton(
+          icon: Icon(Icons.more_vert),
+          onPressed: () {},
+        );
       }
+
       return null;
     }
 
