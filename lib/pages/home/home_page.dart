@@ -46,60 +46,58 @@ class _HomePageState extends State<HomePage> {
       Container()
     ];
 
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: true,
-            // backgroundColor: Colors.white,
-            backgroundColor: Color(0xff8893f2),
-            elevation: 0.0,
-            centerTitle: true,
-            title: _title,
-            actions: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(right: 15.0),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.exit_to_app,
-                      color: Colors.black,
-                    ),
-                    onPressed: () => runApp(Orion()),
-                  ))
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        // backgroundColor: Colors.white,
+        backgroundColor: Color(0xff8893f2),
+        elevation: 0.0,
+        centerTitle: true,
+        title: _title,
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 15.0),
+              child: IconButton(
+                icon: Icon(
+                  Icons.exit_to_app,
+                  color: Colors.black,
+                ),
+                onPressed: () => runApp(Orion()),
+              ))
+        ],
+      ),
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped,
+        currentIndex: _currentIndex,
+        backgroundColor: Color(0xff8893f2),
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Color.fromARGB(255, 0, 0, 0)),
+            title: Text(
+              'Início',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
-          body: _children[_currentIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            onTap: onTabTapped,
-            currentIndex: _currentIndex,
-            backgroundColor: Color(0xff8893f2),
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home, color: Color.fromARGB(255, 0, 0, 0)),
-                title: Text(
-                  'Início',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.notifications,
-                    color: Color.fromARGB(255, 0, 0, 0)),
-                title: Text(
-                  'Eventos',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0)),
-                title: Text(
-                  'Grupos',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
+          BottomNavigationBarItem(
+            icon:
+                Icon(Icons.notifications, color: Color.fromARGB(255, 0, 0, 0)),
+            title: Text(
+              'Eventos',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
-        ));
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search, color: Color.fromARGB(255, 0, 0, 0)),
+            title: Text(
+              'Grupos',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void onTabTapped(int index) {

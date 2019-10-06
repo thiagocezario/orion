@@ -8,6 +8,8 @@ import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/model/user.dart';
+import 'package:orion/provider/my_groups_provider.dart';
+import 'package:provider/provider.dart';
 
 class NewGroupPage extends StatefulWidget {
   var institution = Institution();
@@ -309,6 +311,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                     var jsonResponse = json.decode(response.body);
                     var groupId = jsonResponse["id"];
                     Client.subscribe(_singleton.jwtToken, groupId);
+                    Provider.of<MyGroupsProvider>(context).refreshMyGroups();
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(

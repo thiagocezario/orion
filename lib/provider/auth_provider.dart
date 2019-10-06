@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:orion/api/client.dart';
 import 'package:orion/model/user.dart';
-
-import '../client.dart';
 
 class AuthProvider extends ChangeNotifier {
  

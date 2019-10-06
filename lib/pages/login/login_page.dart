@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/authentication/auth_provider.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/home/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
+import 'package:orion/provider/auth_provider.dart';
+import 'package:orion/provider/my_groups_provider.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -22,7 +23,9 @@ class _LoginPageState extends State<LoginPage> {
     Provider.of<AuthProvider>(context).signIn(_user).then((response) {
       String token = Provider.of<AuthProvider>(context).accessToken;
       if (token != null && token != '') {
-        runApp(HomePage());
+        Provider.of<MyGroupsProvider>(context).refreshMyGroups();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(
