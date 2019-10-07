@@ -14,7 +14,7 @@ class GroupInfo extends StatelessWidget {
     await Client.listSubscriptions(Singleton().jwtToken, groupId.toString(),
             Singleton().user.id.toString())
         .then((response) async {
-      var result = subscriptionsFromJson(response.body);
+      var result = subscriptionFromJson(response.body);
       await Client.unsubscribe(Singleton().jwtToken, result.first.id)
           .then((response) {
         Provider.of<MyGroupsProvider>(context).refreshMyGroups();
