@@ -49,6 +49,7 @@ flutter:
    - assets/background/orion.jpg
    - assets/logo/orionlogo.png
    - assets/logo/orion_logo.png
+   - assets/logo/shenlong.png
    - assets/icons/group.pdf
    - assets/json/groups.json
    - assets/json/institution.json

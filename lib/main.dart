@@ -42,22 +42,9 @@ class Orion extends StatelessWidget {
             seconds: 20,
             backgroundColor: Colors.white,
             imageBackground: AssetImage('assets/background/orion.jpg'),
-            image: Image.asset(
-              'assets/logo/orionlogo.png',
-              fit: BoxFit.fill,
-              height: 150,
-              width: 150,
-              scale: 100.0,
-            ),
+            photoSize: 100,
+            image: Image.asset('assets/logo/shenlong.png'),
             loaderColor: Colors.white,
-            loadingText: Text(
-              'Carregando...',
-              style: TextStyle(color: Colors.white),
-            ),
-            title: Text(
-              'Bem vindo!',
-              style: TextStyle(color: Colors.white),
-            ),
             navigateAfterSeconds: LoginPage(),
           ),
         ));

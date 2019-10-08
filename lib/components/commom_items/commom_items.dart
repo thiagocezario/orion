@@ -53,9 +53,9 @@ Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey,
 
 Widget getLogo() {
   return SizedBox(
-    height: 100.0,
+    height: 180.0,
     child: Image.asset(
-      'assets/logo/orionlogo.png',
+      'assets/logo/shenlong.png',
       fit: BoxFit.contain,
     ),
   );
