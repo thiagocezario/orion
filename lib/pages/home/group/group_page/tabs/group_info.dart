@@ -62,7 +62,7 @@ class GroupInfo extends StatelessWidget {
                 children: <Widget>[
                   Text('Deixar grupo',
                       textAlign: TextAlign.right,
-                      style: getTextStyle().copyWith(
+                      style: textStyle.copyWith(
                           color: Colors.white, fontWeight: FontWeight.bold)),
                   Icon(Icons.exit_to_app, color: Colors.white,)
                 ],

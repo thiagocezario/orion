@@ -102,7 +102,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
-      style: getTextStyle(),
+      style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
           padding: EdgeInsets.all(15.0),
@@ -163,7 +163,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
-      style: getTextStyle(),
+      style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
           padding: EdgeInsets.all(15.0),
@@ -224,7 +224,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
-      style: getTextStyle(),
+      style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
           padding: EdgeInsets.all(15.0),
@@ -272,7 +272,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
-      style: getTextStyle(),
+      style: textStyle,
     );
 
     return Form(

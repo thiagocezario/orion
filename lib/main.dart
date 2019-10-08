@@ -48,7 +48,6 @@ class Orion extends StatelessWidget {
               height: 150,
               width: 150,
               scale: 100.0,
-
             ),
             loaderColor: Colors.white,
             loadingText: Text(

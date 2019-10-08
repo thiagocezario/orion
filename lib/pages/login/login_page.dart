@@ -69,11 +69,11 @@ class _LoginPageState extends State<LoginPage> {
         return null;
       },
       controller: _emailFieldController,
-      style: getTextStyle(),
+      style: textStyle,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: 'Email',
-          errorStyle: errorStyle(),
+          errorStyle: errorStyle,
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -90,11 +90,11 @@ class _LoginPageState extends State<LoginPage> {
       },
       controller: _passwordFieldController,
       obscureText: true,
-      style: getTextStyle(),
+      style: textStyle,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: 'Senha',
-          errorStyle: errorStyle(),
+          errorStyle: errorStyle,
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -123,7 +123,6 @@ class _LoginPageState extends State<LoginPage> {
                 builder: (context) => Material(
                   elevation: 5.0,
                   borderRadius: BorderRadius.circular(30.0),
-                  // color: Color(0xff606fe1),
                   color: Color(0xff192376),
                   child: MaterialButton(
                     minWidth: MediaQuery.of(context).size.width,
@@ -136,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text('Entrar',
                         textAlign: TextAlign.center,
-                        style: getTextStyle().copyWith(
+                        style: textStyle.copyWith(
                             color: Colors.white, fontWeight: FontWeight.bold)),
                   ),
                 ),
