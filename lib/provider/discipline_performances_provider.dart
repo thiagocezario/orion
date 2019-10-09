@@ -9,7 +9,7 @@ class DisciplinePerformancesProvider with ChangeNotifier {
   get disciplinePerformances => _disciplinePerformances;
 
   void fetchPerformances(String disciplineId) async {
-    await Client.listPerformances(Singleton().jwtToken, disciplineId, Singleton().user.id).then((response) {
+    await Client.listPerformances(Singleton().jwtToken, disciplineId, Singleton().user.id.toString()).then((response) {
       print(response.body);
 
       _disciplinePerformances = performanceFromJson(response.body);
