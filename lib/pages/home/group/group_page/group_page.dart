@@ -3,6 +3,7 @@ import 'package:orion/model/group.dart';
 import 'package:orion/pages/home/group/group_page/tabs/discipline_performances.dart';
 import 'package:orion/pages/home/group/group_page/tabs/group_event.dart';
 import 'package:orion/pages/home/group/group_page/tabs/group_info.dart';
+import 'package:orion/pages/home/group/group_page/tabs/group_post.dart';
 import 'package:orion/pages/home/group/group_page/tabs/subscriptions.dart';
 
 class GroupPage extends StatefulWidget {
@@ -41,7 +42,7 @@ class _GroupPageState extends State<GroupPage> {
         ),
         body: TabBarView(
           children: <Widget>[
-            Container(),
+            GroupPost(group),
             GroupUsers(group),
             GroupEvent(group),
             DisciplinePerformance(group.discipline),

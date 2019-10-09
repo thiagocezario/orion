@@ -10,6 +10,7 @@ class MyGroups extends StatefulWidget {
 
 class _MyGroupsState extends State<MyGroups> {
   @override
+
   Widget build(BuildContext context) {
     return Consumer<MyGroupsProvider>(
       builder: (context, myGroupsState, _) => Container(
