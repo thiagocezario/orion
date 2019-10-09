@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 class Client {
 
   // change if you aew running on android emulator
-  static final String _base = "10.0.2.2:3000";
-  // static final String _base = 'localhost:3000';
+  // static final String _base = "10.0.2.2:3000";
+  static final String _base = 'localhost:3000';
 
   static final String _baseUrl = 'http://$_base';
 
@@ -107,7 +107,7 @@ class Client {
     var headers = defaultAuthHeader(token);
     var data = {'group_id': groupId.toString(), 'user_id': userId.toString()};
 
-    Uri uri = Uri.http('10.0.2.2:3000', '/api/subscriptions/', data);
+    Uri uri = Uri.http(_base, '/api/subscriptions/', data);
     var response = await http.get(uri, headers: headers).catchError((e) {
       print(e);
     });
@@ -234,6 +234,8 @@ class Client {
     return response;
   }
 
+  // Event
+
   static Future listEvents(String token, String groupId, int userId) async {
     var headers = defaultAuthHeader(token);
     var data = { 'group_id': groupId.toString(), 'user_id': userId.toString() };
@@ -290,4 +292,64 @@ class Client {
 
     return response;
   }
+
+  // Performance
+
+  static Future listPerformances(String token, String disciplineId, int userId) async {
+    var headers = defaultAuthHeader(token);
+    var data = { 'discipline_id': disciplineId.toString(), 'user_id': userId.toString() };
+
+    Uri uri = Uri.http(_base, '/api/performances/', data);
+    var response = await http.get(uri, headers: headers).catchError((e) {
+      print(e);
+    });
+
+    return response;
+  }
+
+  static Future createPerformance(String token, int disciplineId, String description, String value, String maxValue) async {
+    var headers = defaultAuthHeader(token);
+    var data = {
+      "discipline_id": disciplineId.toString(),
+      "description": description.toString(),
+      "value": value.toString(),
+      "max_value": maxValue.toString()
+    };
+
+    var response = await http
+      .post('$_baseUrl/api/performances', body: json.encode(data), headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future updatePerformance(String token, int performanceId, String description, String value, String maxValue) async {
+    var headers = defaultAuthHeader(token);
+    var data = {
+      "description": description.toString(),
+      "value": value.toString(),
+      "max_value": maxValue.toString()
+    };
+
+    var response = await http
+      .put('$_baseUrl/api/performances/$performanceId', body: json.encode(data), headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future deletePerformance(String token, int performanceId) async {
+    var headers = defaultAuthHeader(token);
+
+    var response = await http
+      .delete('$_baseUrl/api/performances/$performanceId', headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+
 }
