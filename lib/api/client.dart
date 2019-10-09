@@ -62,7 +62,7 @@ class Client {
 
     var response = await http
         .get(uri, headers: headers)
-        .timeout(Duration(seconds: 5))
+        .timeout(Duration(seconds: 500))
         .catchError((e) {
       print(e);
     });
@@ -295,7 +295,7 @@ class Client {
 
   // Performance
 
-  static Future listPerformances(String token, String disciplineId, int userId) async {
+  static Future listPerformances(String token, String disciplineId, String userId) async {
     var headers = defaultAuthHeader(token);
     var data = { 'discipline_id': disciplineId.toString(), 'user_id': userId.toString() };
 
@@ -351,5 +351,60 @@ class Client {
     return response;
   }
 
+  // Post
 
+  static Future listPosts(String token, String groupId, String userId) async {
+    var headers = defaultAuthHeader(token);
+    var data = { 'group_id': groupId.toString(), 'user_id': userId.toString() };
+
+    Uri uri = Uri.http(_base, '/api/posts/', data);
+    var response = await http.get(uri, headers: headers).catchError((e) {
+      print(e);
+    });
+
+    return response;
+  }
+
+  static Future createPost(String token, int groupId, int userId, String title, String content) async {
+    var headers = defaultAuthHeader(token);
+    var data = {
+      "group_id": groupId.toString(),
+      "user_id": userId.toString(),
+      "title": title.toString(),
+      "content": content.toString()
+    };
+
+    var response = await http
+      .post('$_baseUrl/api/posts', body: json.encode(data), headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future updatePost(String token, int postId, String title, String content) async {
+    var headers = defaultAuthHeader(token);
+    var data = {
+      "title": title.toString(),
+      "content": content.toString()
+    };
+
+    var response = await http
+      .put('$_baseUrl/api/posts/$postId', body: json.encode(data), headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
+
+  static Future deletePost(String token, int postId) async {
+    var headers = defaultAuthHeader(token);
+
+    var response = await http
+      .delete('$_baseUrl/api/posts/$postId', headers: headers)
+      .timeout(Duration(seconds: 500))
+      .catchError((e) { print(e); });
+
+    return response;
+  }
 }
