@@ -5,6 +5,7 @@ import 'package:orion/pages/login/recover_password_page.dart';
 import 'package:orion/provider/auth_provider.dart';
 import 'package:orion/provider/discipline_performances_provider.dart';
 import 'package:orion/provider/group_events_provider.dart';
+import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
@@ -24,6 +25,7 @@ class Orion extends StatelessWidget {
         ChangeNotifierProvider(builder: (context) => MyGroupsProvider()),
         // ChangeNotifierProvider(builder: (context) => SearchGroupsProvider()),
         ChangeNotifierProvider(builder: (context) => MyEventsProvider()),
+        ChangeNotifierProvider(builder: (context) => GroupPostsProvider()),
         ChangeNotifierProvider(builder: (context) => GroupEventsProvider()),
         ChangeNotifierProvider(builder: (context) => DisciplinePerformancesProvider()),
         ChangeNotifierProvider(builder: (context) => SubscriptionsProvider()),
