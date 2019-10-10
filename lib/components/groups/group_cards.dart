@@ -26,6 +26,7 @@ class GroupCards {
         onTap: () {
           Provider.of<GroupPostsProvider>(context).fetchPosts(group.id.toString());
           Provider.of<SubscriptionsProvider>(context).fetchSubscriptions(group.id.toString());
+          Provider.of<GroupPostsProvider>(context).fetchPosts(group.id.toString());
           Provider.of<GroupEventsProvider>(context).fetchEvents(group.id.toString());
           Provider.of<DisciplinePerformancesProvider>(context).fetchPerformances(group.discipline.id.toString());
 

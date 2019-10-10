@@ -28,7 +28,7 @@ class Client {
     var response = await http
         .post('$_baseUrl/api/sessions',
             body: json.encode(data), headers: headers)
-        .timeout(Duration(seconds: 5))
+        .timeout(Duration(seconds: 500))
         .catchError((e) {
       print(e);
     });
