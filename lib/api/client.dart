@@ -296,7 +296,7 @@ class Client {
   // Performance
 
   static Future listPerformances(String token, String disciplineId, String userId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = { 'discipline_id': disciplineId.toString(), 'user_id': userId.toString() };
 
     Uri uri = Uri.http(_base, '/api/performances/', data);
@@ -308,7 +308,7 @@ class Client {
   }
 
   static Future createPerformance(String token, int disciplineId, String description, String value, String maxValue) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {
       "discipline_id": disciplineId.toString(),
       "description": description.toString(),
@@ -325,7 +325,7 @@ class Client {
   }
 
   static Future updatePerformance(String token, int performanceId, String description, String value, String maxValue) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {
       "description": description.toString(),
       "value": value.toString(),
@@ -341,7 +341,7 @@ class Client {
   }
 
   static Future deletePerformance(String token, int performanceId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
 
     var response = await http
       .delete('$_baseUrl/api/performances/$performanceId', headers: headers)
@@ -354,7 +354,7 @@ class Client {
   // Post
 
   static Future listPosts(String token, String groupId, String userId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = { 'group_id': groupId.toString(), 'user_id': userId.toString() };
 
     Uri uri = Uri.http(_base, '/api/posts/', data);
@@ -366,7 +366,7 @@ class Client {
   }
 
   static Future createPost(String token, int groupId, int userId, String title, String content) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {
       "group_id": groupId.toString(),
       "user_id": userId.toString(),
@@ -383,7 +383,7 @@ class Client {
   }
 
   static Future updatePost(String token, int postId, String title, String content) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {
       "title": title.toString(),
       "content": content.toString()
@@ -398,7 +398,7 @@ class Client {
   }
 
   static Future deletePost(String token, int postId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
 
     var response = await http
       .delete('$_baseUrl/api/posts/$postId', headers: headers)
