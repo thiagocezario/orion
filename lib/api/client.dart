@@ -234,6 +234,19 @@ class Client {
     return response;
   }
 
+  // Recomendations
+
+  static Future listGroupRecomendations(String token) async {
+    var headers = defaultAuthHeader(token);
+
+    Uri uri = Uri.http(_base, '/api/groups/recomendations');
+    var response = await http.get(uri, headers: headers).catchError((e) {
+      print(e);
+    });
+
+    return response;
+  }
+
   // Event
 
   static Future listEvents(String token, String groupId, int userId) async {
