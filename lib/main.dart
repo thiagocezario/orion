@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/pages/login/login_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
@@ -39,28 +40,13 @@ class Orion extends StatelessWidget {
           },
           debugShowCheckedModeBanner: false,
           title: 'Orion',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
           home: SplashScreen(
-            seconds: 20,
-            backgroundColor: Colors.white,
-            imageBackground: AssetImage('assets/background/orion.jpg'),
+            seconds: 5,
+            backgroundColor: primaryColor,
+            photoSize: 150,
+            loaderColor: Colors.white,
             image: Image.asset(
               'assets/logo/orionlogo.png',
-              fit: BoxFit.fill,
-              height: 150,
-              width: 150,
-              scale: 100.0,
-            ),
-            loaderColor: Colors.white,
-            loadingText: Text(
-              'Carregando...',
-              style: TextStyle(color: Colors.white),
-            ),
-            title: Text(
-              'Bem vindo!',
-              style: TextStyle(color: Colors.white),
             ),
             navigateAfterSeconds: LoginPage(),
           ),
