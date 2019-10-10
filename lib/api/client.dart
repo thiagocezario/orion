@@ -237,7 +237,7 @@ class Client {
   // Recomendations
 
   static Future listGroupRecomendations(String token) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
 
     Uri uri = Uri.http(_base, '/api/groups/recomendations');
     var response = await http.get(uri, headers: headers).catchError((e) {
