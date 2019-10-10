@@ -49,7 +49,6 @@ class _GroupUsersState extends State<GroupUsers> {
 
   @override
   Widget build(BuildContext context) {
-
     // TODO: Limitar pra usuarios adm
     PopupMenuButton<String> subscriptionAction(Subscription sub) {
       if (!sub.manager) {
@@ -64,6 +63,23 @@ class _GroupUsersState extends State<GroupUsers> {
     }
 
     Widget subIcon(Subscription sub) {
+      if (sub.banned) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.person,
+              color: Colors.red,
+              
+            ),
+            Text(
+              'Admin',
+              style: TextStyle(color: Colors.red),
+            )
+          ],
+        );
+      }
+
       if (sub.manager) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -80,12 +96,9 @@ class _GroupUsersState extends State<GroupUsers> {
         );
       }
 
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Icon(Icons.person),
-        ],
+      return Container(
+        padding: EdgeInsets.symmetric(horizontal: 7, vertical: 7),
+        child: Icon(Icons.person),
       );
     }
 

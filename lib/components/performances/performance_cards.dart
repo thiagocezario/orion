@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:orion/model/performance.dart';
 
 class PerformanceCards {
-  ListView getPerformanceCards(BuildContext context, List<Performance> performances) {
+  ListView getPerformanceCards(
+      BuildContext context, List<Performance> performances) {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
       itemCount: performances.length,
@@ -23,10 +24,12 @@ class PerformanceCards {
 
     ListTile card = ListTile(
       leading: Container(
-        child: Text("${performance.percentage}%")
+        padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+        child: Text("${performance.percentage}%"),
       ),
       title: Text(performance.description),
-      subtitle: Text("${performance.value.toString()} / ${performance.maxValue.toString()}"),
+      subtitle: Text(
+          "${performance.value.toString()} / ${performance.maxValue.toString()}"),
       trailing: performanceActions(performance),
       isThreeLine: true,
     );

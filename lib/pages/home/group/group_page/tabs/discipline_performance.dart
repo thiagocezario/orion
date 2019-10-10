@@ -22,7 +22,6 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
   Widget build(BuildContext context) {
     return Consumer<DisciplinePerformancesProvider>(
       builder: (context, disciplinePerformancesProvider, _) => Container(
-        alignment: Alignment.center,
         child: PerformanceCards().getPerformanceCards(context, disciplinePerformancesProvider.disciplinePerformances),
       ),
     );
