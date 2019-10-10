@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
         child: EventIndexPage(),
       ),
       Container(
-        // color: Color(0xff8893f2),
         child: SearchGroupPage(),
       ),
       Container()
@@ -47,23 +46,11 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
-        // backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
         backgroundColor: Color(0xff8893f2),
         elevation: 0.0,
         centerTitle: true,
         title: _title,
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 15.0),
-              child: IconButton(
-                icon: Icon(
-                  Icons.exit_to_app,
-                  color: Colors.black,
-                ),
-                onPressed: () => Navigator.pop(context),
-              ))
-        ],
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

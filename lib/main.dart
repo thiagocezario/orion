@@ -10,6 +10,7 @@ import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:splashscreen/splashscreen.dart';
 import 'model/user.dart';
 
 void main() => runApp(Orion());
@@ -41,7 +42,28 @@ class Orion extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: LoginPage(),
+          home: SplashScreen(
+            seconds: 20,
+            backgroundColor: Colors.white,
+            imageBackground: AssetImage('assets/background/orion.jpg'),
+            image: Image.asset(
+              'assets/logo/orionlogo.png',
+              fit: BoxFit.fill,
+              height: 150,
+              width: 150,
+              scale: 100.0,
+            ),
+            loaderColor: Colors.white,
+            loadingText: Text(
+              'Carregando...',
+              style: TextStyle(color: Colors.white),
+            ),
+            title: Text(
+              'Bem vindo!',
+              style: TextStyle(color: Colors.white),
+            ),
+            navigateAfterSeconds: LoginPage(),
+          ),
         ));
   }
 }

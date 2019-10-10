@@ -11,18 +11,18 @@ class Client {
 
   static final String _baseUrl = 'http://$_base';
 
-  static Map<String, String> defaultHeader() {
+  static Map<String, String> _defaultHeader() {
     return {'Content-Type': 'application/json; charset=UTF-8'};
   }
 
-  static Map<String, String> defaultAuthHeader(String token) {
+  static Map<String, String> _defaultAuthHeader(String token) {
     return {}
-      ..addAll(defaultHeader())
+      ..addAll(_defaultHeader())
       ..addAll({'Authorization': 'Bearer $token'});
   }
 
   static Future signIn(User user) async {
-    var headers = defaultHeader();
+    var headers = _defaultHeader();
     var data = {'email': user.email, 'password': user.password};
 
     var response = await http
@@ -38,7 +38,7 @@ class Client {
   }
 
   static Future createUser(User user) async {
-    var headers = defaultHeader();
+    var headers = _defaultHeader();
     var data = {
       'name': user.name,
       'email': user.email,
@@ -57,7 +57,7 @@ class Client {
   }
 
   static Future listGroups(String token, int userId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var uri = Uri.http(_base, '/api/groups/', {"user_id": userId.toString()});
 
     var response = await http
@@ -71,7 +71,7 @@ class Client {
   }
 
   static Future listInstitutions(String token, String name) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var uri = Uri.http(_base, '/api/institutions/', {"name": name});
 
     var response = await http.get(uri, headers: headers).catchError((e) {
@@ -82,7 +82,7 @@ class Client {
   }
 
   static Future listCourses(String token, String name) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var uri = Uri.http(_base, '/api/courses/', {"name": name});
 
     var response = await http.get(uri, headers: headers).catchError((e) {
@@ -93,7 +93,7 @@ class Client {
   }
 
   static Future listDisciplines(String token, String name) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var uri = Uri.http(_base, '/api/disciplines/', {"name": name});
 
     var response = await http.get(uri, headers: headers).catchError((e) {
@@ -104,7 +104,7 @@ class Client {
   }
 
   static Future listSubscriptions(String token, String groupId, String userId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {'group_id': groupId.toString(), 'user_id': userId.toString()};
 
     Uri uri = Uri.http(_base, '/api/subscriptions/', data);
@@ -116,7 +116,7 @@ class Client {
   }
 
   static Future subscribe(String token, int groupId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {'group_id': groupId};
 
     var response = await http
@@ -132,7 +132,7 @@ class Client {
 
   static Future searchGroups(
       String token, int institution, int course, int discipline) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var uri = Uri.http(_base, '/api/groups/', {
       "institution_id": institution.toString(),
       "course_id": course.toString(),
@@ -148,7 +148,7 @@ class Client {
 
   static Future createGroup(String token, int institutionId, int courseId,
       int disciplineId, String name) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {
       "institution_id": institutionId.toString(),
       "course_id": courseId.toString(),
@@ -167,7 +167,7 @@ class Client {
   }
 
   static Future unsubscribe(String token, int subscriptionId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
 
     var response = await http
         .delete('$_baseUrl/api/subscriptions/$subscriptionId', headers: headers)
@@ -180,7 +180,7 @@ class Client {
   }
 
   static Future createManager(String token, int subscriptionId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {"subscription_id": subscriptionId.toString()};
 
     var response = await http
@@ -195,7 +195,7 @@ class Client {
   }
 
   static Future deleteManager(String token, int subscriptionId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
 
     var response = await http
         .delete('$_baseUrl/api/managers/$subscriptionId', headers: headers)
@@ -208,7 +208,7 @@ class Client {
   }
 
   static Future createBan(String token, int subscriptionId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {"subscription_id": subscriptionId.toString()};
 
     var response = await http
@@ -222,7 +222,7 @@ class Client {
   }
 
   static Future deleteBan(String token, int subscriptionId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
 
     var response = await http
         .delete('$_baseUrl/api/bans/$subscriptionId', headers: headers)
@@ -237,7 +237,7 @@ class Client {
   // Event
 
   static Future listEvents(String token, String groupId, int userId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = { 'group_id': groupId.toString(), 'user_id': userId.toString() };
 
     Uri uri = Uri.http(_base, '/api/events/', data);
@@ -249,7 +249,7 @@ class Client {
   }
 
   static Future createEvent(String token, int groupId, int userId, String title, String content, String date) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {
       "group_id": groupId.toString(),
       "user_id": userId.toString(),
@@ -267,7 +267,7 @@ class Client {
   }
 
   static Future updateEvent(String token, int eventId, String title, String content, String date) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
     var data = {
       "title": title.toString(),
       "content": content.toString(),
@@ -283,7 +283,7 @@ class Client {
   }
 
   static Future deleteEvent(String token, int eventId) async {
-    var headers = defaultAuthHeader(token);
+    var headers = _defaultAuthHeader(token);
 
     var response = await http
       .delete('$_baseUrl/api/events/$eventId', headers: headers)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/client.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/provider/my_groups_provider.dart';
@@ -14,7 +15,7 @@ class GroupInfo extends StatelessWidget {
     await Client.listSubscriptions(Singleton().jwtToken, groupId.toString(),
             Singleton().user.id.toString())
         .then((response) async {
-      var result = subscriptionsFromJson(response.body);
+      var result = subscriptionFromJson(response.body);
       await Client.unsubscribe(Singleton().jwtToken, result.first.id)
           .then((response) {
         Provider.of<MyGroupsProvider>(context).refreshMyGroups();
@@ -32,14 +33,41 @@ class GroupInfo extends StatelessWidget {
         SizedBox(
           height: 50,
         ),
+        SizedBox(
+          height: 50,
+        ),
+        SizedBox(
+          height: 50,
+        ),
+        SizedBox(
+          height: 50,
+        ),
+        SizedBox(
+          height: 50,
+        ),
         Padding(
-          padding: EdgeInsets.all(50),
-          child: RaisedButton(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[Text('Deixar grupo'), Icon(Icons.exit_to_app)],
+          padding: EdgeInsets.all(70.0),
+          child: Material(
+            elevation: 5.0,
+            borderRadius: BorderRadius.circular(30.0),
+            // color: Color(0xff606fe1),
+            color: Color(0xff192376),
+            child: MaterialButton(
+              minWidth: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              elevation: 50.0,
+              onPressed: () => _exitGroup(context),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text('Deixar grupo',
+                      textAlign: TextAlign.right,
+                      style: textStyle.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
+                  Icon(Icons.exit_to_app, color: Colors.white,)
+                ],
+              ),
             ),
-            onPressed: () => _exitGroup(context),
           ),
         ),
         SizedBox(

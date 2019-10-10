@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
-TextStyle getTextStyle() {
-  return TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-}
-
-TextStyle errorStyle() {
-  return TextStyle(fontFamily: 'Montserrat', fontSize: 13.0, color: Colors.redAccent);
-}
+final textStyle = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+final errorStyle = TextStyle(fontFamily: 'Montserrat', fontSize: 13.0);
+final primaryColor = Color(0x728aff);
+final primaryButtonColor = Color(0xff192376);
 
 TextFormField getTextField(
     String placeholder, TextEditingController controller) {
@@ -19,11 +16,11 @@ TextFormField getTextField(
       return null;
     },
     controller: controller,
-    style: getTextStyle(),
+    style: textStyle,
     decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: placeholder,
-        errorStyle: errorStyle(),
+        errorStyle: errorStyle,
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -48,7 +45,7 @@ Widget getMaterialButton(BuildContext context, GlobalKey<FormState> _formKey,
       },
       child: Text(label,
           textAlign: TextAlign.center,
-          style: getTextStyle()
+          style: textStyle
               .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
     ),
   );

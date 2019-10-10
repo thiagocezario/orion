@@ -81,11 +81,11 @@ class _NewAccountPageState extends State<NewAccountPage> {
 
         return null;
       },
-      style: getTextStyle(),
+      style: textStyle,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: 'Email',
-          errorStyle: errorStyle(),
+          errorStyle: errorStyle,
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -102,11 +102,11 @@ class _NewAccountPageState extends State<NewAccountPage> {
         return null;
       },
       obscureText: true,
-      style: getTextStyle(),
+      style: textStyle,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: 'Senha',
-          errorStyle: errorStyle(),
+          errorStyle: errorStyle,
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -122,11 +122,11 @@ class _NewAccountPageState extends State<NewAccountPage> {
 
         return null;
       },
-      style: getTextStyle(),
+      style: textStyle,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: 'Nome',
-          errorStyle: errorStyle(),
+          errorStyle: errorStyle,
           fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
@@ -170,7 +170,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
                   },
                   child: Text('Criar conta',
                       textAlign: TextAlign.center,
-                      style: getTextStyle().copyWith(
+                      style: textStyle.copyWith(
                           color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               )

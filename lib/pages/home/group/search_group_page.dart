@@ -135,7 +135,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
-      style: getTextStyle(),
+      style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
           padding: EdgeInsets.all(15.0),
@@ -196,7 +196,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
-      style: getTextStyle(),
+      style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
           padding: EdgeInsets.all(15.0),
@@ -257,7 +257,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
-      style: getTextStyle(),
+      style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
           padding: EdgeInsets.all(15.0),
