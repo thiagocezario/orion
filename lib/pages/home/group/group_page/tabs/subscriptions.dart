@@ -3,6 +3,7 @@ import 'package:orion/api/client.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/model/user.dart';
+import 'package:orion/pages/home/group/group_page/group_page.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,7 @@ class _GroupUsersState extends State<GroupUsers> {
   Widget build(BuildContext context) {
     // TODO: Limitar pra usuarios adm
     PopupMenuButton<String> subscriptionAction(Subscription sub) {
-      if (!sub.manager) {
+      if (GroupPage.isUserManager) {
         return PopupMenuButton<String>(
           onSelected: (String actionSelected) =>
               _popUpMenuActions(actionSelected, sub),
@@ -73,7 +74,7 @@ class _GroupUsersState extends State<GroupUsers> {
               
             ),
             Text(
-              'Admin',
+              'Banido',
               style: TextStyle(color: Colors.red),
             )
           ],

@@ -8,7 +8,8 @@ import 'package:orion/pages/home/group/group_page/tabs/subscriptions.dart';
 
 class GroupPage extends StatefulWidget {
   final group;
-
+  static bool isUserManager;
+  
   GroupPage(this.group);
 
   @override
@@ -44,7 +45,7 @@ class _GroupPageState extends State<GroupPage> {
             GroupPost(group),
             GroupUsers(group),
             GroupEvent(group),
-            DisciplinePerformance(group.discipline),
+            DisciplinePerformance(group.discipline, group),
             GroupInfo(group.id),
           ],
         ),

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:orion/api/client.dart';
 import 'package:orion/model/group.dart';
+import 'package:orion/model/subscriptions.dart';
+import 'package:orion/model/user.dart';
 import 'package:orion/pages/home/group/group_page/group_page.dart';
 import 'package:orion/provider/discipline_performances_provider.dart';
 import 'package:orion/provider/group_events_provider.dart';
@@ -24,14 +27,30 @@ class GroupCards {
     return Material(
       child: InkWell(
         onTap: () {
-          Provider.of<GroupPostsProvider>(context).fetchPosts(group.id.toString());
-          Provider.of<SubscriptionsProvider>(context).fetchSubscriptions(group.id.toString());
-          Provider.of<GroupPostsProvider>(context).fetchPosts(group.id.toString());
-          Provider.of<GroupEventsProvider>(context).fetchEvents(group.id.toString());
-          Provider.of<DisciplinePerformancesProvider>(context).fetchPerformances(group.discipline.id.toString());
+          Provider.of<GroupPostsProvider>(context)
+              .fetchPosts(group.id.toString());
+          Provider.of<SubscriptionsProvider>(context)
+              .fetchSubscriptions(group.id.toString());
+          Provider.of<GroupPostsProvider>(context)
+              .fetchPosts(group.id.toString());
+          Provider.of<GroupEventsProvider>(context)
+              .fetchEvents(group.id.toString());
+          Provider.of<DisciplinePerformancesProvider>(context)
+              .fetchPerformances(group.discipline.id.toString());
 
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => GroupPage(group)));
+          Client.listSubscriptions(Singleton().jwtToken, group.id.toString(),
+                  Singleton().user.id.toString())
+              .then((response) {
+            var sub = subscriptionFromJson(response.body);
+
+            if (sub.first.student.id == Singleton().user.id &&
+                sub.first.manager) {
+              GroupPage.isUserManager = true;
+            }
+          });
+
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => GroupPage(group)));
         },
         child: Card(
             margin: EdgeInsets.all(7.5),
