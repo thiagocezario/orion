@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 class Client {
 
   // change if you aew running on android emulator
-  // static final String _base = "10.0.2.2:3000";
-  static final String _base = 'localhost:3000';
+  static final String _base = "10.0.2.2:3000";
+  // static final String _base = 'localhost:3000';
 
   static final String _baseUrl = 'http://$_base';
 

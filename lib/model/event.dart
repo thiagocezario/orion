@@ -14,10 +14,10 @@ String eventToJson(List<Event> data) => json.encode(new List<dynamic>.from(data.
 
 class Event {
     int id;
-    String title;
-    String content;
-    Group group;
-    User student;
+    String title = "";
+    String content = "";
+    Group group = Group();
+    User student = User();
 
     Event({
         this.id,
