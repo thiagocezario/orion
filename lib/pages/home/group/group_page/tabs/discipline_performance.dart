@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/client.dart';
+import 'package:orion/components/performances/performance_dialog.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/performance.dart';
@@ -14,7 +15,8 @@ class DisciplinePerformance extends StatefulWidget {
   DisciplinePerformance(this.discipline, this.group);
 
   @override
-  _DisciplinePerformanceState createState() => _DisciplinePerformanceState(discipline, group);
+  _DisciplinePerformanceState createState() =>
+      _DisciplinePerformanceState(discipline, group);
 }
 
 class _DisciplinePerformanceState extends State<DisciplinePerformance> {
@@ -31,45 +33,106 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
               ))
           .toList();
 
+  Future _editPerformance(Performance performance) async {
+    Performance result = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) {
+        return PerformanceDialog(performance);
+      },
+      fullscreenDialog: true,
+    ));
 
-  // TODO: Remover requisições desnecessarias
-  Future _popUpMenuActions(String action, Performance performance, String value, String maxValue) async {
-    if (action == 'Editar') {
-      await Client.updatePerformance(Singleton().jwtToken, performance.id, "", value, maxValue).then((response) {
-        Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.id.toString());
-      });
-    } else if (action == 'Deletar') {
-      await Client.deletePerformance(Singleton().jwtToken, performance.id).then((response) {
+    if (result != null) {
+      await Client.updatePerformance(Singleton().jwtToken, result.discipline.id,
+              result.description, result.value, result.maxValue)
+          .then((response) {
         Provider.of<DisciplinePerformancesProvider>(context)
             .fetchPerformances(group.id.toString());
       });
     }
   }
+
+  Future _createPerformance() async {
+    Performance result = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) {
+        return PerformanceDialog(null);
+      },
+      fullscreenDialog: true,
+    ));
+
+    if (result != null) {
+      await Client.createPerformance(Singleton().jwtToken, group.discipline.id,
+              result.description, result.value, result.maxValue)
+          .then((response) {
+        Provider.of<DisciplinePerformancesProvider>(context)
+            .fetchPerformances(group.id.toString());
+      });
+    }
+  }
+
+  // TODO: Remover requisições desnecessarias
+  Future _popUpMenuActions(String action, Performance performance, String value,
+      String maxValue) async {
+    if (action == 'Editar') {
+      _editPerformance(performance);
+    } else if (action == 'Deletar') {
+      await Client.deletePerformance(Singleton().jwtToken, performance.id)
+          .then((response) {
+        Provider.of<DisciplinePerformancesProvider>(context)
+            .fetchPerformances(group.id.toString());
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     PopupMenuButton<String> eventActions(Performance performance) {
-        return PopupMenuButton<String>(
-          onSelected: (String actionSelected) =>
-              _popUpMenuActions(actionSelected, performance, 0.toString(), 100.toString()),
-          itemBuilder: (BuildContext context) => _popUpMenuItems,
-        );
+      return PopupMenuButton<String>(
+        onSelected: (String actionSelected) => _popUpMenuActions(
+            actionSelected, performance, 0.toString(), 100.toString()),
+        itemBuilder: (BuildContext context) => _popUpMenuItems,
+      );
     }
 
     return Consumer<DisciplinePerformancesProvider>(
       builder: (context, disciplineProvider, _) => Container(
-        child: ListView.builder(
-          itemCount: disciplineProvider.disciplinePerformances.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: Text("${disciplineProvider.disciplinePerformances[index].percentage.toString()}"),
-              title: Text(disciplineProvider.disciplinePerformances[index].description),
-              subtitle: Text("${disciplineProvider.disciplinePerformances[index].value.toString()} / ${disciplineProvider.disciplinePerformances[index].maxValue.toString()}"),
-              trailing: eventActions(disciplineProvider.disciplinePerformances[index]),
-            );
-          },
-        )
-      ),
+          child: ListView.builder(
+        itemCount: disciplineProvider.disciplinePerformances.length + 1,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+                return OutlineButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Adicionar nova nota',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 20,
+                          color: Colors.lightBlue,
+                        ),
+                      ),
+                      Icon(
+                        Icons.add,
+                        color: Colors.lightBlue,
+                      ),
+                    ],
+                  ),
+                  onPressed: () async => await _createPerformance(),
+                );
+              }
+
+          return ListTile(
+            leading: Text(
+                "${disciplineProvider.disciplinePerformances[index - 1].percentage.toString()} %"),
+            title: Text(
+                disciplineProvider.disciplinePerformances[index - 1].description),
+            subtitle: Text(
+                "${disciplineProvider.disciplinePerformances[index - 1].value.toString()} / ${disciplineProvider.disciplinePerformances[index - 1].maxValue.toString()}"),
+            trailing:
+                eventActions(disciplineProvider.disciplinePerformances[index - 1]),
+          );
+        },
+      )),
     );
   }
 }

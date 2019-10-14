@@ -55,14 +55,14 @@ class _EventDialogState extends State<EventDialog> {
                   child: const Text('CANCELAR'),
                   onPressed: () {
                     Navigator.of(context).pop(
-                        false); // Pops the confirmation dialog but not the page.
+                        false);
                   },
                 ),
                 FlatButton(
                   child: const Text('DESCARTAR'),
                   onPressed: () {
                     Navigator.of(context).pop(
-                        true); // Returning true to _onWillPop will pop again.
+                        true);
                   },
                 ),
               ],

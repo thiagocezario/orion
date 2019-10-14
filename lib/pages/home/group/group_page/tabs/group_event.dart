@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/client.dart';
-import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/model/event.dart';
 import 'package:orion/model/group.dart';
