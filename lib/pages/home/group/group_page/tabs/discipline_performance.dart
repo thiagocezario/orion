@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/client.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/performances/performance_dialog.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
@@ -99,7 +100,16 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
         itemCount: disciplineProvider.disciplinePerformances.length + 1,
         itemBuilder: (context, index) {
           if (index == 0) {
-                return OutlineButton(
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+              child: Material(
+                elevation: 5.0,
+                borderRadius: BorderRadius.circular(30.0),
+                color: primaryButtonColor,
+                child: MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                  elevation: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -108,28 +118,32 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 20,
-                          color: Colors.lightBlue,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                       Icon(
                         Icons.add,
-                        color: Colors.lightBlue,
+                        color: Colors.white,
+
                       ),
                     ],
                   ),
                   onPressed: () async => await _createPerformance(),
-                );
-              }
+                ),
+              ),
+            );
+          }
 
           return ListTile(
             leading: Text(
                 "${disciplineProvider.disciplinePerformances[index - 1].percentage.toString()} %"),
-            title: Text(
-                disciplineProvider.disciplinePerformances[index - 1].description),
+            title: Text(disciplineProvider
+                .disciplinePerformances[index - 1].description),
             subtitle: Text(
                 "${disciplineProvider.disciplinePerformances[index - 1].value.toString()} / ${disciplineProvider.disciplinePerformances[index - 1].maxValue.toString()}"),
-            trailing:
-                eventActions(disciplineProvider.disciplinePerformances[index - 1]),
+            trailing: eventActions(
+                disciplineProvider.disciplinePerformances[index - 1]),
           );
         },
       )),
