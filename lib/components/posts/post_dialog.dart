@@ -176,7 +176,8 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
                     itemCount:
                         _files != null && _files.isNotEmpty ? _files.length : 0,
                     itemBuilder: (BuildContext context, int index) {
-                      final String name = _files[index].path.toString();
+                      final String filePath = _files[index].path;
+                      final String name = filePath.split("/").last;
                       return ListTile(
                         leading: Icon(Icons.attachment),
                         title: Text(
