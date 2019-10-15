@@ -26,7 +26,8 @@ class _LoginPageState extends State<LoginPage> {
       String token = Provider.of<AuthProvider>(context).accessToken;
       if (token != null && token != '') {
         Provider.of<MyGroupsProvider>(context).refreshMyGroups();
-        Provider.of<GroupRecomendationsProvider>(context).refreshMyRecomendations();
+        Provider.of<GroupRecomendationsProvider>(context)
+            .refreshMyRecomendations();
         Provider.of<MyEventsProvider>(context).fetchEvents();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
@@ -56,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Form _buildForm(BuildContext context) {
+  Widget _buildForm(BuildContext context) {
     _emailFieldController.text = "user@user.com";
     _passwordFieldController.text = "123123";
     _user.email = "user@user.com";
@@ -76,8 +77,6 @@ class _LoginPageState extends State<LoginPage> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: 'Email',
           errorStyle: errorStyle,
-          fillColor: Colors.white,
-          filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
       onChanged: (text) => _user.email = text,
     );
@@ -97,70 +96,87 @@ class _LoginPageState extends State<LoginPage> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: 'Senha',
           errorStyle: errorStyle,
-          fillColor: Colors.white,
-          filled: true,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
       onChanged: (text) => _user.password = text,
     );
 
-    return Form(
-        key: _formKey,
-        child: Padding(
-          padding: EdgeInsets.only(left: 36.0, right: 36.0, top: 50),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height / 8, horizontal: 16),
+      child: Container(
+        height: 500,
+        child: Card(
+          elevation: 5.0,
+          color: Colors.white,
+          child: Wrap(
             children: <Widget>[
-              getLogo(),
-              SizedBox(
-                height: 35.0,
-              ),
-              userField,
-              SizedBox(height: 10.0),
-              passwordField,
-              SizedBox(
-                height: 25.0,
-              ),
-              Builder(
-                builder: (context) => Material(
-                  elevation: 5.0,
-                  borderRadius: BorderRadius.circular(30.0),
-                  color: Color(0xff192376),
-                  child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                    elevation: 50.0,
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        _signIn(context);
-                      }
-                    },
-                    child: Text('Entrar',
-                        textAlign: TextAlign.center,
-                        style: textStyle.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15.0,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  newAccountButton(context),
-                  SizedBox(width: 20.0),
-                  forgotPasswordButton(context)
-                ],
-              ),
+              Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 36.0, right: 36.0, top: 50),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        getLogo(),
+                        SizedBox(
+                          height: 35.0,
+                        ),
+                        userField,
+                        SizedBox(height: 10.0),
+                        passwordField,
+                        // SizedBox(
+                        //   height: 15.0,
+                        // ),
+                        Container(
+                          alignment: Alignment.bottomRight,
+                          child: forgotPasswordButton(context),
+                        ),
+                        Builder(
+                          builder: (context) => Material(
+                            elevation: 5.0,
+                            borderRadius: BorderRadius.circular(30.0),
+                            color: Color(0xff192376),
+                            child: MaterialButton(
+                              minWidth: MediaQuery.of(context).size.width,
+                              padding:
+                                  EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              elevation: 50.0,
+                              onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  _signIn(context);
+                                }
+                              },
+                              child: Text('Entrar',
+                                  textAlign: TextAlign.center,
+                                  style: textStyle.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Novo usuário?'),
+                            newAccountButton(context),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   FlatButton newAccountButton(BuildContext context) {
-    TextStyle textStyle = TextStyle(fontSize: 12.0, color: Colors.white);
+    TextStyle textStyle = TextStyle(fontSize: 12.0, color: Colors.lightBlue);
 
     FlatButton flatButton = FlatButton(
         child: Text('Criar nova conta', style: textStyle),
@@ -176,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   FlatButton forgotPasswordButton(BuildContext context) {
-    TextStyle textStyle = TextStyle(fontSize: 12.0, color: Colors.white);
+    TextStyle textStyle = TextStyle(fontSize: 12.0, color: Colors.lightBlue);
 
     FlatButton flatButton = FlatButton(
         child: Text('Esqueceu a senha?', style: textStyle),
