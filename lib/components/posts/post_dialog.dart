@@ -158,6 +158,15 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
                 },
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Anexos',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
             Builder(
               builder: (BuildContext context) => Container(
                 padding: const EdgeInsets.only(bottom: 30.0),
@@ -174,7 +183,10 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
                           name,
                         ),
                         trailing: IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red,),
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
                           onPressed: () {
                             setState(() {
                               _files.removeAt(index);
@@ -191,6 +203,7 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
             ),
             FlatButton(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(
                     Icons.attachment,
