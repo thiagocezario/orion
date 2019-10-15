@@ -42,7 +42,7 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
     ));
 
     if (result != null) {
-      await Client.updatePerformance(Singleton().jwtToken, result.discipline.id,
+      await Client.updatePerformance(Singleton().jwtToken, result.id,
               result.description, result.value, result.maxValue)
           .then((response) {
         Provider.of<DisciplinePerformancesProvider>(context)
