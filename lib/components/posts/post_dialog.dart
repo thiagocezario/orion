@@ -26,7 +26,7 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   String _attachmentText = 'Adicionar arquivo';
-  File _file;
+  List<File> _files = List();
 
   _GroupPostDialogState(Post post, this.group) {
     if (post != null) {
@@ -77,13 +77,13 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
         false;
   }
 
-Future getImage() async {
+  Future getImage() async {
     var file = await FilePicker.getFile(type: FileType.ANY, fileExtension: '');
 
     if (file != null) {
       setState(() {
-        _file = file;
-        _attachmentText = _file.toString();
+        _files.add(file);
+        _attachmentText = file.toString();
       });
     }
   }
@@ -158,11 +158,49 @@ Future getImage() async {
                 },
               ),
             ),
+            Builder(
+              builder: (BuildContext context) => Container(
+                padding: const EdgeInsets.only(bottom: 30.0),
+                height: MediaQuery.of(context).size.height * 0.30,
+                child: Scrollbar(
+                  child: ListView.separated(
+                    itemCount:
+                        _files != null && _files.isNotEmpty ? _files.length : 0,
+                    itemBuilder: (BuildContext context, int index) {
+                      final String name = _files[index].path.toString();
+                      return ListTile(
+                        leading: Icon(Icons.attachment),
+                        title: Text(
+                          name,
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red,),
+                          onPressed: () {
+                            setState(() {
+                              _files.removeAt(index);
+                            });
+                          },
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Divider(),
+                  ),
+                ),
+              ),
+            ),
             FlatButton(
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.attachment, color: Colors.lightBlue,),
-                  Text(_attachmentText, style: TextStyle(color: Colors.lightBlue),),
+                  Icon(
+                    Icons.attachment,
+                    color: Colors.lightBlue,
+                  ),
+                  Expanded(
+                      child: Text(
+                    'Adicionar anexo',
+                    style: TextStyle(color: Colors.lightBlue, fontSize: 25),
+                  )),
                 ],
               ),
               onPressed: () => getImage(),
