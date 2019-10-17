@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/client.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
-import 'package:orion/components/posts/post_cards.dart';
 import 'package:orion/components/posts/post_dialog.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
@@ -51,7 +50,7 @@ class _GroupPostState extends State<GroupPost> {
   Future _createPost() async {
     Post result = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {
-        return GroupPostDialog(null, group);
+        return GroupPostDialog(Post(), group);
       },
       fullscreenDialog: true,
     ));

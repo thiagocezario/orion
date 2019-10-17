@@ -18,14 +18,12 @@ class GroupPostDialog extends StatefulWidget {
 class _GroupPostDialogState extends State<GroupPostDialog> {
   bool _saveNeeded = false;
   bool _hasTitle = false;
-  bool _hasAttachments = false;
   bool _hasDescription = false;
   String _screenName = '';
   Post post;
   Group group;
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  String _attachmentText = 'Adicionar arquivo';
   List<File> _files = List();
 
   _GroupPostDialogState(Post post, this.group) {
@@ -33,6 +31,7 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
       this.post = post;
       _titleController.text = post.title;
       _descriptionController.text = post.content;
+      _files = post.attachments;
       _screenName = 'Editar publicação';
     } else {
       post = Post();
@@ -77,13 +76,13 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
         false;
   }
 
-  Future getImage() async {
+  Future getAttachment() async {
     var file = await FilePicker.getFile(type: FileType.ANY, fileExtension: '');
 
     if (file != null) {
       setState(() {
         _files.add(file);
-        _attachmentText = file.toString();
+        post.attachments.add(file);
       });
     }
   }
@@ -170,13 +169,13 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
             Builder(
               builder: (BuildContext context) => Container(
                 padding: const EdgeInsets.only(bottom: 30.0),
-                height: MediaQuery.of(context).size.height * 0.30,
+                height: MediaQuery.of(context).size.height * 0.50,
                 child: Scrollbar(
                   child: ListView.separated(
                     itemCount:
-                        _files != null && _files.isNotEmpty ? _files.length : 0,
+                        post.attachments != null && post.attachments.isNotEmpty ? post.attachments.length : 0,
                     itemBuilder: (BuildContext context, int index) {
-                      final String filePath = _files[index].path;
+                      final String filePath = post.attachments[index].path;
                       final String name = filePath.split("/").last;
                       return ListTile(
                         leading: Icon(Icons.attachment),
@@ -202,25 +201,12 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
                 ),
               ),
             ),
-            FlatButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.attachment,
-                    color: Colors.lightBlue,
-                  ),
-                  Expanded(
-                      child: Text(
-                    'Adicionar anexo',
-                    style: TextStyle(color: Colors.lightBlue, fontSize: 25),
-                  )),
-                ],
-              ),
-              onPressed: () => getImage(),
-            ),
           ]),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.attach_file),
+        onPressed: () => getAttachment(),
       ),
     );
   }

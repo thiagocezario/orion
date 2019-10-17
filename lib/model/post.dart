@@ -3,6 +3,7 @@
 //     final post = postFromJson(jsonString);
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:orion/model/user.dart';
 
@@ -18,6 +19,7 @@ class Post {
     String content;
     Group group;
     User student;
+    List<File> attachments = List();
 
     Post({
         this.id,
