@@ -6,6 +6,7 @@ final TextStyle errorStyle = TextStyle(fontFamily: 'Montserrat', fontSize: 13.0)
 // final primaryColor = Color(0x728aff);
 final Color primaryColor = Color(0xff8893f2);
 final Color primaryButtonColor = Color(0xff192376);
+final Color groupIconsColor = Color(0xFFFF8A65); // orange 300
 
 TextFormField getTextField(
     String placeholder, TextEditingController controller) {

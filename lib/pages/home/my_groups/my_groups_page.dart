@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/groups/group_cards.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
@@ -80,12 +81,22 @@ class _MyGroupsState extends State<MyGroups> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Expanded(
-                                child: Text(
-                                  '${recommendations[index].name}'.toUpperCase(),
-                                  style:
-                                      TextStyle(color: Colors.black, fontSize: 15),
-                                  textAlign: TextAlign.center,
-                                ),
+                              child: Text(
+                                '${recommendations[index].name}'.toUpperCase(),
+                                style: TextStyle(
+                                    color: Colors.blueGrey,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Icon(
+                              Icons.people,
+                              color: Colors.blueGrey,
+                            ),
+                            Text(
+                              '${recommendations[index].metadata.subscriptions}',
+                              style: TextStyle(color: Colors.blueGrey),
                             )
                           ],
                         ),
@@ -97,11 +108,14 @@ class _MyGroupsState extends State<MyGroups> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.place),
+                            Icon(
+                              Icons.place,
+                              color: groupIconsColor,
+                            ),
                             Expanded(
                               child: Text(
                                 '${recommendations[index].institution.name}',
-                                style: TextStyle(color: Colors.black),
+                                style: TextStyle(color: Colors.blueGrey),
                                 textAlign: TextAlign.center,
                               ),
                             )
@@ -115,10 +129,13 @@ class _MyGroupsState extends State<MyGroups> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.people),
+                            Icon(
+                              Icons.desktop_windows,
+                              color: groupIconsColor,
+                            ),
                             Text(
-                              '${recommendations[index].metadata.subscriptions}',
-                              style: TextStyle(color: Colors.black),
+                              '${recommendations[index].discipline.name}',
+                              style: TextStyle(color: Colors.blueGrey),
                             )
                           ],
                         ),

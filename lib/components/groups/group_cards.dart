@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:orion/api/client.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/model/user.dart';
@@ -60,20 +61,52 @@ class GroupCards {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: 15.0, top: 10.0, bottom: 10.0),
-                    child: Text(
-                      group.name.toUpperCase(),
-                      style: TextStyle(fontSize: 17.0),
-                    ),
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 15.0, top: 10.0, bottom: 10.0),
+                        child: Text(
+                          group.name.toUpperCase(),
+                          style: TextStyle(
+                              fontSize: 17.0,
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 15.0, bottom: 10.0, top: 10.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Icon(
+                              Icons.people,
+                              color: Colors.blueGrey,
+                            ),
+                            Text(
+                              group.metadata.subscriptions.toString(),
+                              style: TextStyle(color: Colors.blueGrey),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 13.0, bottom: 3.0),
                     child: Row(
                       children: <Widget>[
-                        Icon(Icons.place),
-                        Text(group.institution.name)
+                        Icon(
+                          Icons.place,
+                          color: groupIconsColor,
+                        ),
+                        Text(
+                          group.institution.name,
+                          style: TextStyle(
+                            color: Colors.blueGrey,
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -83,8 +116,14 @@ class GroupCards {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Icon(Icons.person),
-                        Text(group.metadata.subscriptions.toString())
+                        Icon(
+                          Icons.desktop_windows,
+                          color: groupIconsColor,
+                        ),
+                        Text(
+                          group.discipline.name,
+                          style: TextStyle(color: Colors.blueGrey),
+                        )
                       ],
                     ),
                   ),
