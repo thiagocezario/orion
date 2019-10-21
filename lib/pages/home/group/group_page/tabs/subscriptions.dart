@@ -31,20 +31,33 @@ class _GroupUsersState extends State<GroupUsers> {
   // TODO: Remover requisições desnecessarias
   Future _popUpMenuActions(String action, Subscription sub) async {
     if (action == 'Tornar admin') {
-      await Client.createManager(Singleton().jwtToken, sub.id).then((response) {
-        Provider.of<SubscriptionsProvider>(context)
-            .fetchSubscriptions(group.id.toString());
-      });
+      await Client.createManager(Singleton().jwtToken, sub.id).then(
+        (response) {
+          Provider.of<SubscriptionsProvider>(context)
+              .fetchSubscriptions(group.id.toString());
+        },
+      );
     } else if (action == 'Banir') {
-      await Client.createBan(Singleton().jwtToken, sub.id).then((response) {
-        Provider.of<SubscriptionsProvider>(context)
-            .fetchSubscriptions(group.id.toString());
-      });
+      await Client.createBan(Singleton().jwtToken, sub.id).then(
+        (response) {
+          Provider.of<SubscriptionsProvider>(context)
+              .fetchSubscriptions(group.id.toString());
+        },
+      );
     } else if (action == 'Expulsar') {
-      await Client.unsubscribe(Singleton().jwtToken, sub.id).then((response) {
-        Provider.of<SubscriptionsProvider>(context)
-            .fetchSubscriptions(group.id.toString());
-      });
+      await Client.unsubscribe(Singleton().jwtToken, sub.id).then(
+        (response) {
+          Provider.of<SubscriptionsProvider>(context)
+              .fetchSubscriptions(group.id.toString());
+        },
+      );
+    } else if (action == "Desbanir") {
+      await Client.deleteBan(Singleton().jwtToken, sub.id).then(
+        (response) {
+          Provider.of<SubscriptionsProvider>(context)
+              .fetchSubscriptions(group.id.toString());
+        },
+      );
     }
   }
 
