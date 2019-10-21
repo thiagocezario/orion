@@ -53,11 +53,26 @@ class _GroupUsersState extends State<GroupUsers> {
     // TODO: Limitar pra usuarios adm
     PopupMenuButton<String> subscriptionAction(Subscription sub) {
       if (GroupPage.isUserManager) {
-        return PopupMenuButton<String>(
-          onSelected: (String actionSelected) =>
-              _popUpMenuActions(actionSelected, sub),
-          itemBuilder: (BuildContext context) => _popUpMenuItems,
-        );
+        if (sub.banned) {
+          return PopupMenuButton<String>(
+            onSelected: (String actionSelected) =>
+                _popUpMenuActions(actionSelected, sub),
+            itemBuilder: (BuildContext context) {
+              return <String>['Desbanir', 'Expulsar']
+                  .map((String value) => PopupMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      ))
+                  .toList();
+            },
+          );
+        } else {
+          return PopupMenuButton<String>(
+            onSelected: (String actionSelected) =>
+                _popUpMenuActions(actionSelected, sub),
+            itemBuilder: (BuildContext context) => _popUpMenuItems,
+          );
+        }
       }
 
       return null;
@@ -71,7 +86,6 @@ class _GroupUsersState extends State<GroupUsers> {
             Icon(
               Icons.person,
               color: Colors.red,
-              
             ),
             Text(
               'Banido',
@@ -104,30 +118,62 @@ class _GroupUsersState extends State<GroupUsers> {
     }
 
     return Consumer<SubscriptionsProvider>(
-      builder: (context, subscriptionsState, _) => ListView.builder(
-        physics: BouncingScrollPhysics(),
-        itemCount: subscriptionsState.subscriptions.length,
-        itemBuilder: (context, index) {
-          // TODO: Listar diferente os usuarios banidos
-          if (!subscriptionsState.subscriptions[index].banned &&
-              subscriptionsState.subscriptions[index].active) {
-            return ListTile(
-                leading: subIcon(subscriptionsState.subscriptions[index]),
-                title:
-                    Text(subscriptionsState.subscriptions[index].student.name),
-                subtitle:
-                    Text(subscriptionsState.subscriptions[index].student.email),
-                trailing:
-                    // subscriptionActions(subscriptionsState.subscriptions[index]),
-                    subscriptionAction(
-                        subscriptionsState.subscriptions[index]));
-          }
+      builder: (context, subscriptionsState, _) => CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (!subscriptionsState.subscriptions[index].banned &&
+                    subscriptionsState.subscriptions[index].active) {
+                  return ListTile(
+                      leading: subIcon(subscriptionsState.subscriptions[index]),
+                      title: Text(
+                          subscriptionsState.subscriptions[index].student.name),
+                      subtitle: Text(subscriptionsState
+                          .subscriptions[index].student.email),
+                      trailing: subscriptionAction(
+                          subscriptionsState.subscriptions[index]));
+                }
 
-          return SizedBox(
-            height: 0,
-            width: 0,
-          );
-        },
+                return SizedBox(
+                  height: 0,
+                  width: 0,
+                );
+              },
+              childCount: subscriptionsState.subscriptions.length,
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (subscriptionsState.subscriptions[index].banned) {
+                  return ListTile(
+                      leading: subIcon(subscriptionsState.subscriptions[index]),
+                      title: Text(
+                        subscriptionsState.subscriptions[index].student.name,
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                      ),
+                      subtitle: Text(
+                        subscriptionsState.subscriptions[index].student.email,
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                      ),
+                      trailing: subscriptionAction(
+                          subscriptionsState.subscriptions[index]));
+                }
+
+                return SizedBox(
+                  height: 0,
+                  width: 0,
+                );
+              },
+              childCount: subscriptionsState.subscriptions.length,
+            ),
+          ),
+        ],
       ),
     );
   }
