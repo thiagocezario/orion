@@ -1,6 +1,8 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/course_resource.dart';
+import 'package:orion/api/resources/discipline_resource.dart';
+import 'package:orion/api/resources/institution_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
@@ -22,9 +24,7 @@ class SearchGroupPage extends StatefulWidget {
 
   static Future loadInstitutions() async {
     try {
-      var singleton = Singleton();
-
-      Client.listInstitutions(singleton.jwtToken, "").then((response) {
+      InstitutionResource.list(null).then((response) {
         _SearchGroupPageState.institutions = institutionFromJson(response.body);
       }).catchError((e) {
         print(e);
@@ -36,9 +36,7 @@ class SearchGroupPage extends StatefulWidget {
 
   static Future loadDisciplines() async {
     try {
-      var singleton = Singleton();
-
-      Client.listDisciplines(singleton.jwtToken, "").then((response) {
+      DisciplineResource.list(null).then((response) {
         _SearchGroupPageState.disciplines = disciplineFromJson(response.body);
       }).catchError((e) {
         print(e);
@@ -50,9 +48,7 @@ class SearchGroupPage extends StatefulWidget {
 
   static Future loadCourses() async {
     try {
-      var singleton = Singleton();
-
-      Client.listCourses(singleton.jwtToken, "").then((response) {
+      CourseResource.list(null).then((response) {
         _SearchGroupPageState.courses = courseFromJson(response.body);
       }).catchError((e) {
         print(e);
@@ -85,19 +81,22 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
   var _singleton = Singleton();
 
   void searchInstitutions(String text) {
-    Client.listInstitutions(_singleton.jwtToken, text).then((response) {
+    var data = {'name': text};
+    InstitutionResource.list(data).then((response) {
       _SearchGroupPageState.institutions = institutionFromJson(response.body);
     });
   }
 
   void searchCourses(String text) {
-    Client.listCourses(_singleton.jwtToken, text).then((response) {
+    var data = {'name': text};
+    CourseResource.list(data).then((response) {
       _SearchGroupPageState.courses = courseFromJson(response.body);
     });
   }
 
   void searchDisciplines(String text) {
-    Client.listDisciplines(_singleton.jwtToken, text).then((response) {
+    var data = {'name': text};
+    DisciplineResource.list(data).then((response) {
       _SearchGroupPageState.disciplines = disciplineFromJson(response.body);
     });
   }
