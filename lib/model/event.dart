@@ -18,13 +18,15 @@ class Event {
     String content = "";
     Group group = Group();
     User student = User();
+    DateTime date = DateTime.now();
 
     Event({
         this.id,
         this.title,
         this.content,
         this.group,
-        this.student
+        this.student,
+        this.date,
     });
 
     String description(){
@@ -39,6 +41,7 @@ class Event {
         // but that information is not necessary here
         group: Group(id: json["group"]["id"], name: json["group"]["name"]),
         student: User.fromJson(json["student"]),
+        date: DateTime.parse(json["date"])
     );
 
     Map<String, dynamic> toJson() => {

@@ -27,7 +27,7 @@ class GroupCards {
   Widget _buildGroupCard(BuildContext context, Group group) {
     return Material(
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           Provider.of<GroupPostsProvider>(context)
               .fetchPosts(group.id.toString());
           Provider.of<SubscriptionsProvider>(context)
@@ -37,8 +37,8 @@ class GroupCards {
           Provider.of<DisciplinePerformancesProvider>(context)
               .fetchPerformances(group.discipline.id.toString());
 
-          var data = {'group_id': group.id, 'user_id': Singleton().user.id};
-          SubscriptionResource.list(data).then((response) {
+          var data = {'group_id': group.id.toString(), 'user_id': Singleton().user.id.toString()};
+          await SubscriptionResource.list(data).then((response) {
             var sub = subscriptionFromJson(response.body);
 
             if (sub.first.student.id == Singleton().user.id &&
@@ -85,7 +85,7 @@ class GroupCards {
                               color: Colors.blueGrey,
                             ),
                             Text(
-                              group.metadata.subscriptions.toString(),
+                              "${group.metadata.subscriptions}",
                               style: TextStyle(color: Colors.blueGrey),
                             )
                           ],
