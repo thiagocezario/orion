@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/model/subscriptions.dart';
-import 'package:orion/model/user.dart';
 
 class SubscriptionsProvider with ChangeNotifier {
   List<Subscription> _subscriptions = List();
@@ -9,9 +8,12 @@ class SubscriptionsProvider with ChangeNotifier {
   get subscriptions => _subscriptions;
 
   void fetchSubscriptions(String groupId) async {
-    await Client.listSubscriptions(Singleton().jwtToken, groupId, "").then((response) {
-      _subscriptions = subscriptionFromJson(response.body);
-      notifyListeners();
-    });
+    var data = {'group_id': groupId};
+    return await SubscriptionResource.list(data).then(handleResponse);
+  }
+
+  void handleResponse(dynamic response) {
+    _subscriptions = subscriptionFromJson(response.body);
+    notifyListeners();
   }
 }

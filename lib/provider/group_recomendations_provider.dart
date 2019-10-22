@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/model/user.dart';
 
 class GroupRecomendationsProvider extends ChangeNotifier {
   List<Group> _groupRecomendations = List();
@@ -9,9 +8,11 @@ class GroupRecomendationsProvider extends ChangeNotifier {
   get groupRecomendations => _groupRecomendations;
 
   void refreshMyRecomendations() async {
-    await Client.listGroupRecomendations(Singleton().jwtToken).then((response) {
-      _groupRecomendations = groupFromJson(response.body);
-      notifyListeners();
-    });
+    await GroupResource.listRecomendations(null).then(handleResponse);
+  }
+
+  void handleResponse(dynamic response) {
+    _groupRecomendations = groupFromJson(response.body);
+    notifyListeners();
   }
 }
