@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:orion/api/resources/event_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/events/evet_dialog.dart';
@@ -130,9 +131,25 @@ class _GroupEventState extends State<GroupEvent> {
                 );
               }
               return ListTile(
-                leading: Icon(
-                  Icons.access_time,
-                  size: 25,
+                leading: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 7.0),
+                      child: Text(
+                        "${groupEventsProvider.groupEvents[index - 1].date.day}",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 25,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      DateFormat.MMMM()
+                          .format(groupEventsProvider
+                              .groupEvents[index - 1].date),
+                    ),
+                  ],
                 ),
                 title: Text(groupEventsProvider.groupEvents[index - 1].title),
                 subtitle: Text(
