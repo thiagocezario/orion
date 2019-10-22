@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/user.dart';
 
@@ -17,7 +17,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
   final _user = User();
 
   void _createAccount(BuildContext context) {
-    Client.createUser(_user).then((response) {
+    StudentResource.createObject(_user).then((response) {
       if (response != null) {
         Scaffold.of(context).showSnackBar(
           SnackBar(

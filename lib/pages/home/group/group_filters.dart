@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/group_resource.dart';
+import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
@@ -40,9 +42,13 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
   }
 
   void _listGroups() async {
-    Client.searchGroups(
-            Singleton().jwtToken, institutionId, courseId, disciplineId)
-        .then((response) {
+    var data = {
+      "institution_id": institutionId.toString(),
+      "course_id": courseId.toString(),
+      "discipline_id": disciplineId.toString()
+    };
+
+    GroupResource.list(data).then((response) {
       List<Group> groups = groupFromJson(response.body);
       _buildList(groups);
     });
@@ -110,7 +116,8 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
 
                                     Provider.of<MyGroupsProvider>(context)
                                         .refreshMyGroups();
-                                    Provider.of<GroupRecomendationsProvider>(context)
+                                    Provider.of<GroupRecomendationsProvider>(
+                                            context)
                                         .refreshMyRecomendations();
                                     Provider.of<MyEventsProvider>(context)
                                         .fetchEvents();

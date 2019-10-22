@@ -13,18 +13,18 @@ class PostCards {
     );
   }
 
-  Widget _buildPostCard(Post post) {
-    IconButton postActions(Post post) {
-      if (post.student.id == 2) {
-        return IconButton(
-          icon: Icon(Icons.more_vert),
-          onPressed: () {},
-        );
-      }
-
-      return null;
+  IconButton postActions(Post post) {
+    if (post.student.id == 2) {
+      return IconButton(
+        icon: Icon(Icons.more_vert),
+        onPressed: () {},
+      );
     }
 
+    return null;
+  }
+
+  Widget _buildPostCard(Post post) {
     ListTile card = ListTile(
       title: Text(post.blobs.length.toString()),
       subtitle: Text(post.content),

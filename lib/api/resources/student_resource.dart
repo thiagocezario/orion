@@ -2,7 +2,7 @@ import 'package:orion/model/user.dart';
 
 import '../base.dart';
 
-class GroupResource {
+class StudentResource {
   static String path() {
     return '/api/students';
   }

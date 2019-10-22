@@ -39,9 +39,9 @@ class _GroupPostState extends State<GroupPost> {
     ));
 
     if (result != null) {
-      await Client.updatePost(Singleton().jwtToken, result.id, result.title,
-              result.content, post.blobs)
-          .then((response) {
+      print('Lalala: ${result.blobs.length}');
+
+      await PostResource.updateObject(result).then((response) {
         Provider.of<GroupPostsProvider>(context)
             .fetchPosts(group.id.toString());
       });
@@ -71,7 +71,7 @@ class _GroupPostState extends State<GroupPost> {
     if (action == 'Editar') {
       await _editPost(post);
     } else if (action == 'Deletar') {
-      await Client.deletePost(Singleton().jwtToken, post.id).then((response) {
+      await PostResource.delete(post.id.toString()).then((response) {
         Provider.of<GroupPostsProvider>(context)
             .fetchPosts(group.id.toString());
       });

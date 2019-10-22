@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/performance_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/performances/performance_dialog.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/performance.dart';
-import 'package:orion/model/user.dart';
 import 'package:orion/provider/discipline_performances_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -43,9 +42,7 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
     ));
 
     if (result != null) {
-      await Client.updatePerformance(Singleton().jwtToken, result.id,
-              result.description, result.value, result.maxValue)
-          .then((response) {
+      await PerformanceResource.updateObject(result).then((response) {
         Provider.of<DisciplinePerformancesProvider>(context)
             .fetchPerformances(group.id.toString());
       });
@@ -61,9 +58,9 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
     ));
 
     if (result != null) {
-      await Client.createPerformance(Singleton().jwtToken, group.discipline.id,
-              result.description, result.value, result.maxValue)
-          .then((response) {
+      result.discipline = discipline;
+
+      await PerformanceResource.createObject(result).then((response) {
         Provider.of<DisciplinePerformancesProvider>(context)
             .fetchPerformances(group.id.toString());
       });
@@ -76,7 +73,7 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
     if (action == 'Editar') {
       _editPerformance(performance);
     } else if (action == 'Deletar') {
-      await Client.deletePerformance(Singleton().jwtToken, performance.id)
+      await PerformanceResource.delete(performance.id.toString())
           .then((response) {
         Provider.of<DisciplinePerformancesProvider>(context)
             .fetchPerformances(group.id.toString());
@@ -116,16 +113,14 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
                       Text(
                         'Adicionar nova nota',
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold
-                        ),
+                            fontFamily: 'Montserrat',
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                       Icon(
                         Icons.add,
                         color: Colors.white,
-
                       ),
                     ],
                   ),

@@ -47,7 +47,7 @@ class PostResource {
     request.fields.addAll(data);
 
     // blobsToUpload.forEach((Blob blob) {
-    Blob blob = blobsToUpload.first;
+    Blob blob = blobsToUpload == null ? null : blobsToUpload.first;
     request.files.add(await http.MultipartFile.fromPath(
       'post[files][]',
       blob.file.path,
@@ -58,7 +58,32 @@ class PostResource {
   }
 
   static Future updateObject(Post post) async {
-    var data = {}; // get data from object
-    return update(post.id.toString(), data);
+    Uri uri = Base.memberPath(path(), post.id.toString());
+
+    dynamic data = {
+      'post[title]': post.title,
+      'post[content]': post.content
+    };
+
+    List<Blob> blobsToUpload = List();
+    post.blobs.where((Blob blob) {
+      return blob.id == null;
+    }).forEach((Blob blob) {
+      blobsToUpload.add(blob);
+    });
+
+    var request = new http.MultipartRequest("PUT", uri);
+    request.headers.addAll(Base.defaultAuthHeader());
+    request.fields.addAll(data);
+
+    // blobsToUpload.forEach((Blob blob) {
+    Blob blob = blobsToUpload == null ? null : blobsToUpload.first;
+    request.files.add(await http.MultipartFile.fromPath(
+      'post[files][]',
+      blob.file.path,
+    ));
+    // });
+
+    return request.send();
   }
 }

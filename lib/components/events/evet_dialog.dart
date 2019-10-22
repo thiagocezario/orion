@@ -26,7 +26,7 @@ class _EventDialogState extends State<EventDialog> {
     if (event != null) {
       this.event = event;
       _eventNameController.text = event.title;
-      _eventDescriptionController.text = event.description();
+      _eventDescriptionController.text = event.content;
       _screenName = 'Editar evento';
     } else {
       event = Event();
