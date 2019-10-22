@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
@@ -32,21 +32,20 @@ class GroupCards {
               .fetchPosts(group.id.toString());
           Provider.of<SubscriptionsProvider>(context)
               .fetchSubscriptions(group.id.toString());
-          Provider.of<GroupPostsProvider>(context)
-              .fetchPosts(group.id.toString());
           Provider.of<GroupEventsProvider>(context)
               .fetchEvents(group.id.toString());
           Provider.of<DisciplinePerformancesProvider>(context)
               .fetchPerformances(group.discipline.id.toString());
 
-          Client.listSubscriptions(Singleton().jwtToken, group.id.toString(),
-                  Singleton().user.id.toString())
-              .then((response) {
+          var data = {'group_id': group.id, 'user_id': Singleton().user.id};
+          SubscriptionResource.list(data).then((response) {
             var sub = subscriptionFromJson(response.body);
 
             if (sub.first.student.id == Singleton().user.id &&
                 sub.first.manager) {
               GroupPage.isUserManager = true;
+            } else {
+              GroupPage.isUserManager = false;
             }
           });
 
@@ -75,7 +74,8 @@ class GroupCards {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 15.0, bottom: 10.0, top: 10.0),
+                        padding: EdgeInsets.only(
+                            left: 15.0, bottom: 10.0, top: 10.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,

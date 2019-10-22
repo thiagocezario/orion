@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:orion/components/blobs/blob_item.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/model/blob.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
 
@@ -24,17 +26,15 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
   Group group;
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  List<File> _files = List();
 
   _GroupPostDialogState(Post post, this.group) {
     if (post != null) {
       this.post = post;
       _titleController.text = post.title;
       _descriptionController.text = post.content;
-      _files = post.attachments;
       _screenName = 'Editar publicação';
     } else {
-      post = Post();
+      post = Post(blobs: List());
       _screenName = 'Criar nova publicação';
     }
   }
@@ -81,8 +81,12 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
 
     if (file != null) {
       setState(() {
-        _files.add(file);
-        post.attachments.add(file);
+        final String filename = file.path.split("/").last;
+        Blob blob = Blob(filename: filename, file: file);
+        if (post.blobs == null) {
+          post.blobs = List();
+        }
+        post.blobs.add(blob);
       });
     }
   }
@@ -172,28 +176,10 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
                 height: MediaQuery.of(context).size.height * 0.50,
                 child: Scrollbar(
                   child: ListView.separated(
-                    itemCount:
-                        post.attachments != null && post.attachments.isNotEmpty ? post.attachments.length : 0,
+                    itemCount: post.blobs != null ? post.blobs.length : 0,
                     itemBuilder: (BuildContext context, int index) {
-                      final String filePath = post.attachments[index].path;
-                      final String name = filePath.split("/").last;
-                      return ListTile(
-                        leading: Icon(Icons.attachment),
-                        title: Text(
-                          name,
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _files.removeAt(index);
-                            });
-                          },
-                        ),
-                      );
+                      Blob blob = post.blobs[index];
+                      return BlobItem(blob: blob);
                     },
                     separatorBuilder: (BuildContext context, int index) =>
                         Divider(),

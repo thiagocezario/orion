@@ -17,6 +17,7 @@ String groupToJson(List<Group> data) => json.encode(List<dynamic>.from(data.map(
 class Group {
     int id;
     String name;
+    String description;
     DateTime createdAt;
     DateTime updatedAt;
     Metadata metadata;
@@ -27,6 +28,7 @@ class Group {
     Group({
         this.id,
         this.name,
+        this.description,
         this.createdAt,
         this.updatedAt,
         this.metadata,
@@ -38,6 +40,7 @@ class Group {
     factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json["id"],
         name: json["name"],
+        description: json["description"],
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
         metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
@@ -49,6 +52,7 @@ class Group {
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+        "description": description,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "metadata": metadata.toJson(),

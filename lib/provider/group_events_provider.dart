@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/event_resource.dart';
 import 'package:orion/model/event.dart';
-import 'package:orion/model/user.dart';
 
 class GroupEventsProvider with ChangeNotifier {
   List<Event> _groupEvents = List();
@@ -9,9 +8,12 @@ class GroupEventsProvider with ChangeNotifier {
   get groupEvents => _groupEvents;
 
   void fetchEvents(String groupId) async {
-    await Client.listEvents(Singleton().jwtToken, groupId, Singleton().user.id).then((response) {
-      _groupEvents = eventFromJson(response.body);
-      notifyListeners();
-    });
+    var data = { 'group_id': groupId };
+    return await EventResource.list(data).then(handleResponse);
+  }
+
+  void handleResponse(dynamic response) {
+    _groupEvents = eventFromJson(response.body);
+    notifyListeners();
   }
 }

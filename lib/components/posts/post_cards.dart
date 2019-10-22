@@ -26,7 +26,7 @@ class PostCards {
     }
 
     ListTile card = ListTile(
-      title: Text(post.title),
+      title: Text(post.blobs.length.toString()),
       subtitle: Text(post.content),
       trailing: postActions(post),
       isThreeLine: true,

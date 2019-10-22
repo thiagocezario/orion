@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/performance_resource.dart';
 import 'package:orion/model/performance.dart';
 import 'package:orion/model/user.dart';
 
@@ -9,11 +9,15 @@ class DisciplinePerformancesProvider with ChangeNotifier {
   get disciplinePerformances => _disciplinePerformances;
 
   void fetchPerformances(String disciplineId) async {
-    await Client.listPerformances(Singleton().jwtToken, disciplineId, Singleton().user.id.toString()).then((response) {
-      print(response.body);
+    var data = {
+      'discipline_id': disciplineId,
+      'user_id': Singleton().user.id.toString()
+    };
+    return await PerformanceResource.list(data).then(handleResponse);
+  }
 
-      _disciplinePerformances = performanceFromJson(response.body);
-      notifyListeners();
-    });
+  void handleResponse(dynamic response) {
+    _disciplinePerformances = performanceFromJson(response.body);
+    notifyListeners();
   }
 }
