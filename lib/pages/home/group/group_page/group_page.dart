@@ -8,7 +8,7 @@ import 'package:orion/pages/home/group/group_page/tabs/subscriptions.dart';
 
 class GroupPage extends StatefulWidget {
   final group;
-  static bool isUserManager;
+  static bool isUserManager = false;
   
   GroupPage(this.group);
 

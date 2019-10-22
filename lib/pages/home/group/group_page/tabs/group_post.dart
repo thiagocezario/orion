@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/post_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/posts/post_dialog.dart';
 import 'package:orion/model/group.dart';
@@ -38,11 +39,11 @@ class _GroupPostState extends State<GroupPost> {
     ));
 
     if (result != null) {
-      await Client.updatePost(
-              Singleton().jwtToken, result.id, result.title, result.content)
+      await Client.updatePost(Singleton().jwtToken, result.id, result.title,
+              result.content, post.blobs)
           .then((response) {
         Provider.of<GroupPostsProvider>(context)
-            .fetchPosts(result.group.id.toString());
+            .fetchPosts(group.id.toString());
       });
     }
   }
@@ -56,9 +57,10 @@ class _GroupPostState extends State<GroupPost> {
     ));
 
     if (result != null) {
-      await Client.createPost(Singleton().jwtToken, group.id,
-              Singleton().user.id, result.title, result.content)
-          .then((response) {
+      result.group = group;
+      result.student = Singleton().user;
+
+      await PostResource.createObject(result).then((response) {
         Provider.of<GroupPostsProvider>(context)
             .fetchPosts(group.id.toString());
       });
@@ -98,50 +100,56 @@ class _GroupPostState extends State<GroupPost> {
             itemBuilder: (context, index) {
               if (index == 0) {
                 return Container(
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-              child: Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(30.0),
-                color: primaryButtonColor,
-                child: MaterialButton(
-                  minWidth: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  elevation: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Nova publicação',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold
-                        ),
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                  child: Material(
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.circular(30.0),
+                    color: primaryButtonColor,
+                    child: MaterialButton(
+                      minWidth: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      elevation: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Nova publicação',
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ],
                       ),
-                      Icon(
-                        Icons.add,
-                        color: Colors.white,
-
-                      ),
-                    ],
+                      onPressed: () async => await _createPost(),
+                    ),
                   ),
-                  onPressed: () async => await _createPost(),
-                ),
-              ),
-            );
+                );
               }
-              return ListTile(
-                leading: Icon(
-                  Icons.access_time,
-                  size: 25,
-                ),
-                title: Text(groupPostsProvider.groupPosts[index - 1].title),
-                subtitle: Text(
-                  groupPostsProvider.groupPosts[index - 1].content,
-                ),
-                trailing:
-                    eventActions(groupPostsProvider.groupPosts[index - 1]),
+
+              Post post = groupPostsProvider.groupPosts[index - 1];
+              return Column(
+                children: <Widget>[
+                  Text(".. x stars"),
+                  ListTile(
+                    leading: Icon(
+                      Icons.access_time,
+                      size: 25,
+                    ),
+                    title: Text(post.title),
+                    subtitle: Text(
+                      post.content,
+                    ),
+                    trailing: eventActions(post),
+                  ),
+                  Text("Attachments: ${post.blobs.length}"),
+                  Divider(),
+                ],
               );
             },
           ),

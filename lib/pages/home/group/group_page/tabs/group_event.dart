@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/event_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/model/event.dart';
@@ -36,9 +36,7 @@ class _GroupEventState extends State<GroupEvent> {
     ));
 
     if (result != null) {
-      await Client.updateEvent(Singleton().jwtToken, result.id, result.title,
-              result.content, DateTime.now().toString())
-          .then((response) {
+      await EventResource.updateObject(result).then((response) {
         Provider.of<GroupEventsProvider>(context)
             .fetchEvents(result.group.id.toString());
       });
@@ -54,9 +52,9 @@ class _GroupEventState extends State<GroupEvent> {
     ));
 
     if (result != null) {
-      await Client.createEvent(Singleton().jwtToken, group.id, result.id,
-              result.title, result.content, DateTime.now().toString())
-          .then((response) {
+      result.student = Singleton().user;
+      result.group = group;
+      await EventResource.createObject(result).then((response) {
         Provider.of<GroupEventsProvider>(context)
             .fetchEvents(group.id.toString());
       });
@@ -68,7 +66,7 @@ class _GroupEventState extends State<GroupEvent> {
     if (action == 'Editar') {
       await _editEvent(event);
     } else if (action == 'Deletar') {
-      await Client.deleteEvent(Singleton().jwtToken, event.id).then((response) {
+      await EventResource.delete(event.id.toString()).then((response) {
         Provider.of<GroupEventsProvider>(context)
             .fetchEvents(group.id.toString());
       });
@@ -100,38 +98,36 @@ class _GroupEventState extends State<GroupEvent> {
             itemBuilder: (context, index) {
               if (index == 0) {
                 return Container(
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-              child: Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(30.0),
-                color: primaryButtonColor,
-                child: MaterialButton(
-                  minWidth: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  elevation: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Adicionar novo evento',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold
-                        ),
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                  child: Material(
+                    elevation: 5.0,
+                    borderRadius: BorderRadius.circular(30.0),
+                    color: primaryButtonColor,
+                    child: MaterialButton(
+                      minWidth: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      elevation: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Adicionar novo evento',
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ],
                       ),
-                      Icon(
-                        Icons.add,
-                        color: Colors.white,
-
-                      ),
-                    ],
+                      onPressed: () async => await _createEvent(),
+                    ),
                   ),
-                  onPressed: () async => await _createEvent(),
-                ),
-              ),
-            );
+                );
               }
               return ListTile(
                 leading: Icon(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/model/user.dart';
@@ -12,9 +13,8 @@ class GroupInfo extends StatelessWidget {
   GroupInfo(this.groupId);
 
   void _exitGroup(BuildContext context) async {
-    await Client.listSubscriptions(Singleton().jwtToken, groupId.toString(),
-            Singleton().user.id.toString())
-        .then((response) async {
+    var data = {'group_id': groupId, 'user_id': Singleton().user.id};
+    await SubscriptionResource.list(data).then((response) async {
       var result = subscriptionFromJson(response.body);
       await Client.unsubscribe(Singleton().jwtToken, result.first.id)
           .then((response) {
@@ -64,7 +64,10 @@ class GroupInfo extends StatelessWidget {
                       textAlign: TextAlign.right,
                       style: textStyle.copyWith(
                           color: Colors.white, fontWeight: FontWeight.bold)),
-                  Icon(Icons.exit_to_app, color: Colors.white,)
+                  Icon(
+                    Icons.exit_to_app,
+                    color: Colors.white,
+                  )
                 ],
               ),
             ),
