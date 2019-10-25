@@ -133,9 +133,12 @@ class _MyGroupsState extends State<MyGroups> {
                               Icons.desktop_windows,
                               color: groupIconsColor,
                             ),
-                            Text(
-                              '${recommendations[index].discipline.name}',
-                              style: TextStyle(color: Colors.blueGrey),
+                            Expanded(
+                              child: Text(
+                                '${recommendations[index].discipline.name}',
+                                style: TextStyle(color: Colors.blueGrey),
+                                textAlign: TextAlign.center,
+                              ),
                             )
                           ],
                         ),
