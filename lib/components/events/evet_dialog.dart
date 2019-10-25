@@ -27,6 +27,7 @@ class _EventDialogState extends State<EventDialog> {
       this.event = event;
       _eventNameController.text = event.title;
       _eventDescriptionController.text = event.content;
+      _fromDateTime = event.date;
       _screenName = 'Editar evento';
     } else {
       event = Event();
@@ -95,6 +96,7 @@ class _EventDialogState extends State<EventDialog> {
 
               event.title = _eventNameController.text;
               event.content = _eventDescriptionController.text;
+              event.date = _fromDateTime;
               Navigator.of(context).pop(event);
             },
           )

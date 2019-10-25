@@ -134,20 +134,30 @@ class _GroupEventState extends State<GroupEvent> {
                 leading: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 7.0),
-                      child: Text(
-                        "${groupEventsProvider.groupEvents[index - 1].date.day}",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 25,
+                    Container(
+                      width: 25,
+                      height: 25,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "${groupEventsProvider.groupEvents[index - 1].date.day}",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 25,
+                          ),
                         ),
                       ),
                     ),
-                    Text(
-                      DateFormat.MMMM()
-                          .format(groupEventsProvider
-                              .groupEvents[index - 1].date),
+                    Container(
+                      width: 75,
+                      height: 25,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          DateFormat.MMMM().format(
+                              groupEventsProvider.groupEvents[index - 1].date),
+                        ),
+                      ),
                     ),
                   ],
                 ),
