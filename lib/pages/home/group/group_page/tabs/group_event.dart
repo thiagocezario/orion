@@ -130,17 +130,22 @@ class _GroupEventState extends State<GroupEvent> {
                   ),
                 );
               }
+
+              var event = groupEventsProvider.groupEvents[index - 1];
+              DateTime date = DateFormat("yyyy-MM-dd hh:mm:ss")
+                  .parse(event.date.toString());
+
               return ListTile(
                 leading: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      width: 25,
+                      width: 35,
                       height: 25,
                       child: Align(
-                        alignment: Alignment.center,
+                        alignment: Alignment.topCenter,
                         child: Text(
-                          "${groupEventsProvider.groupEvents[index - 1].date.day}",
+                          "${date.day}",
                           style: TextStyle(
                             color: Colors.red,
                             fontSize: 25,
@@ -149,13 +154,12 @@ class _GroupEventState extends State<GroupEvent> {
                       ),
                     ),
                     Container(
-                      width: 75,
+                      width: 35,
                       height: 25,
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          DateFormat.MMMM().format(
-                              groupEventsProvider.groupEvents[index - 1].date),
+                          DateFormat.MMM().format(date),
                         ),
                       ),
                     ),

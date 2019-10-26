@@ -68,17 +68,22 @@ class _EventIndexPageState extends State<EventIndexPage> {
           ListView.builder(
             itemCount: myEventsProvider.myEvents.length,
             itemBuilder: (context, index) {
+
+              var event = myEventsProvider.myEvents[index];
+              DateTime date = DateFormat("yyyy-MM-dd hh:mm:ss")
+                  .parse(event.date.toString());
+
               return ListTile(
                 leading: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      width: 25,
+                      width: 35,
                       height: 25,
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "${myEventsProvider.myEvents[index].date.day}",
+                          "${date.day}",
                           style: TextStyle(
                             color: Colors.red,
                             fontSize: 25,
@@ -87,13 +92,13 @@ class _EventIndexPageState extends State<EventIndexPage> {
                       ),
                     ),
                     Container(
-                      width: 75,
+                      width: 35,
                       height: 25,
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          DateFormat.MMMM()
-                              .format(myEventsProvider.myEvents[index].date),
+                          DateFormat.MMM()
+                              .format(date),
                         ),
                       ),
                     ),
