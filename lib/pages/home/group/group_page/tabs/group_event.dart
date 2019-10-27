@@ -21,7 +21,7 @@ class GroupEvent extends StatefulWidget {
 class _GroupEventState extends State<GroupEvent> {
   final Group group;
 
-  Future _editEvent(Event event) async {
+  Future _showEvent(Event event) async {
     Event result = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {
         return EventDialog(event);
@@ -105,7 +105,7 @@ class _GroupEventState extends State<GroupEvent> {
 
               return ListTile(
                 onTap: () async {
-                  await _editEvent(event);
+                  await _showEvent(event);
                 },
                 leading: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

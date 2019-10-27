@@ -14,15 +14,7 @@ class EventIndexPage extends StatefulWidget {
 }
 
 class _EventIndexPageState extends State<EventIndexPage> {
-  final List<PopupMenuItem<String>> _popUpMenuItems =
-      <String>['Editar', 'Deletar']
-          .map((String value) => PopupMenuItem<String>(
-                value: value,
-                child: Text(value),
-              ))
-          .toList();
-
-  Future _editEvent(Event event) async {
+  Future _showEvent(Event event) async {
     Event result = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {
         return EventDialog(event);
@@ -35,29 +27,6 @@ class _EventIndexPageState extends State<EventIndexPage> {
         Provider.of<MyEventsProvider>(context).fetchEvents();
       });
     }
-  }
-
-  // TODO: Remover requisições desnecessarias
-  Future _popUpMenuActions(String action, Event event) async {
-    if (action == 'Editar') {
-      await _editEvent(event);
-    } else if (action == 'Deletar') {
-      await EventResource.delete(event.id.toString()).then((response) {
-        Provider.of<MyEventsProvider>(context).fetchEvents();
-      });
-    }
-  }
-
-  PopupMenuButton<String> eventActions(Event event) {
-    if (event.student.id == Singleton().user.id) {
-      return PopupMenuButton<String>(
-        onSelected: (String actionSelected) =>
-            _popUpMenuActions(actionSelected, event),
-        itemBuilder: (BuildContext context) => _popUpMenuItems,
-      );
-    }
-
-    return null;
   }
 
   @override
@@ -74,6 +43,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
                   .parse(event.date.toString());
 
               return ListTile(
+                onTap: () async => await _showEvent(event),
                 leading: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -106,7 +76,6 @@ class _EventIndexPageState extends State<EventIndexPage> {
                 ),
                 title: Text(myEventsProvider.myEvents[index].title),
                 subtitle: Text(myEventsProvider.myEvents[index].description()),
-                trailing: eventActions(myEventsProvider.myEvents[index]),
               );
             },
           ),
