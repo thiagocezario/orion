@@ -138,7 +138,8 @@ class _GroupEventState extends State<GroupEvent> {
                 ),
                 title: Text(event.title),
                 subtitle: Text(
-                    groupEventsProvider.groupEvents[index - 1].description()),
+                  groupEventsProvider.groupEvents[index - 1].content,
+                ),
               );
             },
           ),

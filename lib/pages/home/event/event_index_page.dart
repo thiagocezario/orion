@@ -75,7 +75,7 @@ class _EventIndexPageState extends State<EventIndexPage> {
                   ],
                 ),
                 title: Text(myEventsProvider.myEvents[index].title),
-                subtitle: Text(myEventsProvider.myEvents[index].description()),
+                subtitle: Text(myEventsProvider.myEvents[index].content),
               );
             },
           ),
