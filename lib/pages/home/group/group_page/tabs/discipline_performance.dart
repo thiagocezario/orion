@@ -25,15 +25,7 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
 
   _DisciplinePerformanceState(this.discipline, this.group);
 
-  final List<PopupMenuItem<String>> _popUpMenuItems =
-      <String>['Editar', 'Deletar']
-          .map((String value) => PopupMenuItem<String>(
-                value: value,
-                child: Text(value),
-              ))
-          .toList();
-
-  Future _editPerformance(Performance performance) async {
+  void _editPerformance(Performance performance) async {
     Performance result = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {
         return PerformanceDialog(performance);
@@ -49,7 +41,7 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
     }
   }
 
-  Future _createPerformance() async {
+  void _createPerformance() async {
     Performance result = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {
         return PerformanceDialog(null);
@@ -67,30 +59,8 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
     }
   }
 
-  // TODO: Remover requisições desnecessarias
-  Future _popUpMenuActions(String action, Performance performance, String value,
-      String maxValue) async {
-    if (action == 'Editar') {
-      _editPerformance(performance);
-    } else if (action == 'Deletar') {
-      await PerformanceResource.delete(performance.id.toString())
-          .then((response) {
-        Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.id.toString());
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    PopupMenuButton<String> eventActions(Performance performance) {
-      return PopupMenuButton<String>(
-        onSelected: (String actionSelected) => _popUpMenuActions(
-            actionSelected, performance, 0.toString(), 100.toString()),
-        itemBuilder: (BuildContext context) => _popUpMenuItems,
-      );
-    }
-
     return Consumer<DisciplinePerformancesProvider>(
       builder: (context, disciplineProvider, _) => Container(
           child: ListView.builder(
@@ -124,21 +94,23 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
                       ),
                     ],
                   ),
-                  onPressed: () async => await _createPerformance(),
+                  onPressed: () => _createPerformance(),
                 ),
               ),
             );
           }
 
+          var performance =
+              disciplineProvider.disciplinePerformances[index - 1];
+
           return ListTile(
+            onTap: () => _editPerformance(performance),
             leading: Text(
-                "${disciplineProvider.disciplinePerformances[index - 1].percentage.toString()} %"),
+                "${performance.percentage.toString()} %"),
             title: Text(disciplineProvider
                 .disciplinePerformances[index - 1].description),
             subtitle: Text(
-                "${disciplineProvider.disciplinePerformances[index - 1].value.toString()} / ${disciplineProvider.disciplinePerformances[index - 1].maxValue.toString()}"),
-            trailing: eventActions(
-                disciplineProvider.disciplinePerformances[index - 1]),
+                "${performance.value.toString()} / ${performance.maxValue.toString()}"),
           );
         },
       )),

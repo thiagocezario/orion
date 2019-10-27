@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:orion/api/resources/performance_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/performance.dart';
+import 'package:orion/provider/discipline_performances_provider.dart';
+import 'package:provider/provider.dart';
 
 class PerformanceDialog extends StatefulWidget {
   final Performance grade;
@@ -15,23 +18,75 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
   bool _hasGrade = false;
   bool _hasMaxGrade = false;
   bool _hasDescription = false;
+  bool _isCreatingPerformance = true;
   String _screenName = '';
-  Performance grade;
+  Performance performance;
   TextEditingController _gradeController = TextEditingController();
   TextEditingController _maxGradeController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
 
-  _PerformanceDialogState(Performance grade) {
-    if (grade != null) {
-      this.grade = grade;
-      _gradeController.text = grade.value;
-      _maxGradeController.text = grade.maxValue;
-      _descriptionController.text = grade.description;
+  _PerformanceDialogState(Performance performance) {
+    if (performance != null) {
+      this.performance = performance;
+      _gradeController.text = performance.value;
+      _maxGradeController.text = performance.maxValue;
+      _descriptionController.text = performance.description;
       _screenName = 'Editar nota';
+      _isCreatingPerformance = false;
     } else {
-      grade = Performance();
-      _screenName = 'Adicionar nova nova';
+      performance = Performance();
+      _screenName = 'Adicionar nova nota';
     }
+  }
+
+  void _savePerformance(Performance performance) {
+    if (performance == null) {
+      performance = Performance();
+    }
+
+    performance.description = _descriptionController.text;
+    performance.value = _gradeController.text;
+    performance.maxValue = _maxGradeController.text;
+    Navigator.of(context).pop(performance);
+  }
+
+  Future<bool> _deletePerformance(Performance performance) async {
+    final ThemeData theme = Theme.of(context);
+    final TextStyle dialogTextStyle =
+        theme.textTheme.subhead.copyWith(color: theme.textTheme.caption.color);
+
+    return await showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(
+              'Você tem certeza que deseja excluir essa nota? Essa ação não pode ser desfeita.',
+              style: dialogTextStyle,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: const Text('CANCELAR'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              FlatButton(
+                child: const Text('EXCLUIR'),
+                onPressed: () async {
+                  await PerformanceResource.delete(performance.id.toString())
+                      .then((response) {
+                    // Navigator.of(context).pop("delete");
+                    Provider.of<DisciplinePerformancesProvider>(context)
+                        .fetchPerformances(
+                            performance.discipline.id.toString());
+                  });
+
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 
   Future<bool> _onWillPop() async {
@@ -73,31 +128,27 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
 
   @override
   Widget build(BuildContext context) {
+    IconButton _savePerformanceButton = IconButton(
+      icon: Icon(Icons.save),
+      onPressed: () => _savePerformance(performance),
+    );
+
+    Widget _deletePerformanceButton = Container();
+
+    if (!_isCreatingPerformance) {
+      _deletePerformanceButton = IconButton(
+        icon: Icon(Icons.delete),
+        onPressed: () => _deletePerformance(performance),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: Text(_screenName),
-        centerTitle: true,
         actions: <Widget>[
-          FlatButton(
-            child: Text(
-              'Salvar',
-              style: Theme.of(context)
-                  .textTheme
-                  .subhead
-                  .copyWith(color: Colors.white),
-            ),
-            onPressed: () {
-              if (grade == null) {
-                grade = Performance();
-              }
-
-              grade.description = _descriptionController.text;
-              grade.value = _gradeController.text;
-              grade.maxValue = _maxGradeController.text;
-              Navigator.of(context).pop(grade);
-            },
-          )
+          _deletePerformanceButton,
+          _savePerformanceButton,
         ],
       ),
       body: Form(
@@ -117,7 +168,7 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
                       _hasDescription = value.isNotEmpty;
 
                       if (_hasDescription) {
-                        grade.description = value.toString();
+                        performance.description = value.toString();
                       }
                     });
                   },
@@ -141,7 +192,7 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
                             _hasGrade = value.isNotEmpty;
 
                             if (_hasGrade) {
-                              grade.value = value.toString();
+                              performance.value = value.toString();
                             }
                           });
                         },
@@ -175,7 +226,7 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
                             _hasMaxGrade = value.isNotEmpty;
 
                             if (_hasMaxGrade) {
-                              grade.maxValue = value.toString();
+                              performance.maxValue = value.toString();
                             }
                           });
                         },
