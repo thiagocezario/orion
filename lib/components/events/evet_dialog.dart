@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:orion/api/resources/event_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/event.dart';
+import 'package:orion/model/user.dart';
+import 'package:orion/provider/group_events_provider.dart';
+import 'package:provider/provider.dart';
 
 class EventDialog extends StatefulWidget {
   final Event event;
@@ -17,6 +21,7 @@ class _EventDialogState extends State<EventDialog> {
   bool _saveNeeded = false;
   bool _hasDescription = false;
   bool _hasName = false;
+  bool _userCanEditEvent = false;
   TextEditingController _eventNameController = TextEditingController();
   TextEditingController _eventDescriptionController = TextEditingController();
   String _screenName;
@@ -29,10 +34,62 @@ class _EventDialogState extends State<EventDialog> {
       _eventDescriptionController.text = event.content;
       _fromDateTime = event.date;
       _screenName = 'Editar evento';
+
+      _userCanEditEvent = event.student.id == Singleton().user.id;
     } else {
       event = Event();
       _screenName = 'Criar evento';
     }
+  }
+
+  // Should i notify here or pass on to the Event list screen to deal with it?
+  void _saveEvent(Event event) async {
+    if (event == null) {
+      event = Event();
+    }
+
+    event.title = _eventNameController.text;
+    event.content = _eventDescriptionController.text;
+    event.date = _fromDateTime;
+    Navigator.of(context).pop(event);
+  }
+
+  Future<bool> _deleteEvent(Event event) async {
+    final ThemeData theme = Theme.of(context);
+    final TextStyle dialogTextStyle =
+        theme.textTheme.subhead.copyWith(color: theme.textTheme.caption.color);
+
+    return await showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Text(
+              'Você tem certeza que deseja excluir esse evento? Essa ação não pode ser desfeita.',
+              style: dialogTextStyle,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: const Text('CANCELAR'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              FlatButton(
+                child: const Text('EXCLUIR'),
+                onPressed: () async {
+                  await EventResource.delete(event.id.toString())
+                      .then((response) {
+                    // Navigator.of(context).pop("delete");
+                    Provider.of<GroupEventsProvider>(context)
+                        .fetchEvents(event.group.id.toString());
+                  });
+
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 
   Future<bool> _onWillPop() async {
@@ -55,15 +112,13 @@ class _EventDialogState extends State<EventDialog> {
                 FlatButton(
                   child: const Text('CANCELAR'),
                   onPressed: () {
-                    Navigator.of(context).pop(
-                        false);
+                    Navigator.of(context).pop(false);
                   },
                 ),
                 FlatButton(
                   child: const Text('DESCARTAR'),
                   onPressed: () {
-                    Navigator.of(context).pop(
-                        true);
+                    Navigator.of(context).pop(true);
                   },
                 ),
               ],
@@ -75,31 +130,28 @@ class _EventDialogState extends State<EventDialog> {
 
   @override
   Widget build(BuildContext context) {
+    Widget _deleteEventButton = Container();
+    Widget _saveEventButton = Container();
+
+    if (_userCanEditEvent) {
+      _deleteEventButton = IconButton(
+        icon: Icon(Icons.delete),
+        onPressed: () => _deleteEvent(event),
+      );
+
+      _saveEventButton = IconButton(
+        icon: Icon(Icons.save),
+        onPressed: () => _saveEvent(event),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff8893f2),
         title: Text(_screenName),
-        centerTitle: true,
         actions: <Widget>[
-          FlatButton(
-            child: Text(
-              'Salvar',
-              style: Theme.of(context)
-                  .textTheme
-                  .subhead
-                  .copyWith(color: Colors.white),
-            ),
-            onPressed: () {
-              if (event == null) {
-                event = Event();
-              }
-
-              event.title = _eventNameController.text;
-              event.content = _eventDescriptionController.text;
-              event.date = _fromDateTime;
-              Navigator.of(context).pop(event);
-            },
-          )
+          _deleteEventButton,
+          _saveEventButton,
         ],
       ),
       body: Form(
@@ -112,6 +164,7 @@ class _EventDialogState extends State<EventDialog> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 alignment: Alignment.bottomLeft,
                 child: TextField(
+                  enabled: _userCanEditEvent,
                   controller: _eventNameController,
                   decoration: const InputDecoration(
                     labelText: 'Nome',
@@ -130,6 +183,7 @@ class _EventDialogState extends State<EventDialog> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 alignment: Alignment.bottomLeft,
                 child: TextField(
+                  enabled: _userCanEditEvent,
                   controller: _eventDescriptionController,
                   decoration: const InputDecoration(
                     labelText: 'Descriçao',
@@ -150,6 +204,7 @@ class _EventDialogState extends State<EventDialog> {
                   Text('Horário', style: textStyle),
                   DateTimeItem(
                     dateTime: _fromDateTime,
+                    canUserEdit: _userCanEditEvent,
                     onChanged: (DateTime value) {
                       setState(() {
                         _fromDateTime = value;
@@ -174,7 +229,8 @@ class _EventDialogState extends State<EventDialog> {
 }
 
 class DateTimeItem extends StatelessWidget {
-  DateTimeItem({Key key, DateTime dateTime, @required this.onChanged})
+  DateTimeItem(
+      {Key key, DateTime dateTime, @required this.onChanged, this.canUserEdit})
       : assert(onChanged != null),
         date = DateTime(dateTime.year, dateTime.month, dateTime.day),
         time = TimeOfDay(hour: dateTime.hour, minute: dateTime.minute),
@@ -183,6 +239,7 @@ class DateTimeItem extends StatelessWidget {
   final DateTime date;
   final TimeOfDay time;
   final ValueChanged<DateTime> onChanged;
+  final bool canUserEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -200,16 +257,18 @@ class DateTimeItem extends StatelessWidget {
                       Border(bottom: BorderSide(color: theme.dividerColor))),
               child: InkWell(
                 onTap: () {
-                  showDatePicker(
-                    context: context,
-                    initialDate: date,
-                    firstDate: date.subtract(const Duration(days: 30)),
-                    lastDate: date.add(const Duration(days: 30)),
-                  ).then<void>((DateTime value) {
-                    if (value != null)
-                      onChanged(DateTime(value.year, value.month, value.day,
-                          time.hour, time.minute));
-                  });
+                  if (canUserEdit) {
+                    showDatePicker(
+                      context: context,
+                      initialDate: date,
+                      firstDate: date.subtract(const Duration(days: 30)),
+                      lastDate: date.add(const Duration(days: 30)),
+                    ).then<void>((DateTime value) {
+                      if (value != null)
+                        onChanged(DateTime(value.year, value.month, value.day,
+                            time.hour, time.minute));
+                    });
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,14 +287,16 @@ class DateTimeItem extends StatelessWidget {
                 border: Border(bottom: BorderSide(color: theme.dividerColor))),
             child: InkWell(
               onTap: () {
-                showTimePicker(
-                  context: context,
-                  initialTime: time,
-                ).then<void>((TimeOfDay value) {
-                  if (value != null)
-                    onChanged(DateTime(date.day, date.month, date.year,
-                        value.hour, value.minute));
-                });
+                if (canUserEdit) {
+                  showTimePicker(
+                    context: context,
+                    initialTime: time,
+                  ).then<void>((TimeOfDay value) {
+                    if (value != null)
+                      onChanged(DateTime(date.day, date.month, date.year,
+                          value.hour, value.minute));
+                  });
+                }
               },
               child: Row(
                 children: <Widget>[

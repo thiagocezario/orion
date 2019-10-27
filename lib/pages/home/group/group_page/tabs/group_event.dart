@@ -20,13 +20,6 @@ class GroupEvent extends StatefulWidget {
 
 class _GroupEventState extends State<GroupEvent> {
   final Group group;
-  final List<PopupMenuItem<String>> _popUpMenuItems =
-      <String>['Editar', 'Deletar']
-          .map((String value) => PopupMenuItem<String>(
-                value: value,
-                child: Text(value),
-              ))
-          .toList();
 
   Future _editEvent(Event event) async {
     Event result = await Navigator.of(context).push(MaterialPageRoute(
@@ -62,35 +55,10 @@ class _GroupEventState extends State<GroupEvent> {
     }
   }
 
-  // TODO: Remover requisições desnecessarias
-  Future _popUpMenuActions(String action, Event event) async {
-    if (action == 'Editar') {
-      await _editEvent(event);
-    } else if (action == 'Deletar') {
-      await EventResource.delete(event.id.toString()).then((response) {
-        Provider.of<GroupEventsProvider>(context)
-            .fetchEvents(group.id.toString());
-      });
-    }
-  }
-
   _GroupEventState(this.group);
 
   @override
   Widget build(BuildContext context) {
-    PopupMenuButton<String> eventActions(Event event) {
-      if (event.student.id == Singleton().user.id) {
-        return PopupMenuButton<String>(
-          onSelected: (String actionSelected) =>
-              _popUpMenuActions(actionSelected, event),
-          itemBuilder: (BuildContext context) => _popUpMenuItems,
-        );
-      }
-
-      return null;
-    }
-
-    // Work with Sliver list, make it work!
     return Consumer<GroupEventsProvider>(
       builder: (context, groupEventsProvider, _) => Stack(
         children: <Widget>[
@@ -136,6 +104,9 @@ class _GroupEventState extends State<GroupEvent> {
                   .parse(event.date.toString());
 
               return ListTile(
+                onTap: () async {
+                  await _editEvent(event);
+                },
                 leading: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -165,11 +136,9 @@ class _GroupEventState extends State<GroupEvent> {
                     ),
                   ],
                 ),
-                title: Text(groupEventsProvider.groupEvents[index - 1].title),
+                title: Text(event.title),
                 subtitle: Text(
                     groupEventsProvider.groupEvents[index - 1].description()),
-                trailing:
-                    eventActions(groupEventsProvider.groupEvents[index - 1]),
               );
             },
           ),
