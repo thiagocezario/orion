@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:orion/api/resources/event_resource.dart';
 import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/model/event.dart';
-import 'package:orion/model/user.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:provider/provider.dart';
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/client.dart';
 import 'package:orion/api/resources/post_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/posts/post_dialog.dart';
@@ -133,6 +132,7 @@ class _GroupPostState extends State<GroupPost> {
               }
 
               Post post = groupPostsProvider.groupPosts[index - 1];
+
               return Column(
                 children: <Widget>[
                   Text(".. x stars"),

@@ -78,7 +78,6 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
   static Institution institution = Institution();
   static Course course = Course();
   static Discipline discipline = Discipline();
-  var _singleton = Singleton();
 
   void searchInstitutions(String text) {
     var data = {'name': text};
