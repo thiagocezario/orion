@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/main.dart';
 import 'package:orion/model/event.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
@@ -11,6 +12,8 @@ import 'package:orion/pages/home/group/group_page/group_page.dart';
 import 'package:orion/provider/discipline_performances_provider.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/group_posts_provider.dart';
+import 'package:orion/provider/group_recomendations_provider.dart';
+import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +34,9 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
   void _joinGroup(Group group) {
     SubscriptionResource.subscribe(group.id.toString()).then((response) async {
       if (response.statusCode == 201) {
+        Provider.of<GroupRecomendationsProvider>(context)
+            .refreshMyRecomendations();
+        Provider.of<MyGroupsProvider>(context).refreshMyGroups();
         Provider.of<GroupPostsProvider>(context)
             .fetchPosts(group.id.toString());
         Provider.of<SubscriptionsProvider>(context)
@@ -55,8 +61,7 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
           }
         });
 
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => GroupPage(group)));
+        Navigator.of(context).popAndPushNamed(GroupPageRoute, arguments: group);
       }
     });
   }
