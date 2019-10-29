@@ -3,8 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/groups/group_cards.dart';
 import 'package:orion/model/group.dart';
+import 'package:orion/pages/home/group/group_page/group_preview_page/group_preview_page.dart';
+import 'package:orion/provider/group_events_provider.dart';
+import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
+import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
 class MyGroups extends StatefulWidget {
@@ -26,7 +30,20 @@ class _MyGroupsState extends State<MyGroups> {
         return Padding(
           padding: padding,
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              Provider.of<GroupPostsProvider>(context)
+                  .fetchPosts(recommendations[index].id.toString());
+              Provider.of<SubscriptionsProvider>(context)
+                  .fetchSubscriptions(recommendations[index].id.toString());
+              Provider.of<GroupEventsProvider>(context)
+                  .fetchEvents(recommendations[index].id.toString());
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          GroupPreviewPage(recommendations[index])));
+            },
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
@@ -41,38 +58,6 @@ class _MyGroupsState extends State<MyGroups> {
               width: 200.0,
               child: Stack(
                 children: <Widget>[
-                  // Container(
-                  //   alignment: Alignment.center,
-                  //   margin: EdgeInsets.only(left: 30, right: 30),
-                  //   child: Material(
-                  //     borderRadius: BorderRadius.circular(30.0),
-                  //     color: Colors.blue,
-                  //     child: MaterialButton(
-                  //       minWidth: MediaQuery.of(context).size.width,
-                  //       padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 5.0),
-                  //       onPressed: () {
-                  //         var singleton = Singleton();
-                  //         Client.subscribe(
-                  //                 singleton.jwtToken, recommendations[index].id)
-                  //             .then((response) {
-                  //           if (response.statusCode == 201) {
-                  //             Provider.of<MyGroupsProvider>(context)
-                  //                 .refreshMyGroups();
-                  //             Provider.of<GroupRecomendationsProvider>(context)
-                  //                 .refreshMyRecomendations();
-                  //             Provider.of<MyEventsProvider>(context)
-                  //                 .fetchEvents();
-                  //           }
-                  //         });
-                  //       },
-                  //       child: Text('Ingressar',
-                  //           textAlign: TextAlign.center,
-                  //           style: textStyle.copyWith(
-                  //               color: Colors.white,
-                  //               fontWeight: FontWeight.bold)),
-                  //     ),
-                  //   ),
-                  // ),
                   Align(
                       alignment: Alignment.topCenter,
                       child: Padding(

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:orion/api/client.dart';
 import 'package:orion/api/resources/group_resource.dart';
-import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/model/user.dart';
-import 'package:orion/provider/group_recomendations_provider.dart';
-import 'package:orion/provider/my_events_provider.dart';
-import 'package:orion/provider/my_groups_provider.dart';
+import 'package:orion/pages/home/group/group_page/group_preview_page/group_preview_page.dart';
+import 'package:orion/provider/group_events_provider.dart';
+import 'package:orion/provider/group_posts_provider.dart';
+import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'new_group_page.dart';
@@ -62,7 +60,19 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
         itemBuilder: (context, index) {
           return Material(
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Provider.of<GroupPostsProvider>(context)
+                    .fetchPosts(groups[index].id.toString());
+                Provider.of<SubscriptionsProvider>(context)
+                    .fetchSubscriptions(groups[index].id.toString());
+                Provider.of<GroupEventsProvider>(context)
+                    .fetchEvents(groups[index].id.toString());
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => GroupPreviewPage(groups[index])));
+              },
               child: Card(
                 elevation: 5.0,
                 margin: EdgeInsets.all(7.5),
@@ -99,32 +109,6 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
                                 .metadata
                                 .subscriptions
                                 .toString()),
-                            SizedBox(
-                              width: 240,
-                            ),
-                            RaisedButton(
-                              child: Text('Ingressar'),
-                              onPressed: () {
-                                var singleton = Singleton();
-                                Client.subscribe(
-                                        singleton.jwtToken, groups[index].id)
-                                    .then((response) {
-                                  if (response.statusCode == 201) {
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text('Grupo ingressado'),
-                                    ));
-
-                                    Provider.of<MyGroupsProvider>(context)
-                                        .refreshMyGroups();
-                                    Provider.of<GroupRecomendationsProvider>(
-                                            context)
-                                        .refreshMyRecomendations();
-                                    Provider.of<MyEventsProvider>(context)
-                                        .fetchEvents();
-                                  }
-                                });
-                              },
-                            ),
                           ],
                         ),
                       ),
