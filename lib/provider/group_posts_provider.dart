@@ -12,6 +12,11 @@ class GroupPostsProvider with ChangeNotifier {
     await PostResource.list(data).then(handleResponse);
   }
 
+  void removePost(Post post){
+    _groupPosts.removeWhere((Post i) { return i.id == post.id; });
+    notifyListeners();
+  }
+
   void handleResponse(dynamic response) {
     _groupPosts = postFromJson(response.body);
     notifyListeners();
