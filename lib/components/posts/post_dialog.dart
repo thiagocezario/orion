@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:orion/api/resources/post_resource.dart';
 import 'package:orion/components/blobs/blob_item.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/blob.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
+import 'package:orion/provider/group_posts_provider.dart';
+import 'package:provider/provider.dart';
 
 class GroupPostDialog extends StatefulWidget {
   final Group group;
@@ -77,18 +80,21 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
   }
 
   Future getAttachment() async {
-    var file = await FilePicker.getFile(type: FileType.ANY, fileExtension: '');
+    List<File> files =
+        await FilePicker.getMultiFile(type: FileType.ANY, fileExtension: '');
+    setState(() {
+      files.forEach(createBlob);
+    });
+  }
 
-    if (file != null) {
-      setState(() {
-        final String filename = file.path.split("/").last;
-        Blob blob = Blob(filename: filename, file: file);
-        if (post.blobs == null) {
-          post.blobs = List();
-        }
-        post.blobs.add(blob);
-      });
+  void createBlob(File file) {
+    final String filename = file.path.split("/").last;
+    Blob blob = Blob(filename: filename, file: file);
+
+    if (post.blobs == null) {
+      post.blobs = List();
     }
+    post.blobs.add(blob);
   }
 
   @override
@@ -114,7 +120,8 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
 
               post.content = _descriptionController.text;
               post.title = _titleController.text;
-              Navigator.of(context).pop(post);
+
+              Navigator.of(context).pop<Post>(post);
             },
           )
         ],
