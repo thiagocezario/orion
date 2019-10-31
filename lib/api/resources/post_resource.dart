@@ -1,3 +1,4 @@
+import 'package:http/http.dart';
 import 'package:orion/model/blob.dart';
 import 'package:orion/model/post.dart';
 import 'package:http/http.dart' as http;
@@ -36,8 +37,9 @@ class PostResource {
     };
 
     List<Blob> blobsToUpload = List();
+    if(post.blobs == null) { post.blobs = List(); }
     post.blobs.where((Blob blob) {
-      return blob.id == null;
+      return blob.id == null && !blob.toRemove;
     }).forEach((Blob blob) {
       blobsToUpload.add(blob);
     });
@@ -46,13 +48,18 @@ class PostResource {
     request.headers.addAll(Base.defaultAuthHeader());
     request.fields.addAll(data);
 
-    // blobsToUpload.forEach((Blob blob) {
-    Blob blob = blobsToUpload == null ? null : blobsToUpload.first;
-    request.files.add(await http.MultipartFile.fromPath(
-      'post[files][]',
-      blob.file.path,
-    ));
-    // });
+    List.generate(blobsToUpload.length, (index) {
+      Blob blob = blobsToUpload[index];
+      List<int> bytes = blob.file.readAsBytesSync();
+
+      if (blob != null) {
+        MultipartFile multipartFile = MultipartFile.fromBytes(
+            'post[files][]', bytes,
+            filename: blob.filename);
+
+        request.files.add(multipartFile);
+      }
+    });
 
     return request.send();
   }
@@ -60,29 +67,42 @@ class PostResource {
   static Future updateObject(Post post) async {
     Uri uri = Base.memberPath(path(), post.id.toString());
 
-    dynamic data = {
-      'post[title]': post.title,
-      'post[content]': post.content
-    };
+    dynamic data = {'post[title]': post.title, 'post[content]': post.content};
 
     List<Blob> blobsToUpload = List();
     post.blobs.where((Blob blob) {
-      return blob.id == null;
+      return blob.id == null && !blob.toRemove;
     }).forEach((Blob blob) {
       blobsToUpload.add(blob);
+    });
+
+    List<String> blobsToRemove = List();
+    post.blobs.where((Blob blob) {
+      return blob.id != null && blob.toRemove;
+    }).forEach((Blob blob) {
+      blobsToRemove.add(blob.id.toString());
     });
 
     var request = new http.MultipartRequest("PUT", uri);
     request.headers.addAll(Base.defaultAuthHeader());
     request.fields.addAll(data);
 
-    // blobsToUpload.forEach((Blob blob) {
-    Blob blob = blobsToUpload == null ? null : blobsToUpload.first;
-    request.files.add(await http.MultipartFile.fromPath(
-      'post[files][]',
-      blob.file.path,
-    ));
-    // });
+    List.generate(blobsToUpload.length, (index) {
+      Blob blob = blobsToUpload[index];
+      List<int> bytes = blob.file.readAsBytesSync();
+
+      if (blob != null) {
+        MultipartFile multipartFile = MultipartFile.fromBytes(
+            'post[files][]', bytes,
+            filename: blob.filename);
+
+        request.files.add(multipartFile);
+      }
+    });
+
+    blobsToRemove.forEach((id) {
+      request.fields['post[files_to_remove][$id]'] = id;
+    });
 
     return request.send();
   }
