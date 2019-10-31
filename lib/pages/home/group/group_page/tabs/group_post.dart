@@ -80,10 +80,6 @@ class _GroupPostState extends State<GroupPost> {
   Widget build(BuildContext context) {
     return Consumer<GroupPostsProvider>(
         builder: (context, groupPostsProvider, _) {
-
-          print('RELOADING....');
-          print('Posts: ${groupPostsProvider.groupPosts.length}');
-
       return Stack(
         children: <Widget>[
           ListView.separated(
