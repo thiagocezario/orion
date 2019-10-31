@@ -21,6 +21,13 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordFieldController = TextEditingController();
   User _user = User();
 
+  _LoginPageState() {
+    _emailFieldController.text = "user@user.com";
+    _passwordFieldController.text = "123123";
+    _user.email = "user@user.com";
+    _user.password = "123123";
+  }
+
   void _signIn(BuildContext context) {
     Provider.of<AuthProvider>(context).signIn(_user).then((response) {
       String token = Provider.of<AuthProvider>(context).accessToken;
@@ -58,11 +65,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildForm(BuildContext context) {
-    _emailFieldController.text = "user@user.com";
-    _passwordFieldController.text = "123123";
-    _user.email = "user@user.com";
-    _user.password = "123123";
-
     final userField = TextFormField(
       validator: (value) {
         if (value.isEmpty) {
