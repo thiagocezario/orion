@@ -22,6 +22,7 @@ class _EventDialogState extends State<EventDialog> {
   bool _hasDescription = false;
   bool _hasName = false;
   bool _userCanEditEvent = false;
+  bool _isCreating = false;
   TextEditingController _eventNameController = TextEditingController();
   TextEditingController _eventDescriptionController = TextEditingController();
   String _screenName;
@@ -39,6 +40,7 @@ class _EventDialogState extends State<EventDialog> {
     } else {
       event = Event();
       _screenName = 'Criar evento';
+      _isCreating = true;
     }
   }
 
@@ -145,6 +147,13 @@ class _EventDialogState extends State<EventDialog> {
       );
     }
 
+    if (_isCreating) {
+      _saveEventButton = IconButton(
+        icon: Icon(Icons.save),
+        onPressed: () => _saveEvent(event),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff8893f2),
@@ -164,7 +173,7 @@ class _EventDialogState extends State<EventDialog> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 alignment: Alignment.bottomLeft,
                 child: TextField(
-                  enabled: _userCanEditEvent,
+                  enabled: _userCanEditEvent || _isCreating,
                   controller: _eventNameController,
                   decoration: const InputDecoration(
                     labelText: 'Nome',
@@ -183,7 +192,7 @@ class _EventDialogState extends State<EventDialog> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 alignment: Alignment.bottomLeft,
                 child: TextField(
-                  enabled: _userCanEditEvent,
+                  enabled: _userCanEditEvent || _isCreating,
                   controller: _eventDescriptionController,
                   decoration: const InputDecoration(
                     labelText: 'Descriçao',
@@ -204,7 +213,7 @@ class _EventDialogState extends State<EventDialog> {
                   Text('Horário', style: textStyle),
                   DateTimeItem(
                     dateTime: _fromDateTime,
-                    canUserEdit: _userCanEditEvent,
+                    canUserEdit: _userCanEditEvent || _isCreating,
                     onChanged: (DateTime value) {
                       setState(() {
                         _fromDateTime = value;
