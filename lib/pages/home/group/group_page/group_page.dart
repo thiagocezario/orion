@@ -46,7 +46,7 @@ class _GroupPageState extends State<GroupPage> {
             GroupUsers(group),
             GroupEvent(group),
             DisciplinePerformance(group.discipline, group),
-            GroupInfo(group.id),
+            GroupInfo(group),
           ],
         ),
       ),

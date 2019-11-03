@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/client.dart';
+import 'package:orion/components/groups/subscription_icon.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/home/group/group_page/group_page.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
+
+class SubscriptionsList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
 
 class GroupUsers extends StatefulWidget {
   final Group group;
@@ -91,44 +99,10 @@ class _GroupUsersState extends State<GroupUsers> {
       return null;
     }
 
-    Widget subIcon(Subscription sub) {
-      if (sub.banned) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.person,
-              color: Colors.red,
-            ),
-            Text(
-              'Banido',
-              style: TextStyle(color: Colors.red),
-            )
-          ],
-        );
-      }
-
-      if (sub.manager) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.people,
-              color: Colors.green,
-            ),
-            Text(
-              'Admin',
-              style: TextStyle(color: Colors.green),
-            )
-          ],
-        );
-      }
-
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 7, vertical: 7),
-        child: Icon(Icons.person),
-      );
-    }
+    // return Container(
+    //   padding: EdgeInsets.symmetric(horizontal: 7, vertical: 7),
+    //   child: Icon(Icons.person),
+    // );
 
     return Consumer<SubscriptionsProvider>(
       builder: (context, subscriptionsState, _) => CustomScrollView(
@@ -139,7 +113,8 @@ class _GroupUsersState extends State<GroupUsers> {
                 if (!subscriptionsState.subscriptions[index].banned &&
                     subscriptionsState.subscriptions[index].active) {
                   return ListTile(
-                      leading: subIcon(subscriptionsState.subscriptions[index]),
+                      leading: SubscriptionIcon(
+                          subscriptionsState.subscriptions[index]),
                       title: Text(
                           subscriptionsState.subscriptions[index].student.name),
                       subtitle: Text(subscriptionsState
@@ -161,7 +136,8 @@ class _GroupUsersState extends State<GroupUsers> {
               (context, index) {
                 if (subscriptionsState.subscriptions[index].banned) {
                   return ListTile(
-                      leading: subIcon(subscriptionsState.subscriptions[index]),
+                      leading: SubscriptionIcon(
+                          subscriptionsState.subscriptions[index]),
                       title: Text(
                         subscriptionsState.subscriptions[index].student.name,
                         style: TextStyle(
