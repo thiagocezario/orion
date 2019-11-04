@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 class Client {
   // static final String _ip = "10.0.2.2";    // Local Android
   // static final String _ip = "localhost";   // Local IOS
-  static final String _ip = "192.168.15.3"; // External access
+  // static final String _ip = "192.168.15.3"; // External access
+    static final String _ip = "192.168.0.4"; // External access
   // (run server with rails server -b (YOUR IP) -p 3000)
 
   final HttpClient client = new HttpClient();

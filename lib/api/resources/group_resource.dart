@@ -7,6 +7,10 @@ class GroupResource {
     return '/api/groups';
   }
 
+  static Future find(String resourceId) async {
+    return Base.findResource(path(), resourceId);
+  }
+
   static Future list(dynamic data) async {
     return Base.listResources(path(), data);
   }

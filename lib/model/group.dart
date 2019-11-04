@@ -18,6 +18,7 @@ class Group {
     int id;
     String name;
     String description;
+    int colleagues;
     DateTime createdAt;
     DateTime updatedAt;
     Metadata metadata;
@@ -29,6 +30,7 @@ class Group {
         this.id,
         this.name,
         this.description,
+        this.colleagues,
         this.createdAt,
         this.updatedAt,
         this.metadata,
@@ -37,10 +39,15 @@ class Group {
         this.discipline,
     });
 
+    String link() {
+      return 'http://www.orionapp/subscribe?id=$id';
+    }
+
     factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json["id"],
         name: json["name"],
         description: json["description"],
+        colleagues: json["colleagues"] == null ? null : json["colleagues"],
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
         metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
@@ -60,227 +67,4 @@ class Group {
         "course": course.toJson(),
         "discipline": discipline.toJson(),
     };
-}
-
-
-
-
-String getJsonData()  {
-  return """[
-    {
-      "id": 3,
-      "name": "TCC 1 - Fight Club",
-      "institution_name": "UFPR",
-      "institution_id": 7,
-      "course_id": 3,
-      "discipline_id": 11,
-      "members": [
-        {
-          "id": 1,
-          "name": "Thiago"
-        },
-        {
-          "id": 2,
-          "name": "Luiz"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        }
-      ]
-    },
-    {
-      "id": 12,
-      "name": "TCC 2 - Agora vai",
-      "institution_id": 7,
-      "institution_name": "UFSC",
-      "course_id": 4,
-      "discipline_id": 11,
-      "members": [
-        {
-          "id": 1,
-          "name": "Thiago"
-        },
-        {
-          "id": 2,
-          "name": "Luiz"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "Gestão de empresas",
-      "institution_name": "Universidade Federal do Paraná",
-      "institution_id": 7,
-      "course_id": 3,
-      "discipline_id": 11,
-      "members": [
-        {
-          "id": 1,
-          "name": "Thiago"
-        },
-        {
-          "id": 2,
-          "name": "Luiz"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "Introdução à programação de computadores",
-      "institution_name": "Universidade Federal de Minas Gerais",
-      "institution_id": 7,
-      "course_id": 3,
-      "discipline_id": 11,
-      "members": [
-        {
-          "id": 1,
-          "name": "Thiago"
-        },
-        {
-          "id": 2,
-          "name": "Luiz"
-        }
-      ]
-    },
-    {
-      "id": 12,
-      "name": "Tópicos especiais em bancos de dados",
-      "institution_id": 7,
-      "institution_name": "Universidade Estadual de Ponta Grossa",
-      "course_id": 4,
-      "discipline_id": 11,
-      "members": [
-        {
-          "id": 1,
-          "name": "Thiago"
-        },
-        {
-          "id": 2,
-          "name": "Luiz"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        }
-      ]
-    },
-    {
-      "id": 12,
-      "name": "Arquitetura de computadores",
-      "institution_id": 7,
-      "institution_name": "Universidade Federal do Paraná",
-      "course_id": 4,
-      "discipline_id": 11,
-      "members": [
-        {
-          "id": 1,
-          "name": "Thiago"
-        },
-        {
-          "id": 2,
-          "name": "Luiz"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        }
-      ]
-    },
-    {
-      "id": 12,
-      "name": "Direito Aplicado",
-      "institution_id": 7,
-      "institution_name": "Universidade Federal do Paraná",
-      "course_id": 4,
-      "discipline_id": 11,
-      "members": [
-        {
-          "id": 1,
-          "name": "Thiago"
-        },
-        {
-          "id": 2,
-          "name": "Luiz"
-        },
-        {
-          "id": 3,
-          "name": "Marcos"
-        }
-      ]
-    }
-]
-  """;
 }
