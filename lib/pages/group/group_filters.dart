@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/pages/home/group/group_page/group_preview_page/group_preview_page.dart';
+import 'package:orion/pages/group/group_preview_page.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
@@ -167,25 +167,26 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Scaffold(
-                          appBar: AppBar(
-                            backgroundColor: Color(0xff8893f2),
-                            elevation: 0.0,
-                            title: Text(
-                              'Novo Grupo',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            centerTitle: true,
-                            leading: IconButton(
-                              icon: Icon(
-                                Icons.arrow_back,
-                                color: Colors.black,
-                              ),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                          ),
-                          body: NewGroupPage(),
-                        )),
+                  builder: (context) => Scaffold(
+                    appBar: AppBar(
+                      backgroundColor: Color(0xff8893f2),
+                      elevation: 0.0,
+                      title: Text(
+                        'Novo Grupo',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      centerTitle: true,
+                      leading: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
+                    body: NewGroupPage(),
+                  ),
+                ),
               );
             }
           },

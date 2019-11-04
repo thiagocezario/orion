@@ -17,7 +17,7 @@ class SubscriptionIcon extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Icon(
-          Icons.people,
+          Icons.person,
           color: Colors.green,
         ),
         Text(

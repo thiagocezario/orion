@@ -7,12 +7,12 @@ import 'package:orion/model/event.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:provider/provider.dart';
 
-class EventIndexPage extends StatefulWidget {
+class EventsPage extends StatefulWidget {
   @override
-  _EventIndexPageState createState() => _EventIndexPageState();
+  _EventsPageState createState() => _EventsPageState();
 }
 
-class _EventIndexPageState extends State<EventIndexPage> {
+class _EventsPageState extends State<EventsPage> {
   Future _showEvent(Event event) async {
     Event result = await Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {

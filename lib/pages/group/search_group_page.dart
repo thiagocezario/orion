@@ -12,9 +12,9 @@ import 'package:orion/model/user.dart';
 import 'group_filters.dart';
 
 class SearchGroupPage extends StatefulWidget {
-  var institution = Institution();
-  var course = Course();
-  var discipline = Discipline();
+  Institution institution = Institution();
+  Course course = Course();
+  Discipline discipline = Discipline();
 
   SearchGroupPage({Key key, this.institution, this.course, this.discipline})
       : super(key: key);

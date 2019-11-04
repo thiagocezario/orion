@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/user.dart';
-import 'package:orion/pages/home/home_page.dart';
+import 'package:orion/pages/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
 import 'package:orion/provider/auth_provider.dart';

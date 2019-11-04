@@ -8,7 +8,7 @@ import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/model/user.dart';
-import 'package:orion/pages/home/group/group_page/group_page.dart';
+import 'package:orion/pages/group/group_page.dart';
 import 'package:orion/provider/discipline_performances_provider.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/group_posts_provider.dart';

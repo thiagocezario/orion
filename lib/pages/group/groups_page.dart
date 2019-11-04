@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/groups/group_cards.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/pages/home/group/group_page/group_preview_page/group_preview_page.dart';
+import 'package:orion/pages/group/group_preview_page.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
@@ -11,12 +11,12 @@ import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
-class MyGroups extends StatefulWidget {
+class GroupsPage extends StatefulWidget {
   @override
-  _MyGroupsState createState() => _MyGroupsState();
+  _GroupsPageState createState() => _GroupsPageState();
 }
 
-class _MyGroupsState extends State<MyGroups> {
+class _GroupsPageState extends State<GroupsPage> {
   Widget headerList(BuildContext context, List<Group> recommendations) {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
@@ -55,7 +55,7 @@ class _MyGroupsState extends State<MyGroups> {
                       blurRadius: 3)
                 ],
               ),
-              width: 200.0,
+              width: 350,
               child: Stack(
                 children: <Widget>[
                   Align(
@@ -75,13 +75,25 @@ class _MyGroupsState extends State<MyGroups> {
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                            Icon(
-                              Icons.people,
-                              color: Colors.blueGrey,
-                            ),
-                            Text(
-                              '${recommendations[index].metadata.subscriptions}',
-                              style: TextStyle(color: Colors.blueGrey),
+                            Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.people,
+                                  color: Colors.blueGrey,
+                                ),
+                                Text(
+                                  '${recommendations[index].metadata.subscriptions}',
+                                  style: TextStyle(color: Colors.blueGrey),
+                                ),
+                                Icon(
+                                  Icons.people,
+                                  color: Colors.blueGrey,
+                                ),
+                                Text(
+                                  '${recommendations[index].colleagues}',
+                                  style: TextStyle(color: Colors.green),
+                                )
+                              ],
                             )
                           ],
                         ),
