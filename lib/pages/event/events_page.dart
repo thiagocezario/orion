@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
-import 'package:orion/api/resources/event_resource.dart';
-import 'package:orion/components/events/evet_dialog.dart';
+import 'package:orion/components/events/event_item.dart';
 import 'package:orion/model/event.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:provider/provider.dart';
@@ -13,20 +11,6 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
-  Future _showEvent(Event event) async {
-    Event result = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return EventDialog(event);
-      },
-      fullscreenDialog: true,
-    ));
-
-    if (result != null) {
-      await EventResource.updateObject(result).then((response) {
-        Provider.of<MyEventsProvider>(context).fetchEvents();
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,46 +20,9 @@ class _EventsPageState extends State<EventsPage> {
           ListView.builder(
             itemCount: myEventsProvider.myEvents.length,
             itemBuilder: (context, index) {
+              Event event = myEventsProvider.myEvents[index];
 
-              var event = myEventsProvider.myEvents[index];
-              DateTime date = DateFormat("yyyy-MM-dd hh:mm:ss")
-                  .parse(event.date.toString());
-
-              return ListTile(
-                onTap: () async => await _showEvent(event),
-                leading: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: 35,
-                      height: 25,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "${date.day}",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 25,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 35,
-                      height: 25,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          DateFormat.MMM()
-                              .format(date),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                title: Text(myEventsProvider.myEvents[index].title),
-                subtitle: Text(myEventsProvider.myEvents[index].content),
-              );
+              return EventItem(key: UniqueKey(), event: event);
             },
           ),
         ],

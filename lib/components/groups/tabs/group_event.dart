@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:orion/api/resources/event_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/events/event_item.dart';
 import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/model/event.dart';
 import 'package:orion/model/group.dart';
@@ -20,22 +21,6 @@ class GroupEvent extends StatefulWidget {
 
 class _GroupEventState extends State<GroupEvent> {
   final Group group;
-
-  Future _showEvent(Event event) async {
-    Event result = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return EventDialog(event);
-      },
-      fullscreenDialog: true,
-    ));
-
-    if (result != null) {
-      await EventResource.updateObject(result).then((response) {
-        Provider.of<GroupEventsProvider>(context)
-            .fetchEvents(result.group.id.toString());
-      });
-    }
-  }
 
   Future _createEvent() async {
     Event result = await Navigator.of(context).push(MaterialPageRoute(
@@ -100,47 +85,8 @@ class _GroupEventState extends State<GroupEvent> {
               }
 
               var event = groupEventsProvider.groupEvents[index - 1];
-              DateTime date = DateFormat("yyyy-MM-dd hh:mm:ss")
-                  .parse(event.date.toString());
 
-              return ListTile(
-                onTap: () async {
-                  await _showEvent(event);
-                },
-                leading: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: 35,
-                      height: 25,
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Text(
-                          "${date.day}",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 25,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 35,
-                      height: 25,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          DateFormat.MMM().format(date),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                title: Text(event.title),
-                subtitle: Text(
-                  groupEventsProvider.groupEvents[index - 1].content,
-                ),
-              );
+              return EventItem(key: UniqueKey(), event: event);
             },
           ),
         ],

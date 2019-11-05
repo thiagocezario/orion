@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/events/event_item.dart';
 import 'package:orion/main.dart';
 import 'package:orion/model/event.dart';
 import 'package:orion/model/group.dart';
@@ -229,46 +229,9 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
             return null;
           }
 
-          DateTime date = DateFormat("yyyy-MM-dd hh:mm:ss")
-              .parse(events[index].date.toString());
-
           return Column(
             children: <Widget>[
-              ListTile(
-                leading: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: 35,
-                      height: 25,
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Text(
-                          "${date.day}",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 25,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 35,
-                      height: 25,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          DateFormat.MMM().format(date),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                title: Text(events[index].title),
-                subtitle: Text(
-                  events[index].content,
-                ),
-              ),
+              EventItem(event: events[index]),
               Divider(),
             ],
           );
