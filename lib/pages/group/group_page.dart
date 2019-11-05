@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/pages/group/tabs/discipline_performance.dart';
-import 'package:orion/pages/group/tabs/group_event.dart';
-import 'package:orion/pages/group/tabs/group_info.dart';
-import 'package:orion/pages/group/tabs/group_post.dart';
-import 'package:orion/pages/group/tabs/subscriptions.dart';
+import 'package:orion/components/groups/tabs/discipline_performance.dart';
+import 'package:orion/components/groups/tabs/group_event.dart';
+import 'package:orion/components/groups/tabs/group_info.dart';
+import 'package:orion/components/groups/tabs/group_post.dart';
+import 'package:orion/components/groups/tabs/subscriptions.dart';
 
 class GroupPage extends StatefulWidget {
   final group;
