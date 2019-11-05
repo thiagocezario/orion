@@ -2,13 +2,15 @@ import 'dart:convert';
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:orion/api/client.dart';
 import 'package:orion/api/resources/course_resource.dart';
 import 'package:orion/api/resources/discipline_resource.dart';
+import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/api/resources/institution_resource.dart';
+import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
+import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/provider/my_events_provider.dart';
@@ -306,9 +308,13 @@ class _NewGroupPageState extends State<NewGroupPage> {
             ),
             getMaterialButton(context, _formKey, 'Criar', () {
               {
-                Client.createGroup(_singleton.jwtToken, institution.id,
-                        course.id, discipline.id, _groupNameController.text)
-                    .then((response) {
+                Group group = Group(
+                  name: _groupNameController.text,
+                  institution: institution,
+                  course: course,
+                  discipline: discipline,
+                );
+                GroupResource.createObject(group).then((response) {
                   if (response.statusCode == 201) {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
@@ -317,9 +323,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
                     );
                     var jsonResponse = json.decode(response.body);
                     var groupId = jsonResponse["id"];
-                    Client.subscribe(_singleton.jwtToken, groupId);
-                    Provider.of<MyGroupsProvider>(context).refreshMyGroups();
-                    Provider.of<MyEventsProvider>(context).fetchEvents();
+
+                    SubscriptionResource.subscribe(groupId).then((response) {
+                      Provider.of<MyGroupsProvider>(context).refreshMyGroups();
+                      Provider.of<MyEventsProvider>(context).fetchEvents();
+                    });
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(

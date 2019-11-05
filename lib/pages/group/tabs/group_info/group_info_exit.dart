@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/client.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
@@ -19,7 +18,8 @@ class GroupInfoExit extends StatelessWidget {
     };
     await SubscriptionResource.list(data).then((response) async {
       var result = subscriptionFromJson(response.body);
-      await Client.unsubscribe(Singleton().jwtToken, result.first.id)
+
+      SubscriptionResource.unsubscribe(result.first.id.toString())
           .then((response) {
         Provider.of<MyGroupsProvider>(context).refreshMyGroups();
         Navigator.of(context).pop();

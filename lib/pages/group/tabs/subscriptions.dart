@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/client.dart';
+import 'package:orion/api/resources/ban_resource.dart';
+import 'package:orion/api/resources/manager_resource.dart';
+import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/groups/subscription_icon.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
-import 'package:orion/model/user.dart';
 import 'package:orion/pages/group/group_page.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
@@ -39,33 +40,25 @@ class _GroupUsersState extends State<GroupUsers> {
   // TODO: Remover requisições desnecessarias
   Future _popUpMenuActions(String action, Subscription sub) async {
     if (action == 'Tornar admin') {
-      await Client.createManager(Singleton().jwtToken, sub.id).then(
-        (response) {
-          Provider.of<SubscriptionsProvider>(context)
-              .fetchSubscriptions(group.id.toString());
-        },
-      );
+      ManagerResource.createObject(sub).then((response) {
+        Provider.of<SubscriptionsProvider>(context)
+            .fetchSubscriptions(group.id.toString());
+      });
     } else if (action == 'Banir') {
-      await Client.createBan(Singleton().jwtToken, sub.id).then(
-        (response) {
-          Provider.of<SubscriptionsProvider>(context)
-              .fetchSubscriptions(group.id.toString());
-        },
-      );
+      BanResource.createObject(sub).then((response) {
+        Provider.of<SubscriptionsProvider>(context)
+            .fetchSubscriptions(group.id.toString());
+      });
     } else if (action == 'Expulsar') {
-      await Client.unsubscribe(Singleton().jwtToken, sub.id).then(
-        (response) {
-          Provider.of<SubscriptionsProvider>(context)
-              .fetchSubscriptions(group.id.toString());
-        },
-      );
+      SubscriptionResource.unsubscribe(sub.id.toString()).then((response) {
+        Provider.of<SubscriptionsProvider>(context)
+            .fetchSubscriptions(group.id.toString());
+      });
     } else if (action == "Desbanir") {
-      await Client.deleteBan(Singleton().jwtToken, sub.id).then(
-        (response) {
-          Provider.of<SubscriptionsProvider>(context)
-              .fetchSubscriptions(group.id.toString());
-        },
-      );
+      BanResource.deleteObject(sub).then((response) {
+        Provider.of<SubscriptionsProvider>(context)
+            .fetchSubscriptions(group.id.toString());
+      });
     }
   }
 
