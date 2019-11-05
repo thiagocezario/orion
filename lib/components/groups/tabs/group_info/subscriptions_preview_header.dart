@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/groups/tabs/group_info/subscriptions_search.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:share/share.dart';
@@ -9,6 +10,13 @@ class SubscriptionsPreviewHeader extends StatelessWidget {
 
   SubscriptionsPreviewHeader({this.group, this.subscriptions});
 
+  void _searchUsers(BuildContext context) {
+    showSearch(
+      context: context,
+      delegate: SubscriptionsSearch(subscriptions, group),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -16,6 +24,13 @@ class SubscriptionsPreviewHeader extends StatelessWidget {
         children: <Widget>[
           ListTile(
             title: Text("${subscriptions.length} participantes"),
+            trailing: IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.lightBlueAccent,
+              ),
+              onPressed: () => _searchUsers(context),
+            ),
           ),
           InkWell(
             child: ListTile(
@@ -29,7 +44,8 @@ class SubscriptionsPreviewHeader extends StatelessWidget {
               title: Text("Convidar para grupo"),
             ),
             onTap: () {
-              Share.share('Você foi convidado para fazer parte do grupo ${group.name}! Tenha acesso a conteúdos e eventos da disciplina ${group.discipline.name}.\n${group.link()}');
+              Share.share(
+                  'Você foi convidado para fazer parte do grupo ${group.name}! Tenha acesso a conteúdos e eventos da disciplina ${group.discipline.name}.\n${group.link()}');
             },
           )
         ],

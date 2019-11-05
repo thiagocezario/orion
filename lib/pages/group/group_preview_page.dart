@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/events/event_item.dart';
+import 'package:orion/components/groups/subscription_icon.dart';
 import 'package:orion/main.dart';
 import 'package:orion/model/event.dart';
 import 'package:orion/model/group.dart';
@@ -64,31 +65,6 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
         Navigator.of(context).popAndPushNamed(GroupPageRoute, arguments: group);
       }
     });
-  }
-
-  Widget subIcon(Subscription sub) {
-    String subscriptionRole = 'Membro';
-    Icon subscriptionIcon = Icon(Icons.person);
-
-    if (sub.manager) {
-      subscriptionIcon = Icon(
-        Icons.people,
-        color: Colors.green,
-      );
-
-      subscriptionRole = 'Admin';
-    }
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        subscriptionIcon,
-        Text(
-          subscriptionRole,
-          style: TextStyle(color: Colors.green),
-        )
-      ],
-    );
   }
 
   SliverList _getPostsPreview(List<Post> posts) {
@@ -183,7 +159,7 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
           return Column(
             children: <Widget>[
               ListTile(
-                leading: subIcon(subscriptions[index]),
+                leading: SubscriptionIcon(subscriptions[index]),
                 title: Text(subscriptions[index].student.name),
                 subtitle: Text(subscriptions[index].student.email),
               ),
