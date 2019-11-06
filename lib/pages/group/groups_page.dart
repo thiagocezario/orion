@@ -182,8 +182,7 @@ class _GroupsPageState extends State<GroupsPage> {
                           context, recommendations.groupRecomendations),
                     ),
                     Expanded(
-                      child: GroupCards()
-                          .getGroupCards(context, myGroupsState.myGroups),
+                      child: GroupCardsList(myGroupsState.myGroups),
                     ),
                   ],
                 ),
