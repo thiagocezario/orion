@@ -4,12 +4,29 @@ import 'package:orion/model/subscriptions.dart';
 
 class SubscriptionsPreview extends StatelessWidget {
   final List<Subscription> subscriptions;
+  final int previewSize;
 
-  SubscriptionsPreview(this.subscriptions);
+  SubscriptionsPreview(this.subscriptions, this.previewSize);
 
   @override
   Widget build(BuildContext context) {
-    int subCount = subscriptions.length > 10 ? 10 : subscriptions.length;
+    int subCount =
+        subscriptions.length > previewSize ? previewSize : subscriptions.length;
+
+    if (subCount == 0) {
+      return SliverToBoxAdapter(
+        child: ListTile(
+          title: Text(
+            'Não existem usuários cadastrados neste grupo.',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey.shade600,
+            ),
+          ),
+          enabled: false,
+        ),
+      );
+    }
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(

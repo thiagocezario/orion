@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
-import 'package:orion/components/events/event_item.dart';
-import 'package:orion/components/groups/subscription_icon.dart';
+import 'package:orion/components/groups/group_preview/group_events_preview.dart';
+import 'package:orion/components/groups/group_preview/group_preview_posts.dart';
+import 'package:orion/components/groups/tabs/group_info/subscriptions_preview.dart';
 import 'package:orion/main.dart';
-import 'package:orion/model/event.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/model/post.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/group/group_page.dart';
@@ -67,156 +66,6 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
     });
   }
 
-  SliverList _getPostsPreview(List<Post> posts) {
-    if (posts.length == 0) {
-      return SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return Column(
-              children: <Widget>[
-                ListTile(
-                  title: Text(
-                    'Não existem publicações feitas neste grupo.',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  enabled: false,
-                ),
-                Divider(),
-              ],
-            );
-          },
-          childCount: 1,
-        ),
-      );
-    }
-
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          if (index > 3 || index + 1 > posts.length) {
-            return null;
-          }
-
-          return Column(
-            children: <Widget>[
-              Text(".. x stars"),
-              ListTile(
-                leading: Icon(
-                  Icons.access_time,
-                  size: 25,
-                ),
-                title: Text(posts[index].title),
-                subtitle: Text(
-                  posts[index].content,
-                ),
-              ),
-              Text("Attachments: ${posts[index].blobs.length}"),
-              Divider(),
-            ],
-          );
-        },
-        childCount: posts.length,
-      ),
-    );
-  }
-
-  SliverList _getSubscriptionsPreview(List<Subscription> subscriptions) {
-    if (subscriptions.length == 0) {
-      return SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return Column(
-              children: <Widget>[
-                ListTile(
-                  title: Text(
-                    'Não existem usuários cadastrados neste grupo.',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  enabled: false,
-                ),
-                Divider(),
-              ],
-            );
-          },
-          childCount: 1,
-        ),
-      );
-    }
-
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          if (index > 3 || index + 1 > subscriptions.length) {
-            return null;
-          }
-
-          return Column(
-            children: <Widget>[
-              ListTile(
-                leading: SubscriptionIcon(subscriptions[index]),
-                title: Text(subscriptions[index].student.name),
-                subtitle: Text(subscriptions[index].student.email),
-              ),
-              Divider(),
-            ],
-          );
-        },
-        childCount: subscriptions.length,
-      ),
-    );
-  }
-
-  SliverList _getEventsPreview(List<Event> events) {
-    if (events.length == 0) {
-      return SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return Column(
-              children: <Widget>[
-                ListTile(
-                  title: Text(
-                    'Não existem eventos cadastrados neste grupo.',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  enabled: false,
-                ),
-                Divider(),
-              ],
-            );
-          },
-          childCount: 1,
-        ),
-      );
-    }
-
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          if (index > 3 || index + 1 > events.length) {
-            return null;
-          }
-
-          return Column(
-            children: <Widget>[
-              EventItem(event: events[index]),
-              Divider(),
-            ],
-          );
-        },
-        childCount: events.length,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<GroupPostsProvider>(
@@ -237,72 +86,60 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
             ),
             body: CustomScrollView(
               slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return Column(
-                        children: <Widget>[
-                          ListTile(
-                            title: Text(
-                              'Publicações',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                              ),
-                            ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(
+                          'Publicações',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
                           ),
-                          Divider(),
-                        ],
-                      );
-                    },
-                    childCount: 1,
+                        ),
+                      ),
+                      Divider(),
+                    ],
                   ),
                 ),
-                _getPostsPreview(groupPostsProvider.groupPosts),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return Column(
-                        children: <Widget>[
-                          ListTile(
-                            title: Text(
-                              'Usuários inscritos',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                              ),
-                            ),
+                GroupPreviewPosts(groupPostsProvider.groupPosts),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(
+                          'Usuários inscritos',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
                           ),
-                          Divider(),
-                        ],
-                      );
-                    },
-                    childCount: 1,
+                        ),
+                      ),
+                      Divider(),
+                    ],
                   ),
                 ),
-                _getSubscriptionsPreview(subscriptionsProvider.subscriptions),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return Column(
-                        children: <Widget>[
-                          ListTile(
-                            title: Text(
-                              'Eventos',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                              ),
-                            ),
+                SubscriptionsPreview(
+                  subscriptionsProvider.subscriptions,
+                  3,
+                ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(
+                          'Eventos',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
                           ),
-                          Divider(),
-                        ],
-                      );
-                    },
-                    childCount: 1,
+                        ),
+                      ),
+                      Divider(),
+                    ],
                   ),
                 ),
-                _getEventsPreview(groupEventsProvider.groupEvents),
+                GroupEventsPreview(groupEventsProvider.groupEvents),
               ],
             ),
           ),
