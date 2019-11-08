@@ -48,6 +48,9 @@ class Event {
         "id": id,
         "title": title,
         "content": content,
+        "group": group.toJson(),
+        "student": student.toJson(),
+        "date": date.toIso8601String(),
         // not complete yet
     };
 }

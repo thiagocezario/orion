@@ -8,25 +8,25 @@ import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/api/resources/institution_resource.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/main.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
-import 'package:orion/model/user.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewGroupPage extends StatefulWidget {
-  var institution = Institution();
-  var course = Course();
-  var discipline = Discipline();
+  final institution;
+  final course;
+  final discipline;
 
   NewGroupPage({Key key, this.institution, this.course, this.discipline})
       : super(key: key);
 
   @override
-  _NewGroupPageState createState() => _NewGroupPageState();
+  _NewGroupPageState createState() => _NewGroupPageState(institution, course, discipline);
 }
 
 class _NewGroupPageState extends State<NewGroupPage> {
@@ -50,16 +50,26 @@ class _NewGroupPageState extends State<NewGroupPage> {
   AutoCompleteTextField classField;
   TextFormField groupField;
 
-  static Institution institution = Institution();
-  static Course course = Course();
-  static Discipline discipline = Discipline();
+  Institution institution;
+  Course course;
+  Discipline discipline;
 
-  var _singleton = Singleton();
+  _NewGroupPageState(this.institution, this.course, this.discipline) {
+    searchInstitutions("");
+    searchCourses("");
+    searchDisciplines("");
+
+    _institutionFieldController.text = institution.name;
+    _courseFieldController.text = course.name;
+    _classFieldController.text = discipline.name;
+  }
 
   void searchInstitutions(String text) {
     var data = {'name': text};
     InstitutionResource.list(data).then((response) {
-      _NewGroupPageState.institutions = institutionFromJson(response.body);
+      setState(() {
+        _NewGroupPageState.institutions = institutionFromJson(response.body);
+      });
     });
   }
 
@@ -113,23 +123,30 @@ class _NewGroupPageState extends State<NewGroupPage> {
       style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
-          padding: EdgeInsets.all(15.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 8,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(item.name,
-                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              Expanded(
+                child: Text(item.name,
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              ),
               Container(
                 width: 60.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        item.metadata.subscriptions.toString(),
+                        style:
+                            TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
+                      ),
+                    ),
                     Icon(Icons.person),
-                    Text(
-                      item.metadata.subscriptions.toString(),
-                      style:
-                          TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
-                    )
                   ],
                 ),
               ),
@@ -174,23 +191,30 @@ class _NewGroupPageState extends State<NewGroupPage> {
       style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
-          padding: EdgeInsets.all(15.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 8,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(item.name,
-                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              Expanded(
+                child: Text(item.name,
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              ),
               Container(
                 width: 60.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        item.metadata.subscriptions.toString(),
+                        style:
+                            TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
+                      ),
+                    ),
                     Icon(Icons.person),
-                    Text(
-                      item.metadata.subscriptions.toString(),
-                      style:
-                          TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
-                    )
                   ],
                 ),
               ),
@@ -235,23 +259,30 @@ class _NewGroupPageState extends State<NewGroupPage> {
       style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
-          padding: EdgeInsets.all(15.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 8,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(item.name,
-                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              Expanded(
+                child: Text(item.name,
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              ),
               Container(
                 width: 60.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        item.metadata.subscriptions.toString(),
+                        style:
+                            TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
+                      ),
+                    ),
                     Icon(Icons.person),
-                    Text(
-                      item.metadata.subscriptions.toString(),
-                      style:
-                          TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
-                    )
                   ],
                 ),
               ),
@@ -324,10 +355,12 @@ class _NewGroupPageState extends State<NewGroupPage> {
                     var jsonResponse = json.decode(response.body);
                     var groupId = jsonResponse["id"];
 
-                    SubscriptionResource.subscribe(groupId).then((response) {
+                    SubscriptionResource.subscribe(groupId.toString()).then((response) {
                       Provider.of<MyGroupsProvider>(context).refreshMyGroups();
                       Provider.of<MyEventsProvider>(context).fetchEvents();
                     });
+
+                    Navigator.of(context).popAndPushNamed(GroupPageRoute, arguments: group);
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(

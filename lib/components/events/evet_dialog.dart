@@ -78,15 +78,14 @@ class _EventDialogState extends State<EventDialog> {
               ),
               FlatButton(
                 child: const Text('EXCLUIR'),
-                onPressed: () async {
-                  await EventResource.delete(event.id.toString())
+                onPressed: () {
+                   EventResource.delete(event.id.toString())
                       .then((response) {
                     // Navigator.of(context).pop("delete");
                     Provider.of<GroupEventsProvider>(context)
                         .fetchEvents(event.group.id.toString());
+                        Navigator.of(context).pop();
                   });
-
-                  Navigator.of(context).pop();
                 },
               ),
             ],

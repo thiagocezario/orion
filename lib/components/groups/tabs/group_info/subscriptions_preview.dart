@@ -4,12 +4,29 @@ import 'package:orion/model/subscriptions.dart';
 
 class SubscriptionsPreview extends StatelessWidget {
   final List<Subscription> subscriptions;
+  final int previewSize;
 
-  SubscriptionsPreview(this.subscriptions);
+  SubscriptionsPreview(this.subscriptions, this.previewSize);
 
   @override
   Widget build(BuildContext context) {
-    int subCount = subscriptions.length > 10 ? 10 : subscriptions.length;
+    int subCount =
+        subscriptions.length > previewSize ? previewSize : subscriptions.length;
+
+    if (subCount == 0) {
+      return SliverToBoxAdapter(
+        child: ListTile(
+          title: Text(
+            'Não existem usuários cadastrados neste grupo.',
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.grey.shade600,
+            ),
+          ),
+          enabled: false,
+        ),
+      );
+    }
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -29,59 +46,3 @@ class SubscriptionsPreview extends StatelessWidget {
     );
   }
 }
-
-// SliverList(
-//   delegate: SliverChildBuilderDelegate(
-//     (context, index) {
-//       if (!subscriptionsState.subscriptions[index].banned &&
-//           subscriptionsState.subscriptions[index].active) {
-//         return ListTile(
-//             leading: SubscriptionIcon(
-//                 subscriptionsState.subscriptions[index]),
-//             title: Text(
-//                 subscriptionsState.subscriptions[index].student.name),
-//             subtitle: Text(subscriptionsState
-//                 .subscriptions[index].student.email),
-//             trailing: subscriptionAction(
-//                 subscriptionsState.subscriptions[index]));
-//       }
-
-//       return SizedBox(
-//         height: 0,
-//         width: 0,
-//       );
-//     },
-//     childCount: subscriptionsState.subscriptions.length,
-//   ),
-// ),
-// SliverList(
-//   delegate: SliverChildBuilderDelegate(
-//     (context, index) {
-//       if (subscriptionsState.subscriptions[index].banned) {
-//         return ListTile(
-//             leading: SubscriptionIcon(
-//                 subscriptionsState.subscriptions[index]),
-//             title: Text(
-//               subscriptionsState.subscriptions[index].student.name,
-//               style: TextStyle(
-//                 color: Colors.red,
-//               ),
-//             ),
-//             subtitle: Text(
-//               subscriptionsState.subscriptions[index].student.email,
-//               style: TextStyle(
-//                 color: Colors.red,
-//               ),
-//             ),
-//             trailing: subscriptionAction(
-//                 subscriptionsState.subscriptions[index]));
-//       }
-
-//       return SizedBox(
-//         height: 0,
-//         width: 0,
-//       );
-//     },
-//     childCount: subscriptionsState.subscriptions.length,
-//   ),
-// ),

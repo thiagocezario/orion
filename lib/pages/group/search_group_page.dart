@@ -7,14 +7,13 @@ import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/institution.dart';
-import 'package:orion/model/user.dart';
 
 import 'group_filters.dart';
 
 class SearchGroupPage extends StatefulWidget {
-  Institution institution = Institution();
-  Course course = Course();
-  Discipline discipline = Discipline();
+  final Institution institution;
+  final Course course;
+  final Discipline discipline;
 
   SearchGroupPage({Key key, this.institution, this.course, this.discipline})
       : super(key: key);
@@ -136,23 +135,30 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
-          padding: EdgeInsets.all(15.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 8,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(item.name,
-                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              Expanded(
+                child: Text(item.name,
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              ),
               Container(
                 width: 60.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        item.metadata.subscriptions.toString(),
+                        style:
+                            TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
+                      ),
+                    ),
                     Icon(Icons.person),
-                    Text(
-                      item.metadata.subscriptions.toString(),
-                      style:
-                          TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
-                    )
                   ],
                 ),
               ),
@@ -161,7 +167,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.name.compareTo(a.name);
+        return b.metadata.subscriptions.compareTo(a.metadata.subscriptions);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -197,23 +203,30 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
-          padding: EdgeInsets.all(15.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 8,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(item.name,
-                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              Expanded(
+                child: Text(item.name,
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              ),
               Container(
                 width: 60.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        item.metadata.subscriptions.toString(),
+                        style:
+                            TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
+                      ),
+                    ),
                     Icon(Icons.person),
-                    Text(
-                      item.metadata.subscriptions.toString(),
-                      style:
-                          TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
-                    )
                   ],
                 ),
               ),
@@ -222,7 +235,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.name.compareTo(a.name);
+        return b.metadata.subscriptions.compareTo(a.metadata.subscriptions);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -239,7 +252,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       itemFilter: (item, query) {
         return item.name.toLowerCase().startsWith(query.toLowerCase());
       },
-      suggestionsAmount: 4,
+      suggestionsAmount: 1,
       suggestions: disciplines,
       textChanged: (text) => {
         setState(() {
@@ -258,23 +271,30 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       style: textStyle,
       itemBuilder: (context, item) {
         return Padding(
-          padding: EdgeInsets.all(15.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 8,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(item.name,
-                  style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              Expanded(
+                child: Text(item.name,
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              ),
               Container(
                 width: 60.0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        item.metadata.subscriptions.toString(),
+                        style:
+                            TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
+                      ),
+                    ),
                     Icon(Icons.person),
-                    Text(
-                      item.metadata.subscriptions.toString(),
-                      style:
-                          TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
-                    )
                   ],
                 ),
               ),
@@ -283,7 +303,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
         );
       },
       itemSorter: (a, b) {
-        return b.name.compareTo(a.name);
+        return b.metadata.subscriptions.compareTo(a.metadata.subscriptions);
       },
       itemSubmitted: (item) {
         setState(() {
@@ -318,9 +338,9 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => NewGroupFilter(
-                          institutionId: institution.id,
-                          courseId: course.id,
-                          disciplineId: discipline.id)),
+                          institution: institution,
+                          course: course,
+                          discipline: discipline)),
                 );
               }
             })

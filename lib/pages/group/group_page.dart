@@ -4,7 +4,6 @@ import 'package:orion/components/groups/tabs/discipline_performance.dart';
 import 'package:orion/components/groups/tabs/group_event.dart';
 import 'package:orion/components/groups/tabs/group_info.dart';
 import 'package:orion/components/groups/tabs/group_post.dart';
-import 'package:orion/components/groups/tabs/subscriptions.dart';
 
 class GroupPage extends StatefulWidget {
   final group;
@@ -24,7 +23,7 @@ class _GroupPageState extends State<GroupPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xff8893f2),
@@ -33,7 +32,6 @@ class _GroupPageState extends State<GroupPage> {
           bottom: TabBar(
             tabs: <Widget>[
               Icon(Icons.home),
-              Icon(Icons.people),
               Icon(Icons.event_note),
               Icon(Icons.equalizer),
               Icon(Icons.info),
@@ -43,7 +41,6 @@ class _GroupPageState extends State<GroupPage> {
         body: TabBarView(
           children: <Widget>[
             GroupPost(group),
-            GroupUsers(group),
             GroupEvent(group),
             DisciplinePerformance(group.discipline, group),
             GroupInfo(group),

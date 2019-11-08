@@ -43,7 +43,7 @@ class GroupInfo extends StatelessWidget {
             group: group,
             subscriptions: subscriptionsState.subscriptions,
           ),
-          SubscriptionsPreview(subscriptionsState.subscriptions),
+          SubscriptionsPreview(subscriptionsState.subscriptions, 10),
           SliverToBoxAdapter(
             child: Divider(
               thickness: 20,
