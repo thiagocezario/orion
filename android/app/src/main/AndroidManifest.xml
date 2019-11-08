@@ -15,7 +15,7 @@
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
@@ -32,25 +32,19 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="orionapp"
-                    android:host="test" />
-            </intent-filter>
-
             <intent-filter >
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <!-- Accepts URIs that begin with "http://orionapp/subscribe” -->
                 <data android:scheme="http"
                     android:host="www.orionapp"
                     android:pathPrefix="/subscribe" />
-                <!-- note that the leading "/" is required for pathPrefix-->
+
+                <!-- Accepts URIs that begin with "http://orionapp/reset -->
+                <data android:scheme="http"
+                    android:host="www.orionapp"
+                    android:pathPrefix="/reset" />
             </intent-filter>
         </activity>
     </application>

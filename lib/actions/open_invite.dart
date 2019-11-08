@@ -14,10 +14,11 @@ Future openInvite(BuildContext context) {
     }
 
     Uri uri = response;
-    String id = uri.queryParameters['id'];
+    if (uri.path != '/subscribe') {
+      return;
+    }
 
-    // Open preview when user commig from external link
-    // Verify path in the future
+    String id = uri.queryParameters['id'];
 
     GroupResource.find(id).then((response) {
       Group group = Group.fromJson(json.decode(response.body));
@@ -25,5 +26,20 @@ Future openInvite(BuildContext context) {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => GroupPreviewPage(group)));
     });
+  });
+}
+
+void openInvite2(BuildContext context, Uri uri) {
+  if (uri == null || uri.path != '/subscribe') {
+    return;
+  }
+
+  String id = uri.queryParameters['id'];
+
+  GroupResource.find(id).then((response) {
+    Group group = Group.fromJson(json.decode(response.body));
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => GroupPreviewPage(group)));
   });
 }

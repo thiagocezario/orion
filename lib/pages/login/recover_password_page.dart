@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:orion/actions/open_reset.dart';
+import 'package:orion/api/resources/password_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/provider/origin_provider.dart';
+import 'package:provider/provider.dart';
 
 class RecoverPasswordPage extends StatefulWidget {
   @override
@@ -10,29 +14,45 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   final _controller = TextEditingController();
 
+  void afterBuild(BuildContext context, OriginProvider provider) {
+    if (!provider.opend) {
+      Provider.of<OriginProvider>(context).open();
+      print(provider.uri);
+
+      openReset2(context, provider.uri);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color(0xff8893f2),
-        appBar: AppBar(
-          backgroundColor: Color(0xff8893f2),
-          elevation: 0.0,
-          title: Text(
-            'Recuperar Senha',
-            style: TextStyle(color: Colors.black),
-          ),
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
+    return Consumer<OriginProvider>(
+      builder: (context, originProvider, _) {
+        WidgetsBinding.instance
+            .addPostFrameCallback((_) => afterBuild(context, originProvider));
+
+        return Scaffold(
+            backgroundColor: Color(0xff8893f2),
+            appBar: AppBar(
+              backgroundColor: Color(0xff8893f2),
+              elevation: 0.0,
+              title: Text(
+                'Recuperar Senha',
+                style: TextStyle(color: Colors.black),
+              ),
+              centerTitle: true,
+              leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
             ),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-        body: ListView(
-          children: <Widget>[_buildForm(context)],
-        ));
+            body: ListView(
+              children: <Widget>[_buildForm(context)],
+            ));
+      },
+    );
   }
 
   Builder _buildForm(context) {
@@ -59,6 +79,9 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
                 height: 25.0,
               ),
               getMaterialButton(context, _formKey, 'Redefinir Senha', () {
+                PasswordResource.recover(_controller.text).then((response) {
+                  print(response.body);
+                });
                 Scaffold.of(context).showSnackBar(emailSentConfirmation());
               }),
             ],

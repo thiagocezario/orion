@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/actions/open_reset.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/home_page.dart';
@@ -8,6 +9,7 @@ import 'package:orion/provider/auth_provider.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
+import 'package:orion/provider/origin_provider.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,24 +22,26 @@ class _LoginPageState extends State<LoginPage> {
   final _emailFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
   User _user = User();
+  bool opend = false;
 
   _LoginPageState() {
     _emailFieldController.text = "user@user.com";
     _passwordFieldController.text = "123123";
     _user.email = "user@user.com";
     _user.password = "123123";
+    opend = false;
   }
 
   void _signIn(BuildContext context) {
     Provider.of<AuthProvider>(context).signIn(_user).then((response) {
       String token = Provider.of<AuthProvider>(context).accessToken;
       if (token != null && token != '') {
-        Provider.of<MyGroupsProvider>(context).refreshMyGroups();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+            Provider.of<MyGroupsProvider>(context).refreshMyGroups();
         Provider.of<GroupRecomendationsProvider>(context)
             .refreshMyRecomendations();
         Provider.of<MyEventsProvider>(context).fetchEvents();
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -54,8 +58,20 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  void checkReset() {
+    if (opend) {
+      return;
+    }
+
+    Provider.of<OriginProvider>(context).init();
+
+    openReset(context).then((response) => opend = true);
+  }
+
   @override
   Widget build(BuildContext context) {
+    checkReset();
+
     return Scaffold(
       backgroundColor: Color(0xff8893f2),
       body: ListView(

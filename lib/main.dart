@@ -11,6 +11,7 @@ import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
+import 'package:orion/provider/origin_provider.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 import 'model/user.dart';
@@ -28,6 +29,7 @@ class Orion extends StatelessWidget {
 
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(builder: (context) => OriginProvider()),
           ChangeNotifierProvider(builder: (context) => AuthProvider()),
           ChangeNotifierProvider(builder: (context) => MyGroupsProvider()),
           ChangeNotifierProvider(

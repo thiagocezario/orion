@@ -3,6 +3,8 @@ import 'package:orion/actions/open_invite.dart';
 import 'package:orion/pages/event/events_page.dart';
 import 'package:orion/pages/group/groups_page.dart';
 import 'package:orion/pages/group/search_group_page.dart';
+import 'package:orion/provider/origin_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,7 +25,17 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    openInvite(context).then((eesponse) => opend = true);
+    openInvite(context).then((response) => opend = true);
+  }
+
+  void afterBuild(BuildContext context, OriginProvider provider) {
+    if (!provider.opend) {
+      Provider.of<OriginProvider>(context).open();
+      print(provider.uri);
+
+      openInvite2(context, provider.uri);
+    }
+
   }
 
   @override
@@ -61,37 +73,42 @@ class _HomePageState extends State<HomePage> {
       ],
     );
 
-    return Scaffold(
-      appBar: appBar,
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTabTapped,
-        currentIndex: _currentIndex,
-        //selectedItemColor: Colors.green,
-        selectedItemColor: Color(0xff8893f2),
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text(
-              'Início',
+    return Consumer<OriginProvider>(builder: (context, originProvider, _) {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => afterBuild(context, originProvider));
+
+      return Scaffold(
+        appBar: appBar,
+        body: _children[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: onTabTapped,
+          currentIndex: _currentIndex,
+          //selectedItemColor: Colors.green,
+          selectedItemColor: Color(0xff8893f2),
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text(
+                'Início',
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            title: Text(
-              'Eventos',
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              title: Text(
+                'Eventos',
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text(
-              'Grupos',
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              title: Text(
+                'Grupos',
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 
   void onTabTapped(int index) {
