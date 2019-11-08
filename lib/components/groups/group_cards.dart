@@ -81,30 +81,35 @@ class GroupCard extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 15.0, top: 10.0, bottom: 10.0),
-                  child: Text(
-                    group.name.toUpperCase(),
-                    style: TextStyle(
-                        fontSize: 17.0,
-                        color: Colors.blueGrey,
-                        fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(left: 15.0, top: 10.0, bottom: 10.0),
+                    child: Text(
+                      group.name.toUpperCase(),
+                      style: TextStyle(
+                          fontSize: 17.0,
+                          color: Colors.blueGrey,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 15.0, bottom: 10.0, top: 10.0),
+                  padding: EdgeInsets.only(
+                      left: 15.0, bottom: 10.0, top: 10.0, right: 15.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
+                      Text(
+                        "${group.metadata.subscriptions}",
+                        style: TextStyle(color: Colors.blueGrey),
+                      ),
+                      SizedBox(width: 5.0,),
                       Icon(
                         Icons.people,
                         color: Colors.blueGrey,
                       ),
-                      Text(
-                        "${group.metadata.subscriptions}",
-                        style: TextStyle(color: Colors.blueGrey),
-                      )
                     ],
                   ),
                 ),
@@ -118,10 +123,12 @@ class GroupCard extends StatelessWidget {
                     Icons.place,
                     color: groupIconsColor,
                   ),
-                  Text(
-                    group.institution.name,
-                    style: TextStyle(
-                      color: Colors.blueGrey,
+                  Expanded(
+                    child: Text(
+                      group.institution.name,
+                      style: TextStyle(
+                        color: Colors.blueGrey,
+                      ),
                     ),
                   )
                 ],
@@ -137,9 +144,11 @@ class GroupCard extends StatelessWidget {
                     Icons.desktop_windows,
                     color: groupIconsColor,
                   ),
-                  Text(
-                    group.discipline.name,
-                    style: TextStyle(color: Colors.blueGrey),
+                  Expanded(
+                    child: Text(
+                      group.discipline.name,
+                      style: TextStyle(color: Colors.blueGrey),
+                    ),
                   )
                 ],
               ),
