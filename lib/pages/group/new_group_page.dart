@@ -8,6 +8,7 @@ import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/api/resources/institution_resource.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/main.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
@@ -354,10 +355,12 @@ class _NewGroupPageState extends State<NewGroupPage> {
                     var jsonResponse = json.decode(response.body);
                     var groupId = jsonResponse["id"];
 
-                    SubscriptionResource.subscribe(groupId).then((response) {
+                    SubscriptionResource.subscribe(groupId.toString()).then((response) {
                       Provider.of<MyGroupsProvider>(context).refreshMyGroups();
                       Provider.of<MyEventsProvider>(context).fetchEvents();
                     });
+
+                    Navigator.of(context).popAndPushNamed(GroupPageRoute, arguments: group);
                   } else {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(

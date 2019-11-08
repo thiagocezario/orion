@@ -202,38 +202,35 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       ),
       style: textStyle,
       itemBuilder: (context, item) {
-        return Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 8,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: Text(item.name,
-                      style:
-                          TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
-                ),
-                Container(
-                  width: 60.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          item.metadata.subscriptions.toString(),
-                          style: TextStyle(
-                              fontFamily: 'Montserrat', fontSize: 18.0),
-                        ),
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 8,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: Text(item.name,
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18.0)),
+              ),
+              Container(
+                width: 60.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        item.metadata.subscriptions.toString(),
+                        style:
+                            TextStyle(fontFamily: 'Montserrat', fontSize: 18.0),
                       ),
-                      Icon(Icons.person),
-                    ],
-                  ),
+                    ),
+                    Icon(Icons.person),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
