@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/commom_items/material_button.dart';
 
 class RecoverPasswordPage extends StatefulWidget {
   @override
@@ -58,7 +59,7 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
               SizedBox(
                 height: 25.0,
               ),
-              getMaterialButton(context, _formKey, 'Redefinir Senha', () {
+              CustomMaterialButton('Redefinir senha', () {
                 Scaffold.of(context).showSnackBar(emailSentConfirmation());
               }),
             ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/post_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/components/posts/post_dialog.dart';
 import 'package:orion/components/posts/post_item.dart';
 import 'package:orion/model/group.dart';
@@ -44,36 +45,10 @@ class _GroupPostState extends State<GroupPost> {
 
   Container addButton() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-      child: Material(
-        elevation: 5.0,
-        borderRadius: BorderRadius.circular(30.0),
-        color: primaryButtonColor,
-        child: MaterialButton(
-          minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          elevation: 50,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Nova publicação',
-                style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-              Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-            ],
-          ),
-          onPressed: () async => await _createPost(),
-        ),
-      ),
-    );
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        child: CustomMaterialButton('Adicionar nova publicação', () {
+          _createPost();
+        }));
   }
 
   @override

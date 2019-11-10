@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
@@ -8,6 +9,7 @@ import 'package:orion/provider/auth_provider.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
+import 'package:orion/provider/search_groups_provider.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -36,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         Provider.of<GroupRecomendationsProvider>(context)
             .refreshMyRecomendations();
         Provider.of<MyEventsProvider>(context).fetchEvents();
+        Provider.of<SearchGroupsProvider>(context).refreshItems();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
       } else {
@@ -127,35 +130,17 @@ class _LoginPageState extends State<LoginPage> {
                         userField,
                         SizedBox(height: 10.0),
                         passwordField,
-                        // SizedBox(
-                        //   height: 15.0,
-                        // ),
                         Container(
                           alignment: Alignment.bottomRight,
                           child: forgotPasswordButton(context),
                         ),
-                        Builder(
-                          builder: (context) => Material(
-                            elevation: 5.0,
-                            borderRadius: BorderRadius.circular(30.0),
-                            color: Color(0xff192376),
-                            child: MaterialButton(
-                              minWidth: MediaQuery.of(context).size.width,
-                              padding:
-                                  EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                              elevation: 50.0,
-                              onPressed: () {
-                                if (_formKey.currentState.validate()) {
-                                  _signIn(context);
-                                }
-                              },
-                              child: Text('Entrar',
-                                  textAlign: TextAlign.center,
-                                  style: textStyle.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
+                        CustomMaterialButton(
+                          'Entrar',
+                          () {
+                            if (_formKey.currentState.validate()) {
+                              _signIn(context);
+                            }
+                          },
                         ),
                         SizedBox(
                           height: 15.0,

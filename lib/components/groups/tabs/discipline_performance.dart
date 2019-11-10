@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/performance_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/components/performances/performance_dialog.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
@@ -69,34 +70,9 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
           if (index == 0) {
             return Container(
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-              child: Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(30.0),
-                color: primaryButtonColor,
-                child: MaterialButton(
-                  minWidth: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  elevation: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Adicionar nova nota',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                  onPressed: () => _createPerformance(),
-                ),
-              ),
+              child: CustomMaterialButton('Adicionar nota', () {
+                _createPerformance();
+              }),
             );
           }
 
@@ -105,8 +81,7 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
 
           return ListTile(
             onTap: () => _editPerformance(performance),
-            leading: Text(
-                "${performance.percentage.toString()} %"),
+            leading: Text("${performance.percentage.toString()} %"),
             title: Text(disciplineProvider
                 .disciplinePerformances[index - 1].description),
             subtitle: Text(
