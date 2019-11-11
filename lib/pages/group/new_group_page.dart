@@ -108,7 +108,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 onTap: () async {
                   Course result = await showSearch(
                     context: context,
-                    delegate: CourseSearch(items.courses),
+                    delegate: CourseSearch(items.courses, institution),
                   );
 
                   if (result != null) {
@@ -132,7 +132,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 onTap: () async {
                   Discipline result = await showSearch(
                     context: context,
-                    delegate: DisciplineSearch(items.disciplines),
+                    delegate: DisciplineSearch(items.disciplines, course),
                   );
 
                   if (result != null) {

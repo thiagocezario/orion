@@ -19,6 +19,7 @@ import 'model/user.dart';
 const String GroupPageRoute = '/group_page';
 const String RecoverPasswordRoute = '/recover_password';
 const String NewAccountRoute = '/new_account';
+const String LoginPageRoute = '/login';
 
 void main() => runApp(Orion());
 
@@ -62,6 +63,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => NewAccountPage());
     case RecoverPasswordRoute:
       return MaterialPageRoute(builder: (context) => RecoverPasswordPage());
+    case LoginPageRoute:
+      return MaterialPageRoute(builder: (context) => LoginPage());
     default:
       return MaterialPageRoute(builder: (context) => HomePage());
   }
