@@ -24,33 +24,6 @@ class _GroupPostState extends State<GroupPost> {
 
   _GroupPostState(this.group);
 
-  Future _createPost() async {
-    Post result = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return GroupPostDialog(Post(), group);
-      },
-      fullscreenDialog: true,
-    ));
-
-    if (result != null) {
-      result.group = group;
-      result.student = Singleton().user;
-
-      await PostResource.createObject(result).then((response) {
-        Provider.of<GroupPostsProvider>(context)
-            .fetchPosts(group.id.toString());
-      });
-    }
-  }
-
-  Container addButton() {
-    return Container(
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-        child: CustomMaterialButton('Adicionar nova publicação', () {
-          _createPost();
-        }));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<GroupPostsProvider>(
@@ -64,13 +37,9 @@ class _GroupPostState extends State<GroupPost> {
                 thickness: 5,
               );
             },
-            itemCount: groupPostsProvider.groupPosts.length + 1,
+            itemCount: groupPostsProvider.groupPosts.length,
             itemBuilder: (context, index) {
-              if (index == 0) {
-                return addButton();
-              }
-
-              Post post = groupPostsProvider.groupPosts[index - 1];
+              Post post = groupPostsProvider.groupPosts[index];
 
               return PostItem(
                 key: UniqueKey(),

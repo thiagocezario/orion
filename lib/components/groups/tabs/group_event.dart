@@ -22,24 +22,6 @@ class GroupEvent extends StatefulWidget {
 class _GroupEventState extends State<GroupEvent> {
   final Group group;
 
-  Future _createEvent() async {
-    Event result = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return EventDialog(null);
-      },
-      fullscreenDialog: true,
-    ));
-
-    if (result != null) {
-      result.student = Singleton().user;
-      result.group = group;
-      await EventResource.createObject(result).then((response) {
-        Provider.of<GroupEventsProvider>(context)
-            .fetchEvents(group.id.toString());
-      });
-    }
-  }
-
   _GroupEventState(this.group);
 
   @override
@@ -48,17 +30,9 @@ class _GroupEventState extends State<GroupEvent> {
       builder: (context, groupEventsProvider, _) => Stack(
         children: <Widget>[
           ListView.builder(
-            itemCount: groupEventsProvider.groupEvents.length + 1,
+            itemCount: groupEventsProvider.groupEvents.length,
             itemBuilder: (context, index) {
-              if (index == 0) {
-                return Container(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                    child: CustomMaterialButton('Adicionar novo evento', () {
-                      _createEvent();
-                    }));
-              }
-
-              var event = groupEventsProvider.groupEvents[index - 1];
+              var event = groupEventsProvider.groupEvents[index];
 
               return EventItem(key: UniqueKey(), event: event);
             },

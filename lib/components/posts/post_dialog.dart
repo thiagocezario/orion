@@ -2,14 +2,11 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:orion/api/resources/post_resource.dart';
 import 'package:orion/components/blobs/blob_item.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/blob.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
-import 'package:orion/provider/group_posts_provider.dart';
-import 'package:provider/provider.dart';
 
 class GroupPostDialog extends StatefulWidget {
   final Group group;
@@ -25,19 +22,20 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
   bool _hasTitle = false;
   bool _hasDescription = false;
   String _screenName = '';
-  Post post;
+  Post post = Post();
   Group group;
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
 
-  _GroupPostDialogState(Post post, this.group) {
+  _GroupPostDialogState(Post post, Group group) {
+    this.group = group;
+
     if (post != null) {
       this.post = post;
       _titleController.text = post.title;
       _descriptionController.text = post.content;
       _screenName = 'Editar publicação';
     } else {
-      post = Post(blobs: List());
       _screenName = 'Criar nova publicação';
     }
   }
@@ -177,20 +175,18 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
                 ),
               ),
             ),
-            Builder(
-              builder: (BuildContext context) => Container(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                height: MediaQuery.of(context).size.height * 0.50,
-                child: Scrollbar(
-                  child: ListView.separated(
-                    itemCount: post.blobs != null ? post.blobs.length : 0,
-                    itemBuilder: (BuildContext context, int index) {
-                      Blob blob = post.blobs[index];
-                      return BlobItem(blob: blob);
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        Divider(),
-                  ),
+            Container(
+              padding: const EdgeInsets.only(bottom: 30.0),
+              height: MediaQuery.of(context).size.height * 0.50,
+              child: Scrollbar(
+                child: ListView.separated(
+                  itemCount: post.blobs != null ? post.blobs.length : 0,
+                  itemBuilder: (BuildContext context, int index) {
+                    Blob blob = post.blobs[index];
+                    return BlobItem(blob: blob);
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Divider(),
                 ),
               ),
             ),
