@@ -7,6 +7,7 @@ import 'package:orion/pages/login/login_page.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
+import 'package:orion/provider/origin_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'actions/store_user.dart';
@@ -56,6 +57,8 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<OriginProvider>(context).init();
+
     return Container(
       color: themeColor,
       child: page ?? Container(color: themeColor),
