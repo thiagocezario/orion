@@ -72,6 +72,7 @@ class _HomePageState extends State<HomePage>
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             elevation: 0,
             title: TabBar(
               controller: _tabController,
