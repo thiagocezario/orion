@@ -35,6 +35,7 @@ class GroupResource {
       "institution_id": group.institution.id,
       "course_id": group.course.id,
       "discipline_id": group.discipline.id,
+      "private": group.isPrivate,
     };
 
     return create(data);

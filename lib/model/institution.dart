@@ -30,7 +30,7 @@ class Institution {
         name: json["name"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
+        metadata: json["metadata"] == null ? Metadata(subscriptions: 0) : Metadata.fromJson(json["metadata"]),
     );
 
     Map<String, dynamic> toJson() => {

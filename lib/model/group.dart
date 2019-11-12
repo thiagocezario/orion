@@ -25,6 +25,7 @@ class Group {
     Institution institution;
     Course course;
     Discipline discipline;
+    bool isPrivate;
 
     Group({
         this.id,
@@ -37,6 +38,7 @@ class Group {
         this.institution,
         this.course,
         this.discipline,
+        this.isPrivate,
     });
 
     String link() {
@@ -54,6 +56,7 @@ class Group {
         institution: json["institution"] == null ? null : Institution.fromJson(json["institution"]),
         course: json["course"] == null ? null : Course.fromJson(json["course"]),
         discipline: json["discipline"] == null ? null : Discipline.fromJson(json["discipline"]),
+        isPrivate: json["private"],
     );
 
     Map<String, dynamic> toJson() => {
