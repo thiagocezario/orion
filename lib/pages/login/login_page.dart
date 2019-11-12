@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:orion/actions/open_reset.dart';
+import 'package:orion/actions/store_user.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/origin_consumer.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
@@ -11,6 +12,7 @@ import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/origin_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -32,16 +34,25 @@ class _LoginPageState extends State<LoginPage> {
     opend = false;
   }
 
+  void loadHomePage(BuildContext context) {
+    Provider.of<MyGroupsProvider>(context).refreshMyGroups();
+    Provider.of<GroupRecomendationsProvider>(context).refreshMyRecomendations();
+    Provider.of<MyEventsProvider>(context).fetchEvents();
+  }
+
   void _signIn(BuildContext context) {
-    Provider.of<AuthProvider>(context).signIn(_user).then((response) {
-      String token = Provider.of<AuthProvider>(context).accessToken;
+    AuthProvider auth = Provider.of<AuthProvider>(context);
+
+    auth.signIn(_user).then((response) {
+      String token = Singleton().jwtToken;
+      User user = Singleton().user;
+
       if (token != null && token != '') {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
-            Provider.of<MyGroupsProvider>(context).refreshMyGroups();
-        Provider.of<GroupRecomendationsProvider>(context)
-            .refreshMyRecomendations();
-        Provider.of<MyEventsProvider>(context).fetchEvents();
+
+        loadHomePage(context);
+        storeUser(user, token);
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -58,24 +69,16 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void checkReset() {
-    if (opend) {
-      return;
-    }
-
-    Provider.of<OriginProvider>(context).init();
-
-    openReset(context).then((response) => opend = true);
-  }
-
   @override
   Widget build(BuildContext context) {
-    checkReset();
+    Provider.of<OriginProvider>(context).init();
 
-    return Scaffold(
-      backgroundColor: Color(0xff8893f2),
-      body: ListView(
-        children: <Widget>[_buildForm(context)],
+    return OriginConsumer(
+      child: Scaffold(
+        backgroundColor: Color(0xff8893f2),
+        body: ListView(
+          children: <Widget>[_buildForm(context)],
+        ),
       ),
     );
   }

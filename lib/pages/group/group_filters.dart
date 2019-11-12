@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/components/groups/filter_fab.dart';
-import 'package:orion/components/groups/group_cards.dart';
+import 'package:orion/components/groups/group_item.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
@@ -71,7 +71,7 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
                     MaterialPageRoute(
                         builder: (context) => GroupPreviewPage(groups[index])));
               },
-              child: GroupCard(groups[index]),
+              child: GroupCard(group: groups[index]),
             ),
           );
         },

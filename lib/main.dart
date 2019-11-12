@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:orion/landing_page.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/pages/group/group_page.dart';
 import 'package:orion/pages/home_page.dart';
-import 'package:orion/pages/login/login_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
 import 'package:orion/provider/auth_provider.dart';
@@ -43,11 +44,12 @@ class Orion extends StatelessWidget {
           ChangeNotifierProvider(builder: (context) => SubscriptionsProvider()),
         ],
         child: MaterialApp(
+          color: themeColor,
           initialRoute: '/',
           onGenerateRoute: generateRoute,
           debugShowCheckedModeBanner: false,
           title: 'Orion',
-          home: LoginPage(),
+          home: LandingPage(),
         ));
   }
 }

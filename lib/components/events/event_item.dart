@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:orion/api/resources/event_resource.dart';
 import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/model/event.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,14 @@ class _EventItemState extends State<EventItem> {
 
   _EventItemState(this.event);
 
+  Color eventClor() {
+    DateFormat format = DateFormat("yyyy-MM-dd");
+    if(format.parse(DateTime.now().toString()) == format.parse(event.date.toString())) {
+      return Colors.green;
+    }
+
+    return event.date.isBefore(DateTime.now()) ? Colors.grey : themeColor;
+  }
   void showEvent() {
     Navigator.of(context)
         .push(MaterialPageRoute(
@@ -52,7 +61,7 @@ class _EventItemState extends State<EventItem> {
             child: Text(
               "${date.day}",
               style: TextStyle(
-                color: Colors.red,
+                color: eventClor(),
                 fontSize: 25,
               ),
             ),
@@ -80,7 +89,7 @@ class _EventItemState extends State<EventItem> {
         leading: dayLeading(),
         trailing: Text(DateFormat('hh:mm').format(event.date)),
         title: Text(event.title),
-        subtitle: Text(event.content),
+        subtitle: Text(event.group.name),
       ),
     );
   }

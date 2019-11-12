@@ -4,7 +4,14 @@ import 'package:orion/model/event.dart';
 
 class EventCards {
   ListView getEventCards(BuildContext context, List<Event> events) {
-    return ListView.builder(
+    return ListView.separated(
+      padding: EdgeInsets.all(5),
+      separatorBuilder: (context, index) {
+        return Divider(
+          indent: 5,
+          endIndent: 5,
+        );
+      },
       physics: BouncingScrollPhysics(),
       itemCount: events.length,
       itemBuilder: (context, index) {
@@ -38,11 +45,9 @@ class EventCards {
       isThreeLine: true,
     );
 
-    return Material(
-      child: InkWell(
-        onTap: () {},
-        child: card,
-      ),
+    return InkWell(
+      onTap: () {},
+      child: card,
     );
   }
 }

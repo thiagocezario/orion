@@ -24,8 +24,6 @@ class OriginProvider extends ChangeNotifier {
   }
 
   void handleOriginUpdate(Uri uri) {
-    print('Here');
-    print('uri: $uri');
     _uri = uri;
     _opend = false;
     notifyListeners();
@@ -33,7 +31,6 @@ class OriginProvider extends ChangeNotifier {
 
   void handleError(dynamic err) {
     print('Errors...');
-
     // notifyListeners();
   }
 }

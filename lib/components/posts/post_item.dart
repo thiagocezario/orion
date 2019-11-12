@@ -71,14 +71,10 @@ class _PostItemState extends State<PostItem> {
       if (post.classification.id == null) {
         return;
       }
-      print('remove ${post.classification.id}');
       PostClassificationResource.deleteObject(post.classification);
     } else {
-      print('update ${post.classification.id}');
       PostClassificationResource.createObject(post.classification)
-          .then((response) {
-        print(response.body);
-      });
+          .then((response) {});
     }
   }
 

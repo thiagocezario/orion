@@ -12,6 +12,10 @@ class GroupResource {
   }
 
   static Future list(dynamic data) async {
+    return Base.listResources(path(), data..addAll({'exclude_privates': 'true'}));
+  }
+
+  static Future listAll(dynamic data) async {
     return Base.listResources(path(), data);
   }
 
