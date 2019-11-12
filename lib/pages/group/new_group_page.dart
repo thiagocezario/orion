@@ -33,6 +33,8 @@ class NewGroupPage extends StatefulWidget {
 class _NewGroupPageState extends State<NewGroupPage> {
   final _groupNameKey = GlobalKey<FormState>();
   final _groupNameController = TextEditingController();
+  bool _isPrivate = false;
+  Icon _privateIcon = Icon(Icons.lock_open);
 
   TextFormField groupField;
 
@@ -42,16 +44,50 @@ class _NewGroupPageState extends State<NewGroupPage> {
 
   _NewGroupPageState(this.institution, this.course, this.discipline);
 
+  void _changeGroupType() {
+    setState(() {
+      if (_isPrivate) {
+        _privateIcon = Icon(Icons.lock_open);
+      } else {
+        _privateIcon = Icon(Icons.lock);
+      }
+
+      _isPrivate = !_isPrivate;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        _buildForm(context),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xff8893f2),
+        elevation: 0.0,
+        title: Text(
+          'Novo Grupo',
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: _privateIcon,
+            onPressed: () {
+              _changeGroupType();
+            },
+          ),
+        ],
+      ),
+      body: _buildList(context),
     );
   }
 
-  Widget _buildForm(BuildContext context) {
+  Widget _buildList(BuildContext context) {
     groupField = TextFormField(
       key: _groupNameKey,
       controller: _groupNameController,
@@ -68,135 +104,139 @@ class _NewGroupPageState extends State<NewGroupPage> {
     var horizontal = MediaQuery.of(context).size.width / 20;
     var vertical = MediaQuery.of(context).size.height / 7;
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
-      child: Consumer<SearchGroupsProvider>(
-        builder: (context, items, _) => Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Card(
-              elevation: 5,
-              child: ListTile(
-                leading: Icon(Icons.school),
-                title: Text('Instituição'),
-                subtitle: Text(institution.name),
-                trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () async {
-                  Institution result = await showSearch(
-                    context: context,
-                    delegate: InstitutionSearch(items.institutions),
-                  );
+    return SingleChildScrollView(
+      child: Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
+        child: Consumer<SearchGroupsProvider>(
+          builder: (context, items, _) => Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(Icons.school),
+                  title: Text('Instituição'),
+                  subtitle: Text(institution.name),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () async {
+                    Institution result = await showSearch(
+                      context: context,
+                      delegate: InstitutionSearch(items.institutions),
+                    );
 
-                  if (result != null) {
-                    setState(() {
-                      institution = result;
-                    });
-                  }
-                },
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Card(
-              elevation: 5,
-              child: ListTile(
-                leading: Icon(Icons.computer),
-                title: Text('Curso'),
-                subtitle: Text(course.name),
-                trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () async {
-                  Course result = await showSearch(
-                    context: context,
-                    delegate: CourseSearch(items.courses, institution),
-                  );
-
-                  if (result != null) {
-                    setState(() {
-                      course = result;
-                    });
-                  }
-                },
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Card(
-              elevation: 5,
-              child: ListTile(
-                leading: Icon(Icons.class_),
-                title: Text('Disciplina'),
-                subtitle: Text(discipline.name),
-                trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () async {
-                  Discipline result = await showSearch(
-                    context: context,
-                    delegate: DisciplineSearch(items.disciplines, course),
-                  );
-
-                  if (result != null) {
-                    setState(() {
-                      discipline = result;
-                    });
-                  }
-                },
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            groupField,
-            SizedBox(
-              height: 25.0,
-            ),
-            CustomMaterialButton('Criar', () {
-              if (_groupNameController.text.length > 3) {
-                Group group = Group(
-                  name: _groupNameController.text,
-                  institution: institution,
-                  course: course,
-                  discipline: discipline,
-                );
-
-                GroupResource.createObject(group).then(
-                  (response) {
-                    if (response.statusCode == 201) {
-                      Scaffold.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Grupo criado com sucesso!'),
-                        ),
-                      );
-                      var jsonResponse = json.decode(response.body);
-                      var groupId = jsonResponse["id"];
-
-                      SubscriptionResource.subscribe(groupId.toString())
-                          .then((response) {
-                        Provider.of<MyGroupsProvider>(context)
-                            .refreshMyGroups();
-                        Provider.of<MyEventsProvider>(context).fetchEvents();
+                    if (result != null) {
+                      setState(() {
+                        institution = result;
                       });
-
-                      Navigator.of(context)
-                          .popAndPushNamed(GroupPageRoute, arguments: group);
-                    } else {
-                      Scaffold.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('O Grupo não foi criado!'),
-                        ),
-                      );
                     }
                   },
-                );
-              } else {
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Nome de grupo vazio ou muito curto.'),
-                  ),
-                );
-              }
-            }),
-          ],
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(Icons.computer),
+                  title: Text('Curso'),
+                  subtitle: Text(course.name),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () async {
+                    Course result = await showSearch(
+                      context: context,
+                      delegate: CourseSearch(items.courses, institution),
+                    );
+
+                    if (result != null) {
+                      setState(() {
+                        course = result;
+                      });
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(Icons.class_),
+                  title: Text('Disciplina'),
+                  subtitle: Text(discipline.name),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () async {
+                    Discipline result = await showSearch(
+                      context: context,
+                      delegate: DisciplineSearch(items.disciplines, course),
+                    );
+
+                    if (result != null) {
+                      setState(() {
+                        discipline = result;
+                      });
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              groupField,
+              SizedBox(
+                height: 25.0,
+              ),
+              CustomMaterialButton('Criar', () {
+                if (_groupNameController.text.length > 3) {
+                  Group group = Group(
+                    name: _groupNameController.text,
+                    institution: institution,
+                    course: course,
+                    discipline: discipline,
+                    isPrivate: _isPrivate,
+                  );
+
+                  GroupResource.createObject(group).then(
+                    (response) {
+                      if (response.statusCode == 201) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Grupo criado com sucesso!'),
+                          ),
+                        );
+                        var jsonResponse = json.decode(response.body);
+                        var groupId = jsonResponse["id"];
+
+                        SubscriptionResource.subscribe(groupId.toString())
+                            .then((response) {
+                          Provider.of<MyGroupsProvider>(context)
+                              .refreshMyGroups();
+                          Provider.of<MyEventsProvider>(context).fetchEvents();
+                        });
+
+                        Navigator.of(context)
+                            .popAndPushNamed(GroupPageRoute, arguments: group);
+                      } else {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('O Grupo não foi criado!'),
+                          ),
+                        );
+                      }
+                    },
+                  );
+                } else {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Nome de grupo vazio ou muito curto.'),
+                    ),
+                  );
+                }
+              }),
+            ],
+          ),
         ),
       ),
     );

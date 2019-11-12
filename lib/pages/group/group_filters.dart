@@ -97,15 +97,6 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.refresh,
-              color: Colors.black,
-            ),
-            onPressed: () => _listGroups(),
-          ),
-        ],
       ),
       body: _groupCards,
       floatingActionButton:

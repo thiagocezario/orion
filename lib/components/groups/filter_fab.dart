@@ -22,28 +22,10 @@ class FilterFloatingButton extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Color(0xff8893f2),
-                  elevation: 0.0,
-                  title: Text(
-                    'Novo Grupo',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  centerTitle: true,
-                  leading: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-                body: NewGroupPage(
-                  institution: institution,
-                  course: course,
-                  discipline: discipline,
-                ),
+              builder: (context) => NewGroupPage(
+                institution: institution,
+                course: course,
+                discipline: discipline,
               ),
             ),
           );
