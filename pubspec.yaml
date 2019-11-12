@@ -36,9 +36,12 @@ dependencies:
   shared_preferences: "0.5.4"
 
 flutter_icons:
-  image_path: "assets/icon.png"
   android: true
   ios: true
+  image_path_ios: "assets/launcher/icon.png"
+  image_path_android: "assets/launcher/icon.png"
+  adaptive_icon_background: "#FF8893F2"
+  adaptive_icon_foreground: "assets/launcher/foreground.png"
 
 dependency_overrides:
   image: 2.0.7
