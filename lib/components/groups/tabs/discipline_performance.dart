@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/performance_resource.dart';
-import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/components/performances/performance_dialog.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';

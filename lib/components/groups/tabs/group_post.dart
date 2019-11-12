@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/resources/post_resource.dart';
-import 'package:orion/components/commom_items/commom_items.dart';
-import 'package:orion/components/commom_items/material_button.dart';
-import 'package:orion/components/posts/post_dialog.dart';
 import 'package:orion/components/posts/post_item.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
-import 'package:orion/model/user.dart';
 import 'package:orion/provider/group_posts_provider.dart';
 import 'package:provider/provider.dart';
 

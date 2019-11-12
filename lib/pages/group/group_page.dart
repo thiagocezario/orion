@@ -45,7 +45,7 @@ class _GroupPageState extends State<GroupPage> with SingleTickerProviderStateMix
     super.dispose();
   }
 
-  _GroupPageState(this.group) {}
+  _GroupPageState(this.group);
 
   @override
   Widget build(BuildContext context) {
