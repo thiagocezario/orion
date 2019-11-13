@@ -35,7 +35,9 @@ class InstitutionSearch extends SearchDelegate<Institution> {
   void _addNewInstitution(BuildContext context) async {
     String result = await showDialog(
       context: context,
-      child: CreateDialog('Instituição'),
+      builder: (context) {
+        return CreateDialog('Instituição');
+      },
     );
 
     if (result != null && result.length > 3) {
@@ -50,22 +52,46 @@ class InstitutionSearch extends SearchDelegate<Institution> {
           } else if (response.statusCode == 401) {
             showDialog(
               context: context,
-              child: AlertDialog(
-                title: Text('Erro'),
-                content: Text("Sua sessão expirou. Por favor entre novamente."),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text('OK'),
-                    onPressed: () =>
-                        Navigator.of(context).popAndPushNamed(LoginPageRoute),
-                  ),
-                ],
-              ),
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Erro'),
+                  content:
+                      Text("Sua sessão expirou. Por favor entre novamente."),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('OK'),
+                      onPressed: () =>
+                          Navigator.of(context).popAndPushNamed(LoginPageRoute),
+                    ),
+                  ],
+                );
+              },
             );
           } else {
             showDialog(
               context: context,
-              child: AlertDialog(
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Erro'),
+                  content: Text(
+                      "Ocorreu um erro inesperado. Por favor, tente novamente."),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('OK'),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        },
+      ).catchError(
+        (error) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
                 title: Text('Erro'),
                 content: Text(
                     "Ocorreu um erro inesperado. Por favor, tente novamente."),
@@ -75,24 +101,8 @@ class InstitutionSearch extends SearchDelegate<Institution> {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
-              ),
-            );
-          }
-        },
-      ).catchError(
-        (error) {
-          showDialog(
-            context: context,
-            child: AlertDialog(
-              title: Text('Erro'),
-              content: Text("Ocorreu um erro inesperado. Por favor, tente novamente."),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('OK'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            ),
+              );
+            },
           );
         },
       );

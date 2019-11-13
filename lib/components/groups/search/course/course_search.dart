@@ -36,7 +36,9 @@ class CourseSearch extends SearchDelegate<Course> {
   void _addNewCourse(BuildContext context) async {
     String result = await showDialog(
       context: context,
-      child: CreateDialog('Curso'),
+      builder: (context) {
+        return CreateDialog('Curso');
+      },
     );
 
     if (result != null && result.length > 3) {
@@ -51,50 +53,56 @@ class CourseSearch extends SearchDelegate<Course> {
           } else if (response.statusCode == 401) {
             showDialog(
               context: context,
-              child: AlertDialog(
-                title: Text('Erro'),
-                content: Text("Sua sessão expirou. Por favor entre novamente."),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text('OK'),
-                    onPressed: () =>
-                        Navigator.of(context).popAndPushNamed(LoginPageRoute),
-                  ),
-                ],
-              ),
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Erro'),
+                  content:
+                      Text("Sua sessão expirou. Por favor entre novamente."),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('OK'),
+                      onPressed: () =>
+                          Navigator.of(context).popAndPushNamed(LoginPageRoute),
+                    ),
+                  ],
+                );
+              },
             );
           } else {
             showDialog(
-              context: context,
-              child: AlertDialog(
-                title: Text('Erro'),
-                content: Text("Ocorreu um erro inesperado. Por favor, tente novamente."),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text('OK'),
-                    onPressed: () =>
-                        Navigator.of(context).pop(),
-                  ),
-                ],
-              ),
-            );
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text('Erro'),
+                    content: Text(
+                        "Ocorreu um erro inesperado. Por favor, tente novamente."),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text('OK'),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  );
+                });
           }
         },
       ).catchError(
         (error) {
           showDialog(
-            context: context,
-            child: AlertDialog(
-              title: Text('Erro'),
-              content: Text("Ocorreu um erro inesperado. Por favor, tente novamente."),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('OK'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            ),
-          );
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('Erro'),
+                  content: Text(
+                      "Ocorreu um erro inesperado. Por favor, tente novamente."),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('OK'),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                );
+              });
         },
       );
     }

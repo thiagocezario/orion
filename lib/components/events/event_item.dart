@@ -25,12 +25,15 @@ class _EventItemState extends State<EventItem> {
 
   _EventItemState(Event event) {
     this._event = event;
-    _tileColor = _event.student.id == Singleton().user.id ? Colors.grey.shade200 : Colors.white;
+    _tileColor = _event.student.id == Singleton().user.id
+        ? Colors.grey.shade200
+        : Colors.white;
   }
 
   Color eventClor() {
     DateFormat format = DateFormat("yyyy-MM-dd");
-    if(format.parse(DateTime.now().toString()) == format.parse(_event.date.toString())) {
+    if (format.parse(DateTime.now().toString()) ==
+        format.parse(_event.date.toString())) {
       return Colors.green;
     }
 

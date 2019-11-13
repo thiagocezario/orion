@@ -80,9 +80,11 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
   Future getAttachment() async {
     List<File> files =
         await FilePicker.getMultiFile(type: FileType.ANY, fileExtension: '');
-    setState(() {
-      files.forEach(createBlob);
-    });
+    if (files != null) {
+      setState(() {
+        files.forEach(createBlob);
+      });
+    }
   }
 
   void createBlob(File file) {

@@ -31,6 +31,11 @@ class OriginProvider extends ChangeNotifier {
 
   void handleError(dynamic err) {
     print('Errors...');
-    // notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
   }
 }
