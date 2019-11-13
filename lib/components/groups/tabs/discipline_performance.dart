@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/performance_resource.dart';
-import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/performances/performance_dialog.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
@@ -41,74 +40,21 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
     }
   }
 
-  void _createPerformance() async {
-    Performance result = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return PerformanceDialog(null);
-      },
-      fullscreenDialog: true,
-    ));
-
-    if (result != null) {
-      result.discipline = discipline;
-
-      await PerformanceResource.createObject(result).then((response) {
-        Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.id.toString());
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<DisciplinePerformancesProvider>(
       builder: (context, disciplineProvider, _) => Container(
           child: ListView.builder(
-        itemCount: disciplineProvider.disciplinePerformances.length + 1,
+        itemCount: disciplineProvider.disciplinePerformances.length,
         itemBuilder: (context, index) {
-          if (index == 0) {
-            return Container(
-              margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-              child: Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(30.0),
-                color: primaryButtonColor,
-                child: MaterialButton(
-                  minWidth: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  elevation: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Adicionar nova nota',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                  onPressed: () => _createPerformance(),
-                ),
-              ),
-            );
-          }
-
           var performance =
-              disciplineProvider.disciplinePerformances[index - 1];
+              disciplineProvider.disciplinePerformances[index];
 
           return ListTile(
             onTap: () => _editPerformance(performance),
-            leading: Text(
-                "${performance.percentage.toString()} %"),
+            leading: Text("${performance.percentage.toString()} %"),
             title: Text(disciplineProvider
-                .disciplinePerformances[index - 1].description),
+                .disciplinePerformances[index].description),
             subtitle: Text(
                 "${performance.value.toString()} / ${performance.maxValue.toString()}"),
           );

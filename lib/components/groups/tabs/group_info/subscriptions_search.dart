@@ -6,7 +6,6 @@ import 'package:orion/pages/group/group_page.dart';
 
 class SubscriptionsSearch extends SearchDelegate {
   final List<Subscription> subscriptions;
-  List<Subscription> filteredSubscriptions = List();
   final Group group;
 
   SubscriptionsSearch(this.subscriptions, this.group);
@@ -48,7 +47,7 @@ class SubscriptionsSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    filteredSubscriptions = _filterSubscriptions(query, subscriptions);
+    List<Subscription> filteredSubscriptions = _filterSubscriptions(query, subscriptions);
 
     return SubscriptionList(
         filteredSubscriptions, group, GroupPage.isUserManager);

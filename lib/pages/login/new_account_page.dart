@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/model/user.dart';
 
 class NewAccountPage extends StatefulWidget {
@@ -153,27 +154,12 @@ class _NewAccountPageState extends State<NewAccountPage> {
               SizedBox(
                 height: 25.0,
               ),
-              Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(30.0),
-                // color: Color(0xff606fe1),
-                color: Color(0xff192376),
-                child: MaterialButton(
-                  minWidth: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  elevation: 50.0,
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      _user.name = "Root";
-                      _createAccount(context);
-                    }
-                  },
-                  child: Text('Criar conta',
-                      textAlign: TextAlign.center,
-                      style: textStyle.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
-                ),
-              )
+              CustomMaterialButton('Criar nova conta', () {
+                if (_formKey.currentState.validate()) {
+                  _user.name = "Root";
+                  _createAccount(context);
+                }
+              }),
             ],
           ),
         ));

@@ -4,36 +4,44 @@ import 'package:orion/api/resources/event_resource.dart';
 import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/model/event.dart';
 import 'package:orion/model/global.dart';
+import 'package:orion/model/student.dart';
+import 'package:orion/model/user.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:provider/provider.dart';
 
 class EventItem extends StatefulWidget {
   final Event event;
+  final Student currentStudent;
 
-  EventItem({Key key, this.event}) : super(key: key);
+  EventItem({Key key, this.event, this.currentStudent}) : super(key: key);
 
   @override
   _EventItemState createState() => _EventItemState(event);
 }
 
 class _EventItemState extends State<EventItem> {
-  Event event;
+  Event _event;
+  Color _tileColor;
 
-  _EventItemState(this.event);
+  _EventItemState(Event event) {
+    this._event = event;
+    _tileColor = _event.student.id == Singleton().user.id ? Colors.grey.shade200 : Colors.white;
+  }
 
   Color eventClor() {
     DateFormat format = DateFormat("yyyy-MM-dd");
-    if(format.parse(DateTime.now().toString()) == format.parse(event.date.toString())) {
+    if(format.parse(DateTime.now().toString()) == format.parse(_event.date.toString())) {
       return Colors.green;
     }
 
-    return event.date.isBefore(DateTime.now()) ? Colors.grey : themeColor;
+    return _event.date.isBefore(DateTime.now()) ? Colors.grey : themeColor;
   }
+
   void showEvent() {
     Navigator.of(context)
         .push(MaterialPageRoute(
       builder: (context) {
-        return EventDialog(event);
+        return EventDialog(_event);
       },
       fullscreenDialog: true,
     ))
@@ -48,7 +56,7 @@ class _EventItemState extends State<EventItem> {
 
   Column dayLeading() {
     DateTime date =
-        DateFormat("yyyy-MM-dd hh:mm:ss").parse(event.date.toString());
+        DateFormat("yyyy-MM-dd hh:mm:ss").parse(_event.date.toString());
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -84,12 +92,13 @@ class _EventItemState extends State<EventItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: _tileColor,
       child: ListTile(
         onTap: showEvent,
         leading: dayLeading(),
-        trailing: Text(DateFormat('hh:mm').format(event.date)),
-        title: Text(event.title),
-        subtitle: Text(event.group.name),
+        trailing: Text(DateFormat('hh:mm').format(_event.date)),
+        title: Text(_event.title),
+        subtitle: Text(_event.content),
       ),
     );
   }
