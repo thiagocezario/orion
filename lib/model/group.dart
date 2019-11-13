@@ -56,7 +56,7 @@ class Group {
         institution: json["institution"] == null ? null : Institution.fromJson(json["institution"]),
         course: json["course"] == null ? null : Course.fromJson(json["course"]),
         discipline: json["discipline"] == null ? null : Discipline.fromJson(json["discipline"]),
-        isPrivate: json["private"],
+        isPrivate: json["private"] ?? false,
     );
 
     Map<String, dynamic> toJson() => {

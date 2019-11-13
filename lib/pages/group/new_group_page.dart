@@ -128,7 +128,8 @@ class _NewGroupPageState extends State<NewGroupPage> {
                     if (result != null) {
                       setState(() {
                         institution = result;
-                        Provider.of<SearchGroupsProvider>(context).refreshCourses(institution.id);
+                        Provider.of<SearchGroupsProvider>(context)
+                            .refreshCourses(institution.id);
                       });
                     }
                   },
@@ -153,7 +154,8 @@ class _NewGroupPageState extends State<NewGroupPage> {
                     if (result != null) {
                       setState(() {
                         course = result;
-                        Provider.of<SearchGroupsProvider>(context).refreshDisciplines(course.id);
+                        Provider.of<SearchGroupsProvider>(context)
+                            .refreshDisciplines(course.id);
                       });
                     }
                   },
@@ -208,16 +210,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
                             content: Text('Grupo criado com sucesso!'),
                           ),
                         );
-                        var jsonResponse = json.decode(response.body);
-                        var groupId = jsonResponse["id"];
+                        var body = json.decode(response.body);
+                        group = Group.fromJson(body);
 
-                        SubscriptionResource.subscribe(groupId.toString())
-                            .then((response) {
-                          Provider.of<MyGroupsProvider>(context)
-                              .refreshMyGroups();
-                          Provider.of<MyEventsProvider>(context).fetchEvents();
-                        });
-
+                        Provider.of<MyGroupsProvider>(context)
+                            .refreshMyGroups();
                         Navigator.of(context)
                             .popAndPushNamed(GroupPageRoute, arguments: group);
                       } else {

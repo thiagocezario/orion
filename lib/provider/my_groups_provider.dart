@@ -10,7 +10,7 @@ class MyGroupsProvider extends ChangeNotifier {
 
   void refreshMyGroups() async {
     var data = {'user_id': Singleton().user.id.toString()};
-    await GroupResource.list(data).then(handleResponse);
+    await GroupResource.listAll(data).then(handleResponse);
   }
 
   void handleResponse(dynamic response) {
