@@ -38,11 +38,17 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
   }
 
   void _listGroups() async {
-    var data = {
-      "institution_id": institution.id.toString(),
-      "course_id": course.id.toString(),
-      "discipline_id": discipline.id.toString()
+    print(institution.id);
+    print(course.id);
+    print(discipline.id);
+
+    Map<String, String> data = {
+      "institution_id": (institution.id ?? '').toString(),
+      "course_id": (course.id ?? '').toString(),
+      "discipline_id": (discipline.id ?? '').toString(),
     };
+
+    print(data);
 
     GroupResource.list(data).then((response) {
       List<Group> groups = groupFromJson(response.body);
