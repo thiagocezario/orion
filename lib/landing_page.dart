@@ -38,7 +38,7 @@ class _LandingPageState extends State<LandingPage> {
     Provider.of<MyGroupsProvider>(context).refreshMyGroups();
     Provider.of<GroupRecomendationsProvider>(context).refreshMyRecomendations();
     Provider.of<MyEventsProvider>(context).fetchEvents();
-    Provider.of<SearchGroupsProvider>(context).refreshItems();
+    Provider.of<SearchGroupsProvider>(context).refreshInstitutions();
   }
 
   loadPage() {

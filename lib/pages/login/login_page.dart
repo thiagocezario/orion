@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     Provider.of<MyGroupsProvider>(context).refreshMyGroups();
     Provider.of<GroupRecomendationsProvider>(context).refreshMyRecomendations();
     Provider.of<MyEventsProvider>(context).fetchEvents();
-    Provider.of<SearchGroupsProvider>(context).refreshItems();
+    Provider.of<SearchGroupsProvider>(context).refreshInstitutions();
   }
 
   void _signIn(BuildContext context) {

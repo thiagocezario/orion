@@ -15,13 +15,6 @@ class SearchGroupsProvider extends ChangeNotifier {
   get courses => _courses;
   get disciplines => _disciplines;
 
-  void refreshItems() async {
-    // TODO: Remover
-    InstitutionResource.list(null).then(handleInstitutionResponse);
-    CourseResource.list(null).then(handleCourseResponse);
-    DisciplineResource.list(null).then(handleDisciplineResponse);
-  }
-
   void refreshInstitutions() async {
     InstitutionResource.list(null).then(handleInstitutionResponse);
   }

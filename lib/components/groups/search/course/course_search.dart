@@ -49,7 +49,7 @@ class CourseSearch extends SearchDelegate<Course> {
             var json = jsonDecode(response.body);
             Course course = Course.fromJson(json);
             courses.add(course);
-            Provider.of<SearchGroupsProvider>(context).refreshItems();
+            Provider.of<SearchGroupsProvider>(context).refreshCourses(selectedInstitution.id);
           } else if (response.statusCode == 401) {
             showDialog(
               context: context,

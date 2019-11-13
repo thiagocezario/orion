@@ -128,6 +128,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                     if (result != null) {
                       setState(() {
                         institution = result;
+                        Provider.of<SearchGroupsProvider>(context).refreshCourses(institution.id);
                       });
                     }
                   },
@@ -152,6 +153,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                     if (result != null) {
                       setState(() {
                         course = result;
+                        Provider.of<SearchGroupsProvider>(context).refreshDisciplines(course.id);
                       });
                     }
                   },

@@ -66,6 +66,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
                   if (result != null) {
                     setState(() {
                       institution = result;
+                      Provider.of<SearchGroupsProvider>(context).refreshCourses(result.id);
                     });
                   }
                 },
@@ -90,6 +91,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
                   if (result != null) {
                     setState(() {
                       course = result;
+                      Provider.of<SearchGroupsProvider>(context).refreshDisciplines(course.id);
                     });
                   }
                 },

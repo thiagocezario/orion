@@ -48,7 +48,7 @@ class InstitutionSearch extends SearchDelegate<Institution> {
             var json = jsonDecode(response.body);
             Institution institution = Institution.fromJson(json);
             institutions.add(institution);
-            Provider.of<SearchGroupsProvider>(context).refreshItems();
+            Provider.of<SearchGroupsProvider>(context).refreshInstitutions();
           } else if (response.statusCode == 401) {
             showDialog(
               context: context,

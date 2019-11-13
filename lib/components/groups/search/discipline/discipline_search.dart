@@ -50,7 +50,7 @@ class DisciplineSearch extends SearchDelegate<Discipline> {
             var json = jsonDecode(response.body);
             Discipline discipline = Discipline.fromJson(json);
             disciplines.add(discipline);
-            Provider.of<SearchGroupsProvider>(context).refreshItems();
+            Provider.of<SearchGroupsProvider>(context).refreshDisciplines(selectedCourse.id);
           } else if (response.statusCode == 401) {
             showDialog(
               context: context,
