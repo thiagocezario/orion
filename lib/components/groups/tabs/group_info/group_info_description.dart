@@ -31,7 +31,7 @@ class _GroupInfoDescriptionState extends State<GroupInfoDescription> {
         leading: Icon(Icons.description),
         title: EditableText(
           onSubmitted: (value) {
-            _editDescription(value, context);
+            _editDescription(value);
             FocusScopeNode currentFocus = FocusScope.of(context);
 
             if (!currentFocus.hasPrimaryFocus) {
@@ -49,7 +49,7 @@ class _GroupInfoDescriptionState extends State<GroupInfoDescription> {
     );
   }
 
-  void _editDescription(String description, BuildContext context) {
+  void _editDescription(String description) {
     group.description = description;
     GroupResource.updateObject(group);
     Provider.of<MyGroupsProvider>(context).refreshMyGroups();

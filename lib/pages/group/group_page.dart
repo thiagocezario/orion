@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/event_resource.dart';
+import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/api/resources/performance_resource.dart';
 import 'package:orion/api/resources/post_resource.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/components/performances/performance_dialog.dart';
 import 'package:orion/components/posts/post_dialog.dart';
@@ -17,6 +19,7 @@ import 'package:orion/model/user.dart';
 import 'package:orion/provider/discipline_performances_provider.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/group_posts_provider.dart';
+import 'package:orion/provider/my_groups_provider.dart';
 import 'package:provider/provider.dart';
 
 class GroupPage extends StatefulWidget {
@@ -29,7 +32,8 @@ class GroupPage extends StatefulWidget {
   _GroupPageState createState() => _GroupPageState(group);
 }
 
-class _GroupPageState extends State<GroupPage> with SingleTickerProviderStateMixin {
+class _GroupPageState extends State<GroupPage>
+    with SingleTickerProviderStateMixin {
   Group group;
   TabController _tabController;
 
@@ -54,7 +58,7 @@ class _GroupPageState extends State<GroupPage> with SingleTickerProviderStateMix
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xff8893f2),
-          title: Text(group.name),
+          title: _GroupName(group),
           centerTitle: true,
           bottom: TabBar(
             controller: _tabController,
@@ -172,5 +176,52 @@ class _GroupPageState extends State<GroupPage> with SingleTickerProviderStateMix
             .fetchEvents(group.id.toString());
       });
     }
+  }
+}
+
+class _GroupName extends StatefulWidget {
+  final Group group;
+
+  _GroupName(this.group);
+
+  @override
+  _GroupNameState createState() => _GroupNameState(group);
+}
+
+class _GroupNameState extends State<_GroupName> {
+  final TextEditingController _nameTextController =
+      TextEditingController();
+  final FocusNode _descriptionFocusNode = FocusNode();
+
+  final Group group;
+
+  _GroupNameState(this.group) {
+    _nameTextController.text = group.name;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return EditableText(
+      onSubmitted: (value) {
+        _editGroupName(value);
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      backgroundCursorColor: Colors.black,
+      textAlign: TextAlign.justify,
+      controller: _nameTextController,
+      cursorColor: Colors.white,
+      focusNode: _descriptionFocusNode,
+      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+    );
+  }
+
+  void _editGroupName(String name) {
+    group.name = name;
+    GroupResource.updateObject(group);
+    Provider.of<MyGroupsProvider>(context).refreshMyGroups();
   }
 }
