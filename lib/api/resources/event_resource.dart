@@ -29,7 +29,7 @@ class EventResource {
       "user_id": event.student.id.toString(),
       "title": event.title,
       "content": event.content,
-      "date": event.date.toString()
+      "date": event.date.toIso8601String()
     };
     return create(data);
   }
@@ -38,7 +38,7 @@ class EventResource {
     var data = {
       "title": event.title,
       "content": event.content,
-      "date": event.date.toString()
+      "date": event.date.toIso8601String()
     };
     return update(event.id.toString(), data);
   }
