@@ -219,9 +219,9 @@ class _GroupNameState extends State<_GroupName> {
     );
   }
 
-  void _editGroupName(String name) {
+  Future<void> _editGroupName(String name) async {
     group.name = name;
-    GroupResource.updateObject(group);
+    await GroupResource.updateObject(group);
     Provider.of<MyGroupsProvider>(context).refreshMyGroups();
   }
 }

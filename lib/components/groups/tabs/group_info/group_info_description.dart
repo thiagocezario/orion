@@ -49,9 +49,9 @@ class _GroupInfoDescriptionState extends State<GroupInfoDescription> {
     );
   }
 
-  void _editDescription(String description) {
+  void _editDescription(String description) async {
     group.description = description;
-    GroupResource.updateObject(group);
+    await GroupResource.updateObject(group);
     Provider.of<MyGroupsProvider>(context).refreshMyGroups();
   }
 }
