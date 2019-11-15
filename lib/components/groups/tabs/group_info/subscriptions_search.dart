@@ -3,12 +3,13 @@ import 'package:orion/components/groups/tabs/group_info/subscription_list.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/pages/group/group_page.dart';
+import 'package:orion/provider/subscriptions_provider.dart';
+import 'package:provider/provider.dart';
 
 class SubscriptionsSearch extends SearchDelegate {
-  final List<Subscription> subscriptions;
   final Group group;
 
-  SubscriptionsSearch(this.subscriptions, this.group);
+  SubscriptionsSearch(this.group);
 
   List<Subscription> _filterSubscriptions(
       String query, List<Subscription> subscriptions) {
@@ -47,14 +48,19 @@ class SubscriptionsSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    List<Subscription> filteredSubscriptions = _filterSubscriptions(query, subscriptions);
-
-    return SubscriptionList(
-        filteredSubscriptions, group, GroupPage.isUserManager);
+    return Consumer<SubscriptionsProvider>(
+      builder: (context, subProvider, _) => SubscriptionList(
+          _filterSubscriptions(query, subProvider.subscriptions),
+          group,
+          GroupPage.isUserManager),
+    );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return SubscriptionList(subscriptions, group, GroupPage.isUserManager);
+    return Consumer<SubscriptionsProvider>(
+      builder: (context, subProvider, _) => SubscriptionList(
+          subProvider.subscriptions, group, GroupPage.isUserManager),
+    );
   }
 }

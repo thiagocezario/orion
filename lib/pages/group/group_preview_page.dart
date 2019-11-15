@@ -122,6 +122,8 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
                 SubscriptionsPreview(
                   subscriptionsProvider.subscriptions,
                   3,
+                  group,
+                  false,
                 ),
                 SliverToBoxAdapter(
                   child: Column(

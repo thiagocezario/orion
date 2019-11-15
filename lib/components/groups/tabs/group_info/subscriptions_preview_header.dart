@@ -13,7 +13,7 @@ class SubscriptionsPreviewHeader extends StatelessWidget {
   void _searchUsers(BuildContext context) {
     showSearch(
       context: context,
-      delegate: SubscriptionsSearch(subscriptions, group),
+      delegate: SubscriptionsSearch(group),
     );
   }
 
