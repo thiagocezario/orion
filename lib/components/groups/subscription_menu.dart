@@ -47,7 +47,7 @@ class SubscriptionMenu extends StatelessWidget {
     }
   }
 
-  PopupMenuButton<String> _subscriptionAction(
+  Widget _subscriptionAction(
       BuildContext context, Subscription sub) {
     if (isUserManager) {
       if (sub.banned) {
@@ -72,7 +72,7 @@ class SubscriptionMenu extends StatelessWidget {
       }
     }
 
-    return null;
+    return SizedBox();
   }
 
   @override

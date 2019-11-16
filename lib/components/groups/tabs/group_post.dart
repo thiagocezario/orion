@@ -37,9 +37,10 @@ class _GroupPostState extends State<GroupPost> {
               Post post = groupPostsProvider.groupPosts[index];
 
               return PostItem(
-                key: UniqueKey(),
-                post: post,
-                group: group,
+                UniqueKey(),
+                post,
+                group,
+                false,
               );
             },
           ),

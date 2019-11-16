@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:orion/components/posts/post_item.dart';
+import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
 
 class GroupPreviewPosts extends StatelessWidget {
   final List<Post> posts;
+  final Group group;
 
-  GroupPreviewPosts(this.posts);
+  GroupPreviewPosts(this.posts, this.group);
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +29,11 @@ class GroupPreviewPosts extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          return Column(
-            children: <Widget>[
-              Text(".. x stars"),
-              ListTile(
-                leading: Icon(
-                  Icons.access_time,
-                  size: 25,
-                ),
-                title: Text(posts[index].title),
-                subtitle: Text(
-                  posts[index].content,
-                ),
-              ),
-              Text("Attachments: ${posts[index].blobs.length}"),
-              Divider(),
-            ],
+          return PostItem(
+            UniqueKey(),
+            posts[index],
+            group,
+            true,
           );
         },
         childCount: posts.length > 3 ? 3 : posts.length,

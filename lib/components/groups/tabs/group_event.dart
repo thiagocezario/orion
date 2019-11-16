@@ -28,7 +28,7 @@ class _GroupEventState extends State<GroupEvent> {
             itemBuilder: (context, index) {
               var event = groupEventsProvider.groupEvents[index];
 
-              return EventItem(key: UniqueKey(), event: event);
+              return EventItem(UniqueKey(), event, false);
             },
           ),
         ],

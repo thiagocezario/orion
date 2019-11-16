@@ -102,7 +102,7 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
                     ],
                   ),
                 ),
-                GroupPreviewPosts(groupPostsProvider.groupPosts),
+                GroupPreviewPosts(groupPostsProvider.groupPosts, group),
                 SliverToBoxAdapter(
                   child: Column(
                     children: <Widget>[

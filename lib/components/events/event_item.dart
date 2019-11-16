@@ -9,38 +9,20 @@ import 'package:orion/model/user.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:provider/provider.dart';
 
-class EventItem extends StatefulWidget {
-  final Event event;
+class EventItem extends StatelessWidget {
+  final Event _event;
   final Student currentStudent;
-
-  EventItem({Key key, this.event, this.currentStudent}) : super(key: key);
-
-  @override
-  _EventItemState createState() => _EventItemState(event);
-}
-
-class _EventItemState extends State<EventItem> {
-  Event _event;
+  final bool isPreview;
   Color _tileColor;
 
-  _EventItemState(Event event) {
-    this._event = event;
+  EventItem(Key key, this._event, this.isPreview, {this.currentStudent})
+      : super(key: key) {
     _tileColor = _event.student.id == Singleton().user.id
         ? Colors.grey.shade200
         : Colors.white;
   }
 
-  Color eventClor() {
-    DateFormat format = DateFormat("yyyy-MM-dd");
-    if (format.parse(DateTime.now().toString()) ==
-        format.parse(_event.date.toString())) {
-      return Colors.green;
-    }
-
-    return _event.date.isBefore(DateTime.now()) ? Colors.grey : themeColor;
-  }
-
-  void showEvent() {
+  void showEvent(BuildContext context) {
     Navigator.of(context)
         .push(MaterialPageRoute(
       builder: (context) {
@@ -57,7 +39,42 @@ class _EventItemState extends State<EventItem> {
     });
   }
 
-  Column dayLeading() {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: _tileColor,
+      child: ListTile(
+        onTap: () {
+          if (!isPreview) {
+            showEvent(context);
+          }
+        },
+        leading: _LeadingEventDay(_event),
+        trailing: Text(DateFormat('hh:mm').format(_event.date)),
+        title: Text(_event.title),
+        subtitle: Text(_event.content),
+      ),
+    );
+  }
+}
+
+class _LeadingEventDay extends StatelessWidget {
+  final Event _event;
+
+  _LeadingEventDay(this._event);
+
+  Color eventClor() {
+    DateFormat format = DateFormat("yyyy-MM-dd");
+    if (format.parse(DateTime.now().toString()) ==
+        format.parse(_event.date.toString())) {
+      return Colors.green;
+    }
+
+    return _event.date.isBefore(DateTime.now()) ? Colors.grey : themeColor;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     DateTime date =
         DateFormat("yyyy-MM-dd hh:mm:ss").parse(_event.date.toString());
 
@@ -89,20 +106,6 @@ class _EventItemState extends State<EventItem> {
           ),
         ),
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: _tileColor,
-      child: ListTile(
-        onTap: showEvent,
-        leading: dayLeading(),
-        trailing: Text(DateFormat('hh:mm').format(_event.date)),
-        title: Text(_event.title),
-        subtitle: Text(_event.content),
-      ),
     );
   }
 }
