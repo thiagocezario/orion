@@ -36,17 +36,26 @@ class _GroupPageState extends State<GroupPage>
     with SingleTickerProviderStateMixin {
   Group group;
   TabController _tabController;
+  Widget _fabButton;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+    _tabController.addListener(_handleTabChange);
   }
 
   @override
   void dispose() {
+    _tabController.removeListener(_handleTabChange);
     _tabController.dispose();
     super.dispose();
+  }
+
+  void _handleTabChange() {
+    setState(() {
+      _fabButton = _bottomButtons();
+    });
   }
 
   _GroupPageState(this.group);
@@ -87,7 +96,7 @@ class _GroupPageState extends State<GroupPage>
             GroupInfo(group),
           ],
         ),
-        floatingActionButton: _bottomButtons(),
+        floatingActionButton: _fabButton,
       ),
     );
   }
@@ -96,6 +105,7 @@ class _GroupPageState extends State<GroupPage>
     switch (_tabController.index) {
       case 0:
         return FloatingActionButton(
+            heroTag: "postFAB",
             onPressed: () => _createPost(),
             backgroundColor: Colors.greenAccent,
             child: Icon(
@@ -104,6 +114,7 @@ class _GroupPageState extends State<GroupPage>
             ));
       case 1:
         return FloatingActionButton(
+            heroTag: "eventFAB",
             onPressed: () => _createEvent(),
             backgroundColor: Colors.greenAccent,
             child: Icon(
@@ -112,6 +123,7 @@ class _GroupPageState extends State<GroupPage>
             ));
       case 2:
         return FloatingActionButton(
+            heroTag: "scoreFAB",
             onPressed: () => _createPerformance(),
             backgroundColor: Colors.greenAccent,
             child: Icon(
@@ -189,8 +201,7 @@ class _GroupName extends StatefulWidget {
 }
 
 class _GroupNameState extends State<_GroupName> {
-  final TextEditingController _nameTextController =
-      TextEditingController();
+  final TextEditingController _nameTextController = TextEditingController();
   final FocusNode _descriptionFocusNode = FocusNode();
 
   final Group group;
@@ -215,7 +226,8 @@ class _GroupNameState extends State<_GroupName> {
       controller: _nameTextController,
       cursorColor: Colors.white,
       focusNode: _descriptionFocusNode,
-      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+      style: TextStyle(
+          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
     );
   }
 
