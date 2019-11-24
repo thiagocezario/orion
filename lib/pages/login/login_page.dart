@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:orion/actions/store_user.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/commom_items/custom_text_form_field.dart';
 import 'package:orion/components/origin_consumer.dart';
 import 'package:orion/components/commom_items/material_button.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/home_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
@@ -28,10 +30,6 @@ class _LoginPageState extends State<LoginPage> {
   bool opend = false;
 
   _LoginPageState() {
-    // _emailFieldController.text = "user@user.com";
-    // _passwordFieldController.text = "123123";
-    // _user.email = "user@user.com";
-    // _user.password = "123123";
     opend = false;
   }
 
@@ -63,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     }).catchError((e) {
+      print(e);
       Scaffold.of(context).showSnackBar(
         SnackBar(
           content: Text('Ocorreu um erro. Tente novamente em alguns minutos.'),
@@ -75,112 +74,101 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Provider.of<OriginProvider>(context).init();
 
-    final userField = TextFormField(
-      validator: (value) {
+    final userField = CustomTextFormField(
+      _emailFieldController,
+      "Email",
+      (String value) {
         if (value.isEmpty) {
           return "O campo de email deve ser preenchido";
         }
 
         return null;
       },
-      controller: _emailFieldController,
-      style: textStyle,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: 'Email',
-          errorStyle: errorStyle,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-      onChanged: (text) => _user.email = text,
+      (String value) {
+        _user.email = value;
+      },
+      false,
     );
 
-    final passwordField = TextFormField(
-      validator: (value) {
+    final passwordField = CustomTextFormField(
+      _passwordFieldController,
+      "Senha",
+      (String value) {
         if (value.isEmpty) {
           return "O campo de senha deve ser preenchido";
         }
 
         return null;
       },
-      controller: _passwordFieldController,
-      obscureText: true,
-      style: textStyle,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: 'Senha',
-          errorStyle: errorStyle,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-      onChanged: (text) => _user.password = text,
+      (String value) {
+        _user.password = value;
+      },
+      true,
+    );
+
+    final loginButton = CustomMaterialButton(
+      'Entrar',
+      () {
+        if (_formKey.currentState.validate()) {
+          _signIn(context);
+        }
+      },
     );
 
     return OriginConsumer(
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Container(
-                padding: EdgeInsets.only(top: 100, bottom: 50),
-                // height: 300,
-                child: SizedBox(
-                  height: 130.0,
-                  child: Image.asset(
-                    'assets/logo/logo.png',
-                    fit: BoxFit.contain,
+      child: Scaffold(
+        backgroundColor: themeColor,
+        body: ListView(
+          children: <Widget>[
+            Container(
+              height: MediaQuery.of(context).size.height / 3,
+              child: Image.asset(
+                'assets/logo/logo.png',
+                fit: BoxFit.fill,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Card(
+                elevation: 5.0,
+                color: Colors.white,
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 35.0,
+                        ),
+                        userField,
+                        SizedBox(height: 10.0),
+                        passwordField,
+                        Container(
+                          alignment: Alignment.bottomRight,
+                          child: forgotPasswordButton(context),
+                        ),
+                        loginButton,
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Novo usuário?'),
+                            newAccountButton(context),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Card(
-                  elevation: 5.0,
-                  color: Colors.white,
-                  child: Wrap(
-                    children: <Widget>[
-                      Form(
-                          key: _formKey,
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 35.0, right: 35.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SizedBox(
-                                  height: 35.0,
-                                ),
-                                userField,
-                                SizedBox(height: 10.0),
-                                passwordField,
-                                Container(
-                                  alignment: Alignment.bottomRight,
-                                  child: forgotPasswordButton(context),
-                                ),
-                                CustomMaterialButton(
-                                  'Entrar',
-                                  () {
-                                    if (_formKey.currentState.validate()) {
-                                      _signIn(context);
-                                    }
-                                  },
-                                ),
-                                SizedBox(
-                                  height: 15.0,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text('Novo usuário?'),
-                                    newAccountButton(context),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            ]),
-          )
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -195,7 +183,6 @@ class _LoginPageState extends State<LoginPage> {
             context,
             MaterialPageRoute(builder: (context) => NewAccountPage()),
           );
-          // Navigator.pushNamed(context, '/new_account');
         });
 
     return flatButton;
@@ -211,7 +198,6 @@ class _LoginPageState extends State<LoginPage> {
             context,
             MaterialPageRoute(builder: (context) => RecoverPasswordPage()),
           );
-          // Navigator.pushNamed(context, '/recover_password');
         });
 
     return flatButton;

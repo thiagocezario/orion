@@ -18,8 +18,8 @@ class _NewAccountPageState extends State<NewAccountPage> {
   final _nameTextFieldController = TextEditingController();
   final _user = User();
 
-  void _createAccount(BuildContext context) {
-    StudentResource.createObject(_user).then((response) {
+  void _createAccount(BuildContext context, User user) {
+    StudentResource.createObject(user).then((response) {
       if (response != null) {
         Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -157,7 +157,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
               ),
               CustomMaterialButton('Criar nova conta', () {
                 if (_formKey.currentState.validate()) {
-                  _createAccount(context);
+                  _createAccount(context, _user);
                 }
               }),
             ],
