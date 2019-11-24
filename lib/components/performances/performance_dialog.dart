@@ -60,7 +60,7 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
         builder: (BuildContext context) {
           return AlertDialog(
             content: Text(
-              'Você tem certeza que deseja excluir essa nota? Essa ação não pode ser desfeita.',
+              'Você tem certeza que deseja excluir essa nota?',
               style: dialogTextStyle,
             ),
             actions: <Widget>[
@@ -81,6 +81,7 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
                             performance.discipline.id.toString());
                   });
 
+                  Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
               ),

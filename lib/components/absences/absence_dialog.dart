@@ -16,29 +16,27 @@ class AbsenceDialog extends StatefulWidget {
 }
 
 class _AbsenceDialogState extends State<AbsenceDialog> {
-  bool _saveNeeded = false;
-  bool _hasGrade = false;
-  bool _hasMaxGrade = false;
-  bool _hasDescription = false;
-  bool _isCreatingAbsence = true;
-  String _screenName = '';
-  Absence absence;
-  TextEditingController _gradeController = TextEditingController();
-  DateTime _formDate = DateTime.now();
-  TextEditingController _maxGradeController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
+  int _absences;
+  bool _saveNeeded;
+  bool _isCreatingAbsence;
+  String _screenName;
+  Absence _absence;
+  DateTime _formDate;
 
   _AbsenceDialogState(Absence absence) {
     if (absence != null) {
-      this.absence = absence;
-      _gradeController.text = absence.quantity.toString();
-      // _maxGradeController.text = absence.maxValue;
-      // _descriptionController.text = absence.description;
-      _screenName = 'Editar falta';
+      this._absence = absence;
+      _formDate = absence.date;
+      _absences = absence.quantity;
+      _saveNeeded = false;
       _isCreatingAbsence = false;
+      _screenName = 'Editar falta';
     } else {
-      _gradeController.text = '1';
-      absence = Absence();
+      this._absence = Absence();
+      _formDate = DateTime.now();
+      _absences = 1;
+      _saveNeeded = true;
+      _isCreatingAbsence = true;
       _screenName = 'Adicionar nova falta';
     }
   }
@@ -48,9 +46,9 @@ class _AbsenceDialogState extends State<AbsenceDialog> {
       absence = Absence();
     }
 
-    // absence.description = _descriptionController.text;
-    // absence.value = _gradeController.text;
-    // absence.maxValue = _maxGradeController.text;
+    absence.date = _formDate;
+    absence.quantity = _absences;
+    absence.year = _formDate.year;
     Navigator.of(context).pop(absence);
   }
 
@@ -64,13 +62,14 @@ class _AbsenceDialogState extends State<AbsenceDialog> {
         builder: (BuildContext context) {
           return AlertDialog(
             content: Text(
-              'Você tem certeza que deseja excluir essa falta? Essa ação não pode ser desfeita.',
+              'Você tem certeza que deseja excluir essa falta?',
               style: dialogTextStyle,
             ),
             actions: <Widget>[
               FlatButton(
                 child: const Text('CANCELAR'),
                 onPressed: () {
+                  // TODO: change to pop until
                   Navigator.of(context).pop(false);
                 },
               ),
@@ -84,6 +83,8 @@ class _AbsenceDialogState extends State<AbsenceDialog> {
                         .fetchAbsences(absence.discipline.id.toString());
                   });
 
+                  // TODO: change to pop until
+                  Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
               ),
@@ -93,8 +94,6 @@ class _AbsenceDialogState extends State<AbsenceDialog> {
   }
 
   Future<bool> _onWillPop() async {
-    _saveNeeded = _hasGrade && _hasMaxGrade && _hasDescription;
-
     if (!_saveNeeded) return true;
 
     final ThemeData theme = Theme.of(context);
@@ -133,15 +132,14 @@ class _AbsenceDialogState extends State<AbsenceDialog> {
   Widget build(BuildContext context) {
     IconButton _saveAbsenceButton = IconButton(
       icon: Icon(Icons.save),
-      onPressed: () => _saveAbsence(absence),
+      onPressed: () => _saveAbsence(_absence),
     );
 
     Widget _deleteAbsenceButton = Container();
-
     if (!_isCreatingAbsence) {
       _deleteAbsenceButton = IconButton(
         icon: Icon(Icons.delete),
-        onPressed: () => _deleteAbsence(absence),
+        onPressed: () => _deleteAbsence(_absence),
       );
     }
 
@@ -154,79 +152,69 @@ class _AbsenceDialogState extends State<AbsenceDialog> {
           _saveAbsenceButton,
         ],
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(40.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(right: 15),
+              child: FloatingActionButton(
+                heroTag: 'decrease',
+                onPressed: () {
+                  setState(() {
+                    _absences -= 1;
+                  });
+                },
+                backgroundColor: themeColor,
+                child: Icon(Icons.arrow_downward),
+              ),
+            ),
+            FloatingActionButton(
+              heroTag: 'increase',
+              onPressed: () {
+                setState(() {
+                  _absences += 1;
+                });
+              },
+              backgroundColor: themeColor,
+              child: Icon(Icons.arrow_upward),
+            )
+          ],
+        ),
+      ),
       body: Form(
         onWillPop: _onWillPop,
-        child: Scrollbar(
-          child: ListView(
-            padding: const EdgeInsets.all(16.0),
-            children: <Widget>[
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Horário', style: textStyle),
-                    DateItem(
-                      dateTime: _formDate,
-                      canUserEdit: true,
-                      onChanged: (DateTime value) {
-                        setState(() {
-                          _formDate = value;
-                          _saveNeeded = true;
-                        });
-                      },
-                    ),
-                  ],
-                ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(top: 50),
+              child: Text(
+                '$_absences ${_absences == 1 ? 'falta' : 'faltas'}',
+                style: TextStyle(color: themeColor, fontSize: 40),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                alignment: Alignment.bottomLeft,
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      alignment: Alignment.bottomLeft,
-                      width: MediaQuery.of(context).size.width / 2.7,
-                      child: TextField(
-                        controller: _gradeController,
-                        keyboardType: TextInputType.number,
-                        decoration:
-                            const InputDecoration(labelText: 'Quantidade'),
-                        onChanged: (value) {
-                          setState(() {
-                            _hasGrade = value.isNotEmpty;
-
-                            if (_hasGrade) {
-                              absence.quantity = value as int;
-                            }
-                          });
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      width: 25,
-                    ),
-                    Column(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.arrow_upward)
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.arrow_downward)
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              )
-            ].map<Widget>((Widget child) {
-              return Container(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                height: 96.0,
-                child: child,
-              );
-            }).toList(),
-          ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 30, left: 20, right: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text('Data', style: textStyle),
+                  DateItem(
+                    dateTime: _formDate,
+                    canUserEdit: true,
+                    onChanged: (DateTime value) {
+                      setState(() {
+                        _formDate = value;
+                        _saveNeeded = true;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

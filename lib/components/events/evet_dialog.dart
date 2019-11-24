@@ -67,7 +67,7 @@ class _EventDialogState extends State<EventDialog> {
         builder: (BuildContext context) {
           return AlertDialog(
             content: Text(
-              'Você tem certeza que deseja excluir esse evento? Essa ação não pode ser desfeita.',
+              'Você tem certeza que deseja excluir esse evento?',
               style: dialogTextStyle,
             ),
             actions: <Widget>[
