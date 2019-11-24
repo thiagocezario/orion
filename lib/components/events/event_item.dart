@@ -5,7 +5,6 @@ import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/model/event.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/student.dart';
-import 'package:orion/model/user.dart';
 import 'package:orion/provider/my_events_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -13,13 +12,13 @@ class EventItem extends StatelessWidget {
   final Event _event;
   final Student currentStudent;
   final bool isPreview;
-  Color _tileColor;
+  // Color _tileColor;
 
   EventItem(Key key, this._event, this.isPreview, {this.currentStudent})
       : super(key: key) {
-    _tileColor = _event.student.id == Singleton().user.id
-        ? Colors.grey.shade200
-        : Colors.white;
+    // _tileColor = _event.student.id == Singleton().user.id
+    //     ? Colors.grey.shade200
+    //     : Colors.white;
   }
 
   void showEvent(BuildContext context) {
@@ -42,7 +41,7 @@ class EventItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: _tileColor,
+      // color: _tileColor,
       child: ListTile(
         onTap: () {
           if (!isPreview) {

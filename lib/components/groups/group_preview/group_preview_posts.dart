@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:orion/components/posts/post_item.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';

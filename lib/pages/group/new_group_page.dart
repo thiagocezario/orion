@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/group_resource.dart';
-import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/components/groups/search/course/course_search.dart';
@@ -10,9 +9,9 @@ import 'package:orion/components/groups/search/institution/institution_search.da
 import 'package:orion/main.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
-import 'package:orion/provider/my_events_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/search_groups_provider.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +59,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff8893f2),
+        backgroundColor: themeColor,
         elevation: 0.0,
         title: Text(
           'Novo Grupo',

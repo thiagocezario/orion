@@ -30,22 +30,19 @@ class GroupInfoExit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: InkWell(
-        onTap: () => _exitGroup(context),
         child: ListTile(
-          leading: Icon(
-            Icons.exit_to_app,
-            color: Colors.red,
-          ),
-          title: Text(
-            'Deixar grupo',
-            style: TextStyle(
-              color: Colors.red,
-            ),
-            textAlign: TextAlign.justify,
-          ),
-        ),
+      onTap: () => _exitGroup(context),
+      leading: Icon(
+        Icons.exit_to_app,
+        color: Colors.red,
       ),
-    );
+      title: Text(
+        'Deixar grupo',
+        style: TextStyle(
+          color: Colors.red,
+        ),
+        textAlign: TextAlign.justify,
+      ),
+    ));
   }
 }

@@ -46,6 +46,7 @@ class _LandingPageState extends State<LandingPage> {
       String token = Singleton().jwtToken;
 
       setState(() {
+        // page = LoginPage();
         page = token != null ? toHome() : LoginPage();
       });
     });

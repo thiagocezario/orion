@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/model/global.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   final String token;
@@ -28,9 +29,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xff8893f2),
+        backgroundColor: themeColor,
         appBar: AppBar(
-          backgroundColor: Color(0xff8893f2),
+          backgroundColor: themeColor,
           elevation: 0.0,
           title: Text(
             'Redefinir senha',

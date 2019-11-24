@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:orion/api/resources/event_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/event.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:provider/provider.dart';
@@ -79,12 +80,11 @@ class _EventDialogState extends State<EventDialog> {
               FlatButton(
                 child: const Text('EXCLUIR'),
                 onPressed: () {
-                   EventResource.delete(event.id.toString())
-                      .then((response) {
+                  EventResource.delete(event.id.toString()).then((response) {
                     // Navigator.of(context).pop("delete");
                     Provider.of<GroupEventsProvider>(context)
                         .fetchEvents(event.group.id.toString());
-                        Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   });
                 },
               ),
@@ -155,7 +155,7 @@ class _EventDialogState extends State<EventDialog> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff8893f2),
+        backgroundColor: themeColor,
         title: Text(_screenName),
         actions: <Widget>[
           _deleteEventButton,
@@ -261,8 +261,10 @@ class DateTimeItem extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               decoration: BoxDecoration(
-                  border:
-                      Border(bottom: BorderSide(color: theme.dividerColor))),
+                border: Border(
+                  bottom: BorderSide(color: theme.dividerColor),
+                ),
+              ),
               child: InkWell(
                 onTap: () {
                   if (canUserEdit) {
@@ -273,8 +275,15 @@ class DateTimeItem extends StatelessWidget {
                       lastDate: date.add(const Duration(days: 30)),
                     ).then<void>((DateTime value) {
                       if (value != null)
-                        onChanged(DateTime(value.year, value.month, value.day,
-                            time.hour, time.minute));
+                        onChanged(
+                          DateTime(
+                            value.year,
+                            value.month,
+                            value.day,
+                            time.hour,
+                            time.minute,
+                          ),
+                        );
                     });
                   }
                 },
@@ -301,8 +310,15 @@ class DateTimeItem extends StatelessWidget {
                     initialTime: time,
                   ).then<void>((TimeOfDay value) {
                     if (value != null)
-                      onChanged(DateTime(date.day, date.month, date.year,
-                          value.hour, value.minute));
+                      onChanged(
+                        DateTime(
+                          date.day,
+                          date.month,
+                          date.year,
+                          value.hour,
+                          value.minute,
+                        ),
+                      );
                   });
                 }
               },
@@ -311,6 +327,69 @@ class DateTimeItem extends StatelessWidget {
                   Text('${time.format(context)}'),
                   const Icon(Icons.arrow_drop_down, color: Colors.black54),
                 ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DateItem extends StatelessWidget {
+  DateItem(
+      {Key key, DateTime dateTime, @required this.onChanged, this.canUserEdit})
+      : assert(onChanged != null),
+        date = DateTime(dateTime.year, dateTime.month, dateTime.day),
+        super(key: key);
+
+  final DateTime date;
+  final ValueChanged<DateTime> onChanged;
+  final bool canUserEdit;
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
+    return DefaultTextStyle(
+      style: theme.textTheme.subhead,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: theme.dividerColor),
+                ),
+              ),
+              child: InkWell(
+                onTap: () {
+                  if (canUserEdit) {
+                    showDatePicker(
+                      context: context,
+                      initialDate: date,
+                      firstDate: date.subtract(const Duration(days: 30)),
+                      lastDate: date.add(const Duration(days: 30)),
+                    ).then<void>((DateTime value) {
+                      if (value != null)
+                        onChanged(
+                          DateTime(
+                            value.year,
+                            value.month,
+                            value.day,
+                          ),
+                        );
+                    });
+                  }
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(DateFormat('EEE, MMM d yyyy').format(date)),
+                    const Icon(Icons.arrow_drop_down, color: Colors.black54),
+                  ],
+                ),
               ),
             ),
           ),

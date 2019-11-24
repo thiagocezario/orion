@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/commom_items/material_button.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
 
 class NewAccountPage extends StatefulWidget {
@@ -46,9 +47,9 @@ class _NewAccountPageState extends State<NewAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xff8893f2),
+        backgroundColor: themeColor,
         appBar: AppBar(
-          backgroundColor: Color(0xff8893f2),
+          backgroundColor: themeColor,
           elevation: 0.0,
           title: Text(
             'Nova Conta',
@@ -156,7 +157,6 @@ class _NewAccountPageState extends State<NewAccountPage> {
               ),
               CustomMaterialButton('Criar nova conta', () {
                 if (_formKey.currentState.validate()) {
-                  _user.name = "Root";
                   _createAccount(context);
                 }
               }),

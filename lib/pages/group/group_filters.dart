@@ -5,6 +5,7 @@ import 'package:orion/components/groups/filter_fab.dart';
 import 'package:orion/components/groups/group_item.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/pages/group/group_preview_page.dart';
@@ -89,7 +90,7 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff8893f2),
+        backgroundColor: themeColor,
         elevation: 0.0,
         title: Text(
           'Grupos',

@@ -3,6 +3,7 @@ import 'package:orion/api/resources/password_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/origin_consumer.dart';
 import 'package:orion/components/commom_items/material_button.dart';
+import 'package:orion/model/global.dart';
 
 class RecoverPasswordPage extends StatefulWidget {
   @override
@@ -17,9 +18,9 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
   Widget build(BuildContext context) {
     return OriginConsumer(
       child: Scaffold(
-        backgroundColor: Color(0xff8893f2),
+        backgroundColor: themeColor,
         appBar: AppBar(
-          backgroundColor: Color(0xff8893f2),
+          backgroundColor: themeColor,
           elevation: 0.0,
           title: Text(
             'Recuperar Senha',

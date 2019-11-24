@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/groups/tabs/tab_title.dart';
 import 'package:orion/components/posts/post_item.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/model/post.dart';
 import 'package:orion/provider/group_posts_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -22,30 +22,56 @@ class _GroupPostState extends State<GroupPost> {
   @override
   Widget build(BuildContext context) {
     return Consumer<GroupPostsProvider>(
-        builder: (context, groupPostsProvider, _) {
-      return Stack(
-        children: <Widget>[
-          ListView.separated(
-            separatorBuilder: (context, index) {
-              return Divider(
-                height: 15,
-                thickness: 5,
-              );
-            },
-            itemCount: groupPostsProvider.groupPosts.length,
-            itemBuilder: (context, index) {
-              Post post = groupPostsProvider.groupPosts[index];
-
-              return PostItem(
-                UniqueKey(),
-                post,
-                group,
-                false,
-              );
-            },
-          ),
-        ],
-      );
-    });
+      builder: (context, groupPostsProvider, _) {
+        return CustomScrollView(
+          physics: BouncingScrollPhysics(),
+          slivers: <Widget>[
+            SliverToBoxAdapter(
+              child: TabTitle(title: 'Posts'),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return Column(
+                    key: UniqueKey(),
+                    children: <Widget>[
+                      PostItem(
+                        UniqueKey(),
+                        groupPostsProvider.groupPosts[index],
+                        group,
+                        false,
+                      ),
+                      Divider(
+                        height: 5,
+                        thickness: 2,
+                        indent: 10,
+                        endIndent: 10,
+                      ),
+                    ],
+                  );
+                },
+                childCount: groupPostsProvider.groupPosts.length,
+              ),
+            )
+          ],
+        );
+      },
+    );
   }
 }
+
+  // SliverAppBar(
+  //   backgroundColor: darkGreyColor,
+  //   pinned: true,
+  //   automaticallyImplyLeading: false,
+  //   title: PreferredSize(
+  //     preferredSize: Size.fromHeight(300.0), // here the desired height
+  //     child: Container(height: 300,),
+  //   ),
+  //   actions: <Widget>[
+  //     IconButton(
+  //       icon: Icon(Icons.add),
+  //       onPressed: () {},
+  //     )
+  //   ],
+  // ),

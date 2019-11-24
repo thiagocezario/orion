@@ -10,10 +10,10 @@ class DisciplinePerformancesProvider with ChangeNotifier {
 
   void fetchPerformances(String disciplineId) async {
     var data = {
-      'discipline_id': disciplineId,
+      'discipline_id': disciplineId.toString(),
       'user_id': Singleton().user.id.toString()
     };
-    return await PerformanceResource.list(data).then(handleResponse);
+    return PerformanceResource.list(data).then(handleResponse);
   }
 
   void handleResponse(dynamic response) {

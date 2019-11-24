@@ -1,56 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/resources/performance_resource.dart';
+import 'package:orion/api/resources/absence_resource.dart';
+import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/events/evet_dialog.dart';
+import 'package:orion/model/absence.dart';
 import 'package:orion/model/global.dart';
-import 'package:orion/model/performance.dart';
-import 'package:orion/provider/discipline_performances_provider.dart';
+import 'package:orion/provider/discipline_absences_provider.dart';
 import 'package:provider/provider.dart';
 
-class PerformanceDialog extends StatefulWidget {
-  final Performance grade;
+class AbsenceDialog extends StatefulWidget {
+  final Absence grade;
 
-  PerformanceDialog(this.grade);
+  AbsenceDialog(this.grade);
   @override
-  _PerformanceDialogState createState() => _PerformanceDialogState(grade);
+  _AbsenceDialogState createState() => _AbsenceDialogState(grade);
 }
 
-class _PerformanceDialogState extends State<PerformanceDialog> {
+class _AbsenceDialogState extends State<AbsenceDialog> {
   bool _saveNeeded = false;
   bool _hasGrade = false;
   bool _hasMaxGrade = false;
   bool _hasDescription = false;
-  bool _isCreatingPerformance = true;
+  bool _isCreatingAbsence = true;
   String _screenName = '';
-  Performance performance;
+  Absence absence;
   TextEditingController _gradeController = TextEditingController();
+  DateTime _formDate = DateTime.now();
   TextEditingController _maxGradeController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
 
-  _PerformanceDialogState(Performance performance) {
-    if (performance != null) {
-      this.performance = performance;
-      _gradeController.text = performance.value;
-      _maxGradeController.text = performance.maxValue;
-      _descriptionController.text = performance.description;
-      _screenName = 'Editar nota';
-      _isCreatingPerformance = false;
+  _AbsenceDialogState(Absence absence) {
+    if (absence != null) {
+      this.absence = absence;
+      _gradeController.text = absence.quantity.toString();
+      // _maxGradeController.text = absence.maxValue;
+      // _descriptionController.text = absence.description;
+      _screenName = 'Editar falta';
+      _isCreatingAbsence = false;
     } else {
-      performance = Performance();
-      _screenName = 'Adicionar nova nota';
+      _gradeController.text = '1';
+      absence = Absence();
+      _screenName = 'Adicionar nova falta';
     }
   }
 
-  void _savePerformance(Performance performance) {
-    if (performance == null) {
-      performance = Performance();
+  void _saveAbsence(Absence absence) {
+    if (absence == null) {
+      absence = Absence();
     }
 
-    performance.description = _descriptionController.text;
-    performance.value = _gradeController.text;
-    performance.maxValue = _maxGradeController.text;
-    Navigator.of(context).pop(performance);
+    // absence.description = _descriptionController.text;
+    // absence.value = _gradeController.text;
+    // absence.maxValue = _maxGradeController.text;
+    Navigator.of(context).pop(absence);
   }
 
-  Future<bool> _deletePerformance(Performance performance) async {
+  Future<bool> _deleteAbsence(Absence absence) async {
     final ThemeData theme = Theme.of(context);
     final TextStyle dialogTextStyle =
         theme.textTheme.subhead.copyWith(color: theme.textTheme.caption.color);
@@ -60,7 +64,7 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
         builder: (BuildContext context) {
           return AlertDialog(
             content: Text(
-              'Você tem certeza que deseja excluir essa nota? Essa ação não pode ser desfeita.',
+              'Você tem certeza que deseja excluir essa falta? Essa ação não pode ser desfeita.',
               style: dialogTextStyle,
             ),
             actions: <Widget>[
@@ -73,12 +77,11 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
               FlatButton(
                 child: const Text('EXCLUIR'),
                 onPressed: () async {
-                  await PerformanceResource.delete(performance.id.toString())
+                  await AbsenceResource.delete(absence.id.toString())
                       .then((response) {
                     // Navigator.of(context).pop("delete");
-                    Provider.of<DisciplinePerformancesProvider>(context)
-                        .fetchPerformances(
-                            performance.discipline.id.toString());
+                    Provider.of<DisciplineAbsencesProvider>(context)
+                        .fetchAbsences(absence.discipline.id.toString());
                   });
 
                   Navigator.of(context).pop();
@@ -103,7 +106,7 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
           builder: (BuildContext context) {
             return AlertDialog(
               content: Text(
-                'Tem certeza que deseja descartar a nota?',
+                'Tem certeza que deseja descartar a falta?',
                 style: dialogTextStyle,
               ),
               actions: <Widget>[
@@ -128,17 +131,17 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
 
   @override
   Widget build(BuildContext context) {
-    IconButton _savePerformanceButton = IconButton(
+    IconButton _saveAbsenceButton = IconButton(
       icon: Icon(Icons.save),
-      onPressed: () => _savePerformance(performance),
+      onPressed: () => _saveAbsence(absence),
     );
 
-    Widget _deletePerformanceButton = Container();
+    Widget _deleteAbsenceButton = Container();
 
-    if (!_isCreatingPerformance) {
-      _deletePerformanceButton = IconButton(
+    if (!_isCreatingAbsence) {
+      _deleteAbsenceButton = IconButton(
         icon: Icon(Icons.delete),
-        onPressed: () => _deletePerformance(performance),
+        onPressed: () => _deleteAbsence(absence),
       );
     }
 
@@ -147,8 +150,8 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
         backgroundColor: themeColor,
         title: Text(_screenName),
         actions: <Widget>[
-          _deletePerformanceButton,
-          _savePerformanceButton,
+          _deleteAbsenceButton,
+          _saveAbsenceButton,
         ],
       ),
       body: Form(
@@ -158,20 +161,21 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
             padding: const EdgeInsets.all(16.0),
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                alignment: Alignment.bottomLeft,
-                child: TextField(
-                  controller: _descriptionController,
-                  decoration: InputDecoration(labelText: 'Descrição'),
-                  onChanged: (value) {
-                    setState(() {
-                      _hasDescription = value.isNotEmpty;
-
-                      if (_hasDescription) {
-                        performance.description = value.toString();
-                      }
-                    });
-                  },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text('Horário', style: textStyle),
+                    DateItem(
+                      dateTime: _formDate,
+                      canUserEdit: true,
+                      onChanged: (DateTime value) {
+                        setState(() {
+                          _formDate = value;
+                          _saveNeeded = true;
+                        });
+                      },
+                    ),
+                  ],
                 ),
               ),
               Container(
@@ -186,13 +190,14 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
                       child: TextField(
                         controller: _gradeController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(labelText: 'Nota'),
+                        decoration:
+                            const InputDecoration(labelText: 'Quantidade'),
                         onChanged: (value) {
                           setState(() {
                             _hasGrade = value.isNotEmpty;
 
                             if (_hasGrade) {
-                              performance.value = value.toString();
+                              absence.quantity = value as int;
                             }
                           });
                         },
@@ -201,37 +206,16 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
                     SizedBox(
                       width: 25,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        '/',
-                        style: TextStyle(fontSize: 25),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 25,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      width: MediaQuery.of(context).size.width / 2.7,
-                      alignment: Alignment.bottomLeft,
-                      child: TextField(
-                        controller: _maxGradeController,
-                        keyboardType: TextInputType.number,
-                        decoration:
-                            const InputDecoration(labelText: 'Nota Máxima'),
-                        onChanged: (value) {
-                          setState(() {
-                            _hasMaxGrade = value.isNotEmpty;
-
-                            if (_hasMaxGrade) {
-                              performance.maxValue = value.toString();
-                            }
-                          });
-                        },
-                      ),
-                    ),
+                    Column(
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.arrow_upward)
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.arrow_downward)
+                        )
+                      ],
+                    )
                   ],
                 ),
               )

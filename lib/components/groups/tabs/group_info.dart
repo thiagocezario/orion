@@ -55,8 +55,8 @@ class GroupInfo extends StatelessWidget {
           GroupInfoExit(group),
           SliverToBoxAdapter(
             child: Divider(
-              thickness: 100,
-              height: 100,
+              thickness: 50,
+              height: 50,
             ),
           ),
         ],

@@ -11,10 +11,8 @@ class Base {
 
   // static final String _ip = "10.0.2.2";    // Local Android
   // static final String _ip = "localhost";   // Local IOS
-  // static final String _ip = "192.168.15.3"; // External access
-   static final String _ip = "192.168.18.147"; // External access
-  // static final String _ip = "192.168.43.182"; // External access
-  // (run server with rails server -b (YOUR IP) -p 3000)
+  static final String _ip = "192.168.18.147"; // External access
+  // (run server with rails server -b 0.0.0.0 -p 3000)
 
   static Uri collectionPath(String path) {
     return Uri(scheme: _scheme, host: _ip, port: _port, path: path);

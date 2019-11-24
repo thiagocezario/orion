@@ -8,7 +8,9 @@ import 'package:orion/pages/login/login_page.dart';
 import 'package:orion/pages/login/new_account_page.dart';
 import 'package:orion/pages/login/recover_password_page.dart';
 import 'package:orion/provider/auth_provider.dart';
+import 'package:orion/provider/discipline_absences_provider.dart';
 import 'package:orion/provider/discipline_performances_provider.dart';
+import 'package:orion/provider/download_provider.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
@@ -34,6 +36,7 @@ class Orion extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(builder: (context) => OriginProvider()),
+          ChangeNotifierProvider(builder: (context) => DownloadProvider()),
           ChangeNotifierProvider(builder: (context) => AuthProvider()),
           ChangeNotifierProvider(builder: (context) => MyGroupsProvider()),
           ChangeNotifierProvider(
@@ -44,6 +47,8 @@ class Orion extends StatelessWidget {
           ChangeNotifierProvider(builder: (context) => GroupEventsProvider()),
           ChangeNotifierProvider(
               builder: (context) => DisciplinePerformancesProvider()),
+          ChangeNotifierProvider(
+              builder: (context) => DisciplineAbsencesProvider()),
           ChangeNotifierProvider(builder: (context) => SubscriptionsProvider()),
         ],
         child: MaterialApp(

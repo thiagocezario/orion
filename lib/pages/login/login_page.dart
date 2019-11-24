@@ -28,10 +28,10 @@ class _LoginPageState extends State<LoginPage> {
   bool opend = false;
 
   _LoginPageState() {
-    _emailFieldController.text = "user@user.com";
-    _passwordFieldController.text = "123123";
-    _user.email = "user@user.com";
-    _user.password = "123123";
+    // _emailFieldController.text = "user@user.com";
+    // _passwordFieldController.text = "123123";
+    // _user.email = "user@user.com";
+    // _user.password = "123123";
     opend = false;
   }
 
@@ -75,17 +75,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Provider.of<OriginProvider>(context).init();
 
-    return OriginConsumer(
-      child: Scaffold(
-        backgroundColor: Color(0xff8893f2),
-        body: ListView(
-          children: <Widget>[_buildForm(context)],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildForm(BuildContext context) {
     final userField = TextFormField(
       validator: (value) {
         if (value.isEmpty) {
@@ -123,59 +112,75 @@ class _LoginPageState extends State<LoginPage> {
       onChanged: (text) => _user.password = text,
     );
 
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          vertical: MediaQuery.of(context).size.height / 8, horizontal: 16),
-      child: Container(
-        height: 500,
-        child: Card(
-          elevation: 5.0,
-          color: Colors.white,
-          child: Wrap(
-            children: <Widget>[
-              Form(
-                  key: _formKey,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 36.0, right: 36.0, top: 50),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        getLogo(),
-                        SizedBox(
-                          height: 35.0,
-                        ),
-                        userField,
-                        SizedBox(height: 10.0),
-                        passwordField,
-                        Container(
-                          alignment: Alignment.bottomRight,
-                          child: forgotPasswordButton(context),
-                        ),
-                        CustomMaterialButton(
-                          'Entrar',
-                          () {
-                            if (_formKey.currentState.validate()) {
-                              _signIn(context);
-                            }
-                          },
-                        ),
-                        SizedBox(
-                          height: 15.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text('Novo usuário?'),
-                            newAccountButton(context),
-                          ],
-                        ),
-                      ],
-                    ),
-                  )),
-            ],
-          ),
-        ),
+    return OriginConsumer(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildListDelegate([
+              Container(
+                padding: EdgeInsets.only(top: 100, bottom: 50),
+                // height: 300,
+                child: SizedBox(
+                  height: 130.0,
+                  child: Image.asset(
+                    'assets/logo/logo.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Card(
+                  elevation: 5.0,
+                  color: Colors.white,
+                  child: Wrap(
+                    children: <Widget>[
+                      Form(
+                          key: _formKey,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 35.0, right: 35.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 35.0,
+                                ),
+                                userField,
+                                SizedBox(height: 10.0),
+                                passwordField,
+                                Container(
+                                  alignment: Alignment.bottomRight,
+                                  child: forgotPasswordButton(context),
+                                ),
+                                CustomMaterialButton(
+                                  'Entrar',
+                                  () {
+                                    if (_formKey.currentState.validate()) {
+                                      _signIn(context);
+                                    }
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 15.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text('Novo usuário?'),
+                                    newAccountButton(context),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            ]),
+          )
+        ],
       ),
     );
   }

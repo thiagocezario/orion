@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/event_resource.dart';
 import 'package:orion/api/resources/group_resource.dart';
-import 'package:orion/api/resources/performance_resource.dart';
 import 'package:orion/api/resources/post_resource.dart';
-import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/events/evet_dialog.dart';
-import 'package:orion/components/performances/performance_dialog.dart';
+import 'package:orion/components/groups/tabs/group_personal_performance.dart';
 import 'package:orion/components/posts/post_dialog.dart';
 import 'package:orion/model/event.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/components/groups/tabs/discipline_performance.dart';
 import 'package:orion/components/groups/tabs/group_event.dart';
 import 'package:orion/components/groups/tabs/group_info.dart';
 import 'package:orion/components/groups/tabs/group_post.dart';
-import 'package:orion/model/performance.dart';
 import 'package:orion/model/post.dart';
 import 'package:orion/model/user.dart';
-import 'package:orion/provider/discipline_performances_provider.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
@@ -65,36 +61,83 @@ class _GroupPageState extends State<GroupPage>
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xff8893f2),
-          title: _GroupName(group),
-          centerTitle: true,
-          bottom: TabBar(
+        body: Stack(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 80),
+              child: TabBarView(
+                controller: _tabController,
+                children: <Widget>[
+                  GroupPost(group),
+                  GroupEvent(group),
+                  PersonalPerformance(group.discipline, group),
+                  GroupInfo(group),
+                ],
+              ),
+            ),
+            Container(
+              height: 90,
+              padding: EdgeInsets.only(top: 28, left: 10, right: 10),
+              decoration: BoxDecoration(
+                color: themeColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50),
+                ),
+              ),
+              child: // Column(
+                  //   children: <Widget>[
+                  Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () {
+                       Navigator.of(context).pop();
+                    },
+                  ),
+                  Expanded(
+                    child: _GroupName(group),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: themeColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+          ),
+          child: TabBar(
+            labelColor: Colors.white,
+            unselectedLabelColor: darkGreyColor,
+            indicatorSize: TabBarIndicatorSize.label,
+            indicatorPadding: EdgeInsets.all(5.0),
+            indicatorColor: darkGreyColor,
+            labelPadding: EdgeInsets.all(0),
             controller: _tabController,
             tabs: <Widget>[
               Tab(
                 icon: Icon(Icons.home),
+                // text: 'Posts',
               ),
               Tab(
                 icon: Icon(Icons.event_note),
+                // text: 'Eventos',
               ),
               Tab(
                 icon: Icon(Icons.equalizer),
+                // text: 'Notas',
               ),
               Tab(
                 icon: Icon(Icons.info),
+                // text: 'Grupo',
               ),
             ],
           ),
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            GroupPost(group),
-            GroupEvent(group),
-            DisciplinePerformance(group.discipline, group),
-            GroupInfo(group),
-          ],
         ),
         floatingActionButton: _fabButton,
       ),
@@ -105,53 +148,30 @@ class _GroupPageState extends State<GroupPage>
     switch (_tabController.index) {
       case 0:
         return FloatingActionButton(
-            heroTag: "postFAB",
-            onPressed: () => _createPost(),
-            backgroundColor: Colors.greenAccent,
-            child: Icon(
-              Icons.add,
-              size: 20.0,
-            ));
+          heroTag: "postFAB",
+          onPressed: () => _createPost(),
+          backgroundColor: themeColor,
+          child: Icon(
+            Icons.add,
+            size: 20.0,
+          ),
+        );
       case 1:
         return FloatingActionButton(
-            heroTag: "eventFAB",
-            onPressed: () => _createEvent(),
-            backgroundColor: Colors.greenAccent,
-            child: Icon(
-              Icons.add,
-              size: 20.0,
-            ));
-      case 2:
-        return FloatingActionButton(
-            heroTag: "scoreFAB",
-            onPressed: () => _createPerformance(),
-            backgroundColor: Colors.greenAccent,
-            child: Icon(
-              Icons.add,
-              size: 20.0,
-            ));
+          heroTag: "eventFAB",
+          onPressed: () => _createEvent(),
+          backgroundColor: themeColor,
+          child: Icon(
+            Icons.add,
+            size: 20.0,
+          ),
+        );
       default:
         return null;
     }
   }
 
-  Future _createPerformance() async {
-    Performance result = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return PerformanceDialog(null);
-      },
-      fullscreenDialog: true,
-    ));
 
-    if (result != null) {
-      result.discipline = group.discipline;
-
-      await PerformanceResource.createObject(result).then((response) {
-        Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.id.toString());
-      });
-    }
-  }
 
   Future _createPost() async {
     Post result = await Navigator.of(context).push(MaterialPageRoute(
@@ -222,12 +242,12 @@ class _GroupNameState extends State<_GroupName> {
         }
       },
       backgroundCursorColor: Colors.black,
-      textAlign: TextAlign.justify,
+      textAlign: TextAlign.center,
       controller: _nameTextController,
       cursorColor: Colors.white,
       focusNode: _descriptionFocusNode,
       style: TextStyle(
-          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
     );
   }
 

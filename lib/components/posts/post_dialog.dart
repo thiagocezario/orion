@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:orion/components/blobs/blob_item.dart';
-import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/blob.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
 
@@ -101,7 +101,7 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: themeColor,
         title: Text(_screenName),
         centerTitle: true,
         actions: <Widget>[

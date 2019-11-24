@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orion/actions/open_invite.dart';
 import 'package:orion/actions/open_reset.dart';
+import 'package:orion/provider/download_provider.dart';
 import 'package:orion/provider/origin_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,11 @@ class OriginConsumer extends StatelessWidget {
       WidgetsBinding.instance
           .addPostFrameCallback((_) => afterBuild(context, originProvider));
 
-      return child;
+      return Consumer<DownloadProvider>(builder: (context, downloadProvider, _) {
+        // downloadProvider.init();
+
+        return child;
+      });
     });
   }
 

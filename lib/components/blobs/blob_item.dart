@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orion/api/base.dart';
 import 'package:orion/model/blob.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BlobItem extends StatefulWidget {
   final Blob blob;
@@ -59,39 +61,40 @@ class _BlobItemState extends State<BlobItem> {
   }
 
   Future download() async {
-    print('Download file logic');
-
-    // Directory tempDir = await getApplicationDocumentsDirectory();
-    // String tempPath = tempDir.path;
-
-    // var _downloadData = List<int>();
-    // var fileSave = new File('$tempPath/logo_pipe.png');
-
-    // HttpClient client = new HttpClient();
-    // client
-    //     .getUrl(Uri.parse(
-    //         "https://fluttermaster.com/wp-content/uploads/2018/08/fluttermaster.com-logo-web-header.png"))
-    //     .then((HttpClientRequest request) {
-    //   return request.close();
-    // }).then((HttpClientResponse response) {
-    //   response.listen((d) => _downloadData.addAll(d), onDone: () {
-    //     print(_downloadData);
-    //     fileSave.writeAsBytes(_downloadData);
-    //     print('ok');
-    //     print(fileSave.readAsString());
-    //   });
-    // });
+    Uri uri = Base.collectionPath('/api/blobs/download');
+    launch(uri.toString());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListTile(
-        leading: Icon(Icons.attachment),
-        title: decoredFilename(),
-        trailing: editButton(),
-        onTap: download,
-      ),
+    return ListTile(
+      leading: Icon(Icons.attachment),
+      title: decoredFilename(),
+      trailing: editButton(),
+      onTap: download,
     );
   }
 }
+
+// Future download() async {
+//     Directory tempDir = await getApplicationDocumentsDirectory();
+//     String tempPath = tempDir.path;
+
+//     var _downloadData = List<int>();
+//     var fileSave = new File('$tempPath/logo_pipe.png');
+
+//     HttpClient client = new HttpClient();
+//     client
+//         .getUrl(Uri.parse(
+//             "https://fluttermaster.com/wp-content/uploads/2018/08/fluttermaster.com-logo-web-header.png"))
+//         .then((HttpClientRequest request) {
+//       return request.close();
+//     }).then((HttpClientResponse response) {
+//       response.listen((d) => _downloadData.addAll(d), onDone: () {
+//         print(_downloadData);
+//         fileSave.writeAsBytes(_downloadData);
+//         print('ok');
+//         print(fileSave.readAsString());
+//       });
+//     });
+//   }

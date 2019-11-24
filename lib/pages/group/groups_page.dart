@@ -18,37 +18,33 @@ class _GroupsPageState extends State<GroupsPage> {
       builder: (context, myGroupsState, _) =>
           Consumer<GroupRecomendationsProvider>(
         builder: (context, recommendations, _) => Container(
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                          padding: EdgeInsets.only(left: 8.0, bottom: 8),
-                          child: Text(
-                            'Recomendações',
-                            style: TextStyle(color: Colors.black),
-                          )),
-                    ),
-                    Container(
-                      height: 140,
-                      width: MediaQuery.of(context).size.width,
-                      child: GroupRecommendations(
-                          recommendations.groupRecomendations),
-                    ),
-                    Expanded(
-                      child: GroupCardsList(myGroupsState.myGroups),
-                    ),
-                  ],
+          child: Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 8.0, bottom: 8),
+                      child: Text(
+                        'Recomendações',
+                        style: TextStyle(color: Colors.black),
+                      )),
                 ),
-              ),
-            ],
+                Container(
+                  height: 140,
+                  width: MediaQuery.of(context).size.width,
+                  child:
+                      GroupRecommendations(recommendations.groupRecomendations),
+                ),
+                Expanded(
+                  child: GroupCardsList(myGroupsState.myGroups),
+                ),
+              ],
+            ),
           ),
         ),
       ),

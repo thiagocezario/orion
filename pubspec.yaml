@@ -33,6 +33,7 @@ dependencies:
   share: ^0.6.3
   flutter_launcher_icons: ^0.6.1
   shared_preferences: "0.5.4"
+  url_launcher: '^5.2.5'
 
 flutter_icons:
   android: true
@@ -66,6 +67,7 @@ flutter:
    - assets/icon.png
    - assets/background/orion.jpg
    - assets/logo/orionlogo.png
+   - assets/logo/logo.png
    - assets/logo/orion_logo.png
    - assets/icons/group.pdf
    - assets/json/groups.json

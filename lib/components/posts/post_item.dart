@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:orion/api/resources/post_classification_resource.dart';
 import 'package:orion/api/resources/post_resource.dart';
 import 'package:orion/components/posts/post_dialog.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
 import 'package:orion/model/user.dart';
@@ -212,11 +213,11 @@ class _PostRatingState extends State<_PostRating> {
   }
 
   Color likeColor() {
-    return liked ? Colors.blueAccent : Colors.grey;
+    return liked ? themeColor : Colors.grey;
   }
 
   Color unlikeColor() {
-    return unliked ? Colors.blueAccent : Colors.grey;
+    return unliked ? themeColor : Colors.grey;
   }
 
   Icon likeIcon() {

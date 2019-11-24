@@ -6,6 +6,7 @@ import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/group/group_page.dart';
+import 'package:orion/provider/discipline_absences_provider.dart';
 import 'package:orion/provider/discipline_performances_provider.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/group_posts_provider.dart';
@@ -24,6 +25,8 @@ class GroupCardsList extends StatelessWidget {
     Provider.of<GroupEventsProvider>(context).fetchEvents(group.id.toString());
     Provider.of<DisciplinePerformancesProvider>(context)
         .fetchPerformances(group.discipline.id.toString());
+    Provider.of<DisciplineAbsencesProvider>(context)
+        .fetchAbsences(group.discipline.id.toString());
 
     var data = {
       'group_id': group.id.toString(),

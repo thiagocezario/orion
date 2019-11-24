@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
-import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/groups/group_preview/group_events_preview.dart';
 import 'package:orion/components/groups/group_preview/group_preview_posts.dart';
 import 'package:orion/components/groups/tabs/group_info/subscriptions_preview.dart';
 import 'package:orion/main.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/model/user.dart';
@@ -75,7 +75,7 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
             Consumer<GroupEventsProvider>(
           builder: (context, groupEventsProvider, _) => Scaffold(
             appBar: AppBar(
-              backgroundColor: primaryColor,
+              backgroundColor: themeColor,
               title: Text(group.name),
               actions: <Widget>[
                 IconButton(
