@@ -144,15 +144,15 @@ class HomeTileState extends State<HomeTile> {
   final List<Widget> tabTitles = [
     Text(
       'Meus Grupos',
-      style: titleStyle,
+      style: mainTitleStyle,
     ),
     Text(
       'Próximos Eventos',
-      style: titleStyle,
+      style: mainTitleStyle,
     ),
     Text(
       'Buscar Grupos',
-      style: titleStyle,
+      style: mainTitleStyle,
     ),
   ];
 
