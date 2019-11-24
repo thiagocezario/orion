@@ -12,7 +12,7 @@ class TabTitle extends StatelessWidget {
       padding: EdgeInsets.only(top: 30, bottom: 20, left: 20, right: 20),
       child: Text(
         title,
-        style: intrayTitleStyle.apply(color: themeColor),
+        style: titleStyle,
       ),
     );
   }

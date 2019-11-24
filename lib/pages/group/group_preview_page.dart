@@ -90,58 +90,43 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        title: Text(
-                          'Publicações',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                          ),
-                        ),
+                        title: Text('Membros', style: intraySubTitleStyle),
                       ),
-                      Divider(),
+                    ],
+                  ),
+                ),
+                SliverPadding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  sliver: SubscriptionsPreview(
+                    subscriptionsProvider.subscriptions,
+                    3,
+                    group,
+                    false,
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text('Eventos', style: intraySubTitleStyle),
+                      ),
+                    ],
+                  ),
+                ),
+                SliverPadding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  sliver: GroupEventsPreview(groupEventsProvider.groupEvents),
+                ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text('Publicações', style: intraySubTitleStyle),
+                      ),
                     ],
                   ),
                 ),
                 GroupPreviewPosts(groupPostsProvider.groupPosts, group),
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text(
-                          'Usuários inscritos',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                          ),
-                        ),
-                      ),
-                      Divider(),
-                    ],
-                  ),
-                ),
-                SubscriptionsPreview(
-                  subscriptionsProvider.subscriptions,
-                  3,
-                  group,
-                  false,
-                ),
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text(
-                          'Eventos',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                          ),
-                        ),
-                      ),
-                      Divider(),
-                    ],
-                  ),
-                ),
-                GroupEventsPreview(groupEventsProvider.groupEvents),
               ],
             ),
           ),

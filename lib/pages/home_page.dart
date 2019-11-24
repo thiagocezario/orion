@@ -144,15 +144,15 @@ class HomeTileState extends State<HomeTile> {
   final List<Widget> tabTitles = [
     Text(
       'Meus Grupos',
-      style: intrayTitleStyle.apply(color: Colors.white),
+      style: titleStyle,
     ),
     Text(
       'Próximos Eventos',
-      style: intrayTitleStyle.apply(color: Colors.white),
+      style: titleStyle,
     ),
     Text(
       'Buscar Grupos',
-      style: intrayTitleStyle.apply(color: Colors.white),
+      style: titleStyle,
     ),
   ];
 
