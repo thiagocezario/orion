@@ -25,17 +25,10 @@ class _GroupsPageState extends State<GroupsPage> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 8.0, bottom: 8),
-                      child: Text(
-                        'Recomendações',
-                        style: TextStyle(color: Colors.black),
-                      )),
-                ),
                 Container(
-                  height: 140,
+                  // color: Colors.black,
+                  padding: EdgeInsets.only(bottom: 5),
+                  height: 80,
                   width: MediaQuery.of(context).size.width,
                   child:
                       GroupRecommendations(recommendations.groupRecomendations),

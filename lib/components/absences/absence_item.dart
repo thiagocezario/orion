@@ -51,9 +51,9 @@ class _AbsenceItemState extends State<AbsenceItem> {
       child: Container(
         padding: EdgeInsets.only(top: 10, bottom: 10),
         decoration: BoxDecoration(
-            // color: ,
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: themeColor)),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: themeColor),
+        ),
         child: Center(
           child: Column(
             children: <Widget>[

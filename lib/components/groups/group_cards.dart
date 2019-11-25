@@ -59,7 +59,7 @@ class GroupCardsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.only(left: 10, right: 10),
         separatorBuilder: (context, index) {
           return Divider(
             indent: 5,

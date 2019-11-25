@@ -201,6 +201,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
     return SliverPadding(
       padding: EdgeInsets.only(top: 20, left: 10, right: 10),
       sliver: SliverGrid(
+        key: UniqueKey(),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 120.0,
           mainAxisSpacing: 10.0,
@@ -210,6 +211,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return AbsenceItem(
+              key: UniqueKey(),
               absence: absencesProvider.disciplineAbsences[index],
             );
           },
