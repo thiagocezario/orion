@@ -78,7 +78,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
     final _confirmPasswordField = CustomTextFormField(
       _passwordConfirmationController,
-      "Senha",
+      "Confirmar Senha",
       (String value) {
         if (value.isEmpty) {
           return "O campo de senha deve ser preenchido";
