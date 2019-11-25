@@ -308,9 +308,9 @@ class DateTimeItem extends StatelessWidget {
                     if (value != null)
                       onChanged(
                         DateTime(
-                          date.day,
-                          date.month,
                           date.year,
+                          date.month,
+                          date.day,
                           value.hour,
                           value.minute,
                         ),
