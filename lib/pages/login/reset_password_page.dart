@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/commom_items/custom_text_form_field.dart';
 import 'package:orion/components/commom_items/material_button.dart';
+import 'package:orion/components/commom_items/orion_logo.dart';
 import 'package:orion/model/global.dart';
 
 class ResetPasswordPage extends StatefulWidget {
@@ -115,7 +115,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              getLogo(),
+              OrionLogo(),
               SizedBox(
                 height: 35.0,
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/commom_items/orion_logo.dart';
 import 'package:orion/components/login/login_card.dart';
 import 'package:orion/components/origin_consumer.dart';
 import 'package:orion/model/global.dart';
@@ -29,13 +30,10 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: themeColor,
         body: ListView(
           children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height / 3,
-              child: Image.asset(
-                'assets/logo/logo.png',
-                fit: BoxFit.fill,
-              ),
+            SizedBox(
+              height: 60,
             ),
+            OrionLogo(),
             LoginForm(
               _formKey,
               _emailFieldController,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orion/api/resources/password_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/commom_items/custom_text_form_field.dart';
+import 'package:orion/components/commom_items/orion_logo.dart';
 import 'package:orion/components/origin_consumer.dart';
 import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/model/global.dart';
@@ -76,7 +77,7 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              getLogo(),
+              OrionLogo(),
               SizedBox(
                 height: 35.0,
               ),

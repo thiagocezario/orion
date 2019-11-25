@@ -4,6 +4,7 @@ import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/commom_items/custom_text_form_field.dart';
 import 'package:orion/components/commom_items/material_button.dart';
+import 'package:orion/components/commom_items/orion_logo.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
 
@@ -142,7 +143,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              getLogo(),
+              OrionLogo(),
               SizedBox(
                 height: 35.0,
               ),
