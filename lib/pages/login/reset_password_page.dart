@@ -116,9 +116,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               OrionLogo(),
-              SizedBox(
-                height: 35.0,
-              ),
               _passwordField,
               SizedBox(height: 10.0),
               _confirmPasswordField,
