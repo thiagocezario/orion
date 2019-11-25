@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/commom_items/custom_text_form_field.dart';
+import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/model/global.dart';
 
 class ResetPasswordPage extends StatefulWidget {
@@ -15,15 +17,15 @@ class ResetPasswordPage extends StatefulWidget {
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final _formKey = GlobalKey<FormState>();
-  final _passworController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _passwordConfirmationController = TextEditingController();
 
   String token;
 
   _ResetPasswordPageState({this.token});
 
-  void _resetPasswor() {
-    Navigator.of(context).pop(_passworController.text);
+  void _resetPassword() {
+    Navigator.of(context).pop(_passwordController.text);
   }
 
   @override
@@ -56,44 +58,53 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   }
 
   Form _buildForm(BuildContext context) {
-    final _passwordField = TextFormField(
-      controller: _passworController,
-      validator: (value) {
+    final _passwordField = CustomTextFormField(
+      _passwordController,
+      "Senha",
+      (String value) {
         if (value.isEmpty) {
           return "O campo de senha deve ser preenchido";
         }
 
-        return null;
-      },
-      obscureText: true,
-      style: textStyle,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: 'Senha',
-          errorStyle: errorStyle,
-          fillColor: Colors.white,
-          filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-    );
-
-    final _confirmPasswordField = TextFormField(
-      controller: _passwordConfirmationController,
-      validator: (value) {
-        if (value.isEmpty) {
-          return "O campo de nome deve ser preenchido";
+        if (value.length < 6) {
+          return "O campo de senha deve ter pelo menos 6 caracteres";
         }
 
         return null;
       },
-      obscureText: true,
-      style: textStyle,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: 'Confirmação da senha',
-          errorStyle: errorStyle,
-          fillColor: Colors.white,
-          filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+      () {},
+      true,
+    );
+
+    final _confirmPasswordField = CustomTextFormField(
+      _passwordConfirmationController,
+      "Senha",
+      (String value) {
+        if (value.isEmpty) {
+          return "O campo de senha deve ser preenchido";
+        }
+
+        if (value.length < 6) {
+          return "O campo de senha deve ter pelo menos 6 caracteres";
+        }
+
+        if (value != _passwordController.text) {
+          return "As senhas devem ser iguais";
+        }
+
+        return null;
+      },
+      () {},
+      true,
+    );
+
+    final _resetPasswordButton = CustomMaterialButton(
+      "Redefinir senha",
+      () {
+        if (_formKey.currentState.validate()) {
+          _resetPassword();
+        }
+      },
     );
 
     return Form(
@@ -114,26 +125,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               SizedBox(
                 height: 25.0,
               ),
-              Material(
-                elevation: 5.0,
-                borderRadius: BorderRadius.circular(30.0),
-                // color: Color(0xff606fe1),
-                color: Color(0xff192376),
-                child: MaterialButton(
-                  minWidth: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                  elevation: 50.0,
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      _resetPasswor();
-                    }
-                  },
-                  child: Text('Redefinir senha',
-                      textAlign: TextAlign.center,
-                      style: textStyle.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
-                ),
-              )
+              _resetPasswordButton,
             ],
           ),
         ));

@@ -31,6 +31,9 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _passwordFieldController;
   User _user = User();
 
+  final RegExp _emailRegex = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
   _LoginFormState(
     this._formKey,
     this._emailFieldController,
@@ -84,6 +87,10 @@ class _LoginFormState extends State<LoginForm> {
           return "O campo de email deve ser preenchido";
         }
 
+        if (!_emailRegex.hasMatch(value)) {
+          return "Por favor insira um endereço de email válido";
+        }
+
         return null;
       },
       (String value) {
@@ -98,6 +105,10 @@ class _LoginFormState extends State<LoginForm> {
       (String value) {
         if (value.isEmpty) {
           return "O campo de senha deve ser preenchido";
+        }
+
+        if (value.length < 6) {
+          return "O campo de senha deve ter pelo menos 6 caracteres";
         }
 
         return null;

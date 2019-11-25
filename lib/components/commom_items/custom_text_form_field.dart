@@ -21,8 +21,11 @@ class CustomTextFormField extends StatelessWidget {
       style: textStyle,
       obscureText: _isPasswordField,
       decoration: InputDecoration(
+        errorMaxLines: 3,
         contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         hintText: _description,
+        fillColor: Colors.white,
+        filled: true,
         errorStyle: errorStyle,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
