@@ -49,7 +49,7 @@ class EventItem extends StatelessWidget {
           }
         },
         leading: _LeadingEventDay(_event),
-        trailing: Text(DateFormat('hh:mm').format(_event.date)),
+        trailing: Text(DateFormat('HH:mm').format(_event.date)),
         title: Text(_event.title),
         subtitle: Text(_event.content),
       ),
