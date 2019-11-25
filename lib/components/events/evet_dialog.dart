@@ -267,8 +267,8 @@ class DateTimeItem extends StatelessWidget {
                     showDatePicker(
                       context: context,
                       initialDate: date,
-                      firstDate: date.subtract(const Duration(days: 30)),
-                      lastDate: date.add(const Duration(days: 30)),
+                      firstDate: date.subtract(const Duration(days: 0)),
+                      lastDate: date.add(const Duration(days: 365)),
                     ).then<void>((DateTime value) {
                       if (value != null)
                         onChanged(
