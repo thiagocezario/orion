@@ -138,15 +138,10 @@ class _NewAccountPageState extends State<NewAccountPage> {
     return Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(36.0),
+          padding: EdgeInsets.only(left: 20, right: 20,),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               OrionLogo(),
-              SizedBox(
-                height: 35.0,
-              ),
               _nameField,
               SizedBox(height: 10.0),
               _emailField,
