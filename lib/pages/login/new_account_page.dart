@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
+import 'package:orion/components/commom_items/custom_text_form_field.dart';
 import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
@@ -18,8 +19,11 @@ class _NewAccountPageState extends State<NewAccountPage> {
   final _nameTextFieldController = TextEditingController();
   final _user = User();
 
-  void _createAccount(BuildContext context) {
-    StudentResource.createObject(_user).then((response) {
+  final RegExp _emailRegex = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
+  void _createAccount(BuildContext context, User user) {
+    StudentResource.createObject(user).then((response) {
       if (response != null) {
         Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -74,65 +78,60 @@ class _NewAccountPageState extends State<NewAccountPage> {
   }
 
   Form _buildForm(BuildContext context) {
-    final _emailField = TextFormField(
-      controller: _emailFieldController,
-      validator: (value) {
+    final _emailField = CustomTextFormField(
+      _emailFieldController,
+      "Email",
+      (String value) {
         if (value.isEmpty) {
           return "O campo de email deve ser preenchido";
         }
 
-        return null;
-      },
-      style: textStyle,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: 'Email',
-          errorStyle: errorStyle,
-          fillColor: Colors.white,
-          filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-      onChanged: (text) => _user.email = text,
-    );
-
-    final _passwordField = TextFormField(
-      controller: _passwordFieldController,
-      validator: (value) {
-        if (value.isEmpty) {
-          return "O campo de senha deve ser preenchido";
+        if (!_emailRegex.hasMatch(value)) {
+          return "Por favor insira um endereço de email válido";
         }
 
         return null;
       },
-      obscureText: true,
-      style: textStyle,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: 'Senha',
-          errorStyle: errorStyle,
-          fillColor: Colors.white,
-          filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-      onChanged: (text) => _user.password = text,
+      (String value) {
+        _user.email = value;
+      },
+      false,
     );
 
-    final _nameField = TextFormField(
-      controller: _nameTextFieldController,
-      validator: (value) {
+    final _passwordField = CustomTextFormField(
+      _passwordFieldController,
+      "Senha",
+      (String value) {
+        if (value.isEmpty) {
+          return "O campo de senha deve ser preenchido";
+        }
+
+        if (value.length < 6) {
+          return "O campo de senha deve ter pelo menos 6 caracteres";
+        }
+
+        return null;
+      },
+      (String value) {
+        _user.password = value;
+      },
+      true,
+    );
+
+    final _nameField = CustomTextFormField(
+      _nameTextFieldController,
+      "Nome",
+      (String value) {
         if (value.isEmpty) {
           return "O campo de nome deve ser preenchido";
         }
 
         return null;
       },
-      style: textStyle,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: 'Nome',
-          errorStyle: errorStyle,
-          fillColor: Colors.white,
-          filled: true,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-      onChanged: (text) => _user.name = text,
+      (String value) {
+        _user.name = value;
+      },
+      false,
     );
 
     return Form(
@@ -157,7 +156,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
               ),
               CustomMaterialButton('Criar nova conta', () {
                 if (_formKey.currentState.validate()) {
-                  _createAccount(context);
+                  _createAccount(context, _user);
                 }
               }),
             ],

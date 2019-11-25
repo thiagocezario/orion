@@ -8,28 +8,6 @@ final TextStyle errorStyle =
 final Color primaryButtonColor = Color(0xff192376);
 final Color groupIconsColor = Color(0xFFFF8A65); // orange 300
 
-TextFormField getTextField(
-    String placeholder, TextEditingController controller) {
-  return TextFormField(
-    validator: (value) {
-      if (value.isEmpty) {
-        return "O campo de $placeholder deve ser preenchido";
-      }
-
-      return null;
-    },
-    controller: controller,
-    style: textStyle,
-    decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: placeholder,
-        errorStyle: errorStyle,
-        fillColor: Colors.white,
-        filled: true,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-  );
-}
-
 Widget getLogo() {
   return SizedBox(
     height: 100.0,
