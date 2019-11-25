@@ -70,7 +70,6 @@ class _GroupPageState extends State<GroupPage>
                   GroupPost(group),
                   GroupEvent(group),
                   PersonalPerformance(group.discipline, group),
-                  //GroupInfo(group),
                 ],
               ),
             ),
@@ -129,10 +128,6 @@ class _GroupPageState extends State<GroupPage>
                 icon: Icon(Icons.equalizer),
                 // text: 'Notas',
               ),
-              // Tab(
-              //   icon: Icon(Icons.info),
-              //   // text: 'Grupo',
-              // ),
             ],
           ),
         ),

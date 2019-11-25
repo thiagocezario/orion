@@ -4,12 +4,12 @@ import 'package:orion/api/resources/absence_resource.dart';
 import 'package:orion/api/resources/performance_resource.dart';
 import 'package:orion/components/absences/absence_dialog.dart';
 import 'package:orion/components/absences/absence_item.dart';
+import 'package:orion/components/empty_warning.dart';
 import 'package:orion/components/groups/tabs/tab_subtitle.dart';
 import 'package:orion/components/groups/tabs/tab_title.dart';
 import 'package:orion/components/performances/performance_dialog.dart';
 import 'package:orion/model/absence.dart';
 import 'package:orion/model/discipline.dart';
-import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/performance.dart';
 import 'package:orion/provider/discipline_absences_provider.dart';
@@ -129,15 +129,8 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
       return SliverToBoxAdapter(
         child: Container(
           padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
-          child: Text(
-            'Você ainda não possui notas registradas!',
-            style: TextStyle(
-              fontFamily: 'Avenir',
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
-              fontSize: 14,
-            ),
-          ),
+          child: EmptyWarning(
+              messsage: 'Você ainda não possui notas registradas!'),
         ),
       );
     }
@@ -152,7 +145,6 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
             children: <Widget>[
               ListTile(
                 onTap: () => _editPerformance(performance),
-                // trailing: Text("${performance.percentage.toString()} %"),
                 trailing: Column(
                   children: <Widget>[
                     Text("${performance.percentage.toString()}"),
@@ -185,15 +177,8 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
       return SliverToBoxAdapter(
         child: Container(
           padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
-          child: Text(
-            'Você ainda não possui faltas registradas!',
-            style: TextStyle(
-              fontFamily: 'Avenir',
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
-              fontSize: 14,
-            ),
-          ),
+          child: EmptyWarning(
+              messsage: 'Você ainda não possui faltas registradas!'),
         ),
       );
     }

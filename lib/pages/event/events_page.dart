@@ -11,24 +11,46 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
+  Widget eventsList(MyEventsProvider myEventsProvider) {
+    int length = myEventsProvider.myEvents.length;
+
+    if (length == 0) {
+      return Container(
+        padding: EdgeInsets.all(20),
+        child: Text(
+          'Nenhum evento registrado para os próximos dias.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Avenir',
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+            fontSize: 14,
+          ),
+        ),
+      );
+    }
+
+    return ListView.separated(
+      padding: EdgeInsets.all(5),
+      separatorBuilder: (context, index) {
+        return Divider(
+          indent: 5,
+          endIndent: 5,
+        );
+      },
+      physics: BouncingScrollPhysics(),
+      itemCount: myEventsProvider.myEvents.length,
+      itemBuilder: (context, index) {
+        Event event = myEventsProvider.myEvents[index];
+        return EventItem(UniqueKey(), event, false);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MyEventsProvider>(
-      builder: (context, myEventsProvider, _) => ListView.separated(
-        padding: EdgeInsets.all(5),
-        separatorBuilder: (context, index) {
-          return Divider(
-            indent: 5,
-            endIndent: 5,
-          );
-        },
-        physics: BouncingScrollPhysics(),
-        itemCount: myEventsProvider.myEvents.length,
-        itemBuilder: (context, index) {
-          Event event = myEventsProvider.myEvents[index];
-          return EventItem(UniqueKey(), event, false);
-        },
-      ),
+      builder: (context, myEventsProvider, _) => eventsList(myEventsProvider),
     );
   }
 }

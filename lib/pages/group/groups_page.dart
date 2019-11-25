@@ -12,6 +12,42 @@ class GroupsPage extends StatefulWidget {
 }
 
 class _GroupsPageState extends State<GroupsPage> {
+  Widget recomendationsList(GroupRecomendationsProvider recommendations) {
+    int length = recommendations.groupRecomendations.length;
+    if (length == 0) {
+      return Container();
+    }
+
+    return Container(
+      padding: EdgeInsets.only(bottom: 5),
+      height: 80,
+      width: MediaQuery.of(context).size.width,
+      child: GroupRecommendations(recommendations.groupRecomendations),
+    );
+  }
+
+  Widget groupsList(MyGroupsProvider myGroupsState) {
+    int length = myGroupsState.myGroups.length;
+    if (length == 0) {
+      return Container(
+        padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+        child: Text(
+          'Você ainda não se inscreveu em nenhum grupo.',
+          style: TextStyle(
+            fontFamily: 'Avenir',
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+            fontSize: 14,
+          ),
+        ),
+      );
+    }
+
+    return Expanded(
+      child: GroupCardsList(myGroupsState.myGroups),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MyGroupsProvider>(
@@ -25,17 +61,8 @@ class _GroupsPageState extends State<GroupsPage> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  // color: Colors.black,
-                  padding: EdgeInsets.only(bottom: 5),
-                  height: 80,
-                  width: MediaQuery.of(context).size.width,
-                  child:
-                      GroupRecommendations(recommendations.groupRecomendations),
-                ),
-                Expanded(
-                  child: GroupCardsList(myGroupsState.myGroups),
-                ),
+                recomendationsList(recommendations),
+                groupsList(myGroupsState),
               ],
             ),
           ),

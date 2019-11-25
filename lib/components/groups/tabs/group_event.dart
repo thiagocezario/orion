@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/empty_warning.dart';
 import 'package:orion/components/events/event_item.dart';
 import 'package:orion/components/groups/tabs/tab_title.dart';
 import 'package:orion/model/group.dart';
@@ -25,15 +26,8 @@ class _GroupEventState extends State<GroupEvent> {
       return SliverToBoxAdapter(
         child: Container(
           padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
-          child: Text(
-            'Este grupo ainda não possui eventos registrados!',
-            style: TextStyle(
-              fontFamily: 'Avenir',
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
-              fontSize: 14,
-            ),
-          ),
+          child: EmptyWarning(
+              messsage: 'Este grupo ainda não possui eventos registrados!'),
         ),
       );
     }
