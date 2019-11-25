@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:orion/api/resources/event_resource.dart';
+import 'package:orion/controllers/event_controller.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/model/event.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
-import 'package:orion/provider/group_events_provider.dart';
-import 'package:provider/provider.dart';
 
 class EventDialog extends StatefulWidget {
   final Event event;
@@ -80,12 +78,10 @@ class _EventDialogState extends State<EventDialog> {
               FlatButton(
                 child: const Text('EXCLUIR'),
                 onPressed: () {
-                  EventResource.delete(event.id.toString()).then((response) {
-                    // Navigator.of(context).pop("delete");
-                    Provider.of<GroupEventsProvider>(context)
-                        .fetchEvents(event.group.id.toString());
-                    Navigator.of(context).pop();
-                  });
+                  EventController.remove(context, event: event);
+
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 },
               ),
             ],

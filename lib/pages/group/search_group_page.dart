@@ -29,7 +29,8 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
   static List<Course> courses = List<Course>();
   static List<Discipline> disciplines = List<Discipline>();
 
-  static Institution initialInstitution = Institution(name: "Nenhum selecionado");
+  static Institution initialInstitution =
+      Institution(name: "Nenhum selecionado");
   static Course initialCourse = Course(name: "Nenhum selecionado");
   static Discipline initialDiscipline = Discipline(name: "Nenhum selecionado");
 
@@ -59,11 +60,18 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
               elevation: 5,
               child: ListTile(
                 isThreeLine: true,
-                dense: true,
-                leading: Icon(Icons.school, color: institution.id == null ? Colors.grey : themeColor),
+                leading: Icon(Icons.school,
+                    color: institution.id == null ? Colors.grey : themeColor),
                 title: Text('Instituição'),
                 subtitle: Text(institution.name),
-                trailing: Icon(Icons.arrow_forward_ios, color: institution.id == null ? Colors.grey : themeColor),
+                trailing: Column(
+                  children: <Widget>[
+                    Icon(Icons.arrow_forward_ios,
+                        color:
+                            institution.id == null ? Colors.grey : themeColor),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
                 onTap: () async {
                   Institution result = await showSearch(
                     context: context,
@@ -73,36 +81,9 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
                   if (result != null) {
                     setState(() {
                       institution = result;
-                      Provider.of<SearchGroupsProvider>(context).refreshCourses(result.id);
-                        course = initialCourse;
-                        discipline = initialDiscipline;
-                    });
-                  }
-                },
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Card(
-              elevation: 5,
-              child: ListTile(
-                isThreeLine: true,
-                dense: true,
-                leading: Icon(Icons.computer, color: course.id == null ? Colors.grey : themeColor),
-                title: Text('Curso'),
-                subtitle: Text(course.name),
-                trailing: Icon(Icons.arrow_forward_ios, color: course.id == null ? Colors.grey : themeColor),
-                onTap: () async {
-                  Course result = await showSearch(
-                    context: context,
-                    delegate: CourseSearch(items.courses, institution),
-                  );
-
-                  if (result != null) {
-                    setState(() {
-                      course = result;
-                      Provider.of<SearchGroupsProvider>(context).refreshDisciplines(course.id);
+                      Provider.of<SearchGroupsProvider>(context)
+                          .refreshCourses(result.id);
+                      course = initialCourse;
                       discipline = initialDiscipline;
                     });
                   }
@@ -116,11 +97,53 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
               elevation: 5,
               child: ListTile(
                 isThreeLine: true,
-                dense: true,
-                leading: Icon(Icons.class_, color: discipline.id == null ? Colors.grey : themeColor),
+                leading: Icon(Icons.computer,
+                    color: course.id == null ? Colors.grey : themeColor),
+                title: Text('Curso'),
+                subtitle: Text(course.name),
+                trailing: Column(
+                  children: <Widget>[
+                    Icon(Icons.arrow_forward_ios,
+                        color: course.id == null ? Colors.grey : themeColor),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                onTap: () async {
+                  Course result = await showSearch(
+                    context: context,
+                    delegate: CourseSearch(items.courses, institution),
+                  );
+
+                  if (result != null) {
+                    setState(() {
+                      course = result;
+                      Provider.of<SearchGroupsProvider>(context)
+                          .refreshDisciplines(course.id);
+                      discipline = initialDiscipline;
+                    });
+                  }
+                },
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Card(
+              elevation: 5,
+              child: ListTile(
+                isThreeLine: true,
+                leading: Icon(Icons.class_,
+                    color: discipline.id == null ? Colors.grey : themeColor),
                 title: Text('Disciplina'),
                 subtitle: Text(discipline.name),
-                trailing: Icon(Icons.arrow_forward_ios, color: discipline.id == null ? Colors.grey : themeColor),
+                trailing: Column(
+                  children: <Widget>[
+                    Icon(Icons.arrow_forward_ios,
+                        color:
+                            discipline.id == null ? Colors.grey : themeColor),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
                 onTap: () async {
                   Discipline result = await showSearch(
                     context: context,

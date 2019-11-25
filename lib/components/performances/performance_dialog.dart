@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/resources/performance_resource.dart';
+import 'package:orion/controllers/performance_controller.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/performance.dart';
-import 'package:orion/provider/discipline_performances_provider.dart';
-import 'package:provider/provider.dart';
 
 class PerformanceDialog extends StatefulWidget {
   final Performance grade;
@@ -73,13 +71,8 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
               FlatButton(
                 child: const Text('EXCLUIR'),
                 onPressed: () async {
-                  await PerformanceResource.delete(performance.id.toString())
-                      .then((response) {
-                    // Navigator.of(context).pop("delete");
-                    Provider.of<DisciplinePerformancesProvider>(context)
-                        .fetchPerformances(
-                            performance.discipline.id.toString());
-                  });
+                  PerformanceController.remove(context,
+                      performance: performance);
 
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();

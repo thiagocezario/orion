@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/empty_warning.dart';
 import 'package:orion/components/events/event_item.dart';
 import 'package:orion/model/event.dart';
 
@@ -12,12 +13,8 @@ class GroupEventsPreview extends StatelessWidget {
     if (events.length == 0) {
       return SliverToBoxAdapter(
         child: ListTile(
-          title: Text(
-            'Não existem eventos cadastrados neste grupo.',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey.shade600,
-            ),
+          title: EmptyWarning(
+            messsage: 'Nenhum evento cadastrado neste grupo.',
           ),
           enabled: false,
         ),

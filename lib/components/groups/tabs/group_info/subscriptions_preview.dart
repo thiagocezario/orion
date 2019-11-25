@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/empty_warning.dart';
 import 'package:orion/components/groups/subscription_icon.dart';
 import 'package:orion/components/groups/subscription_menu.dart';
 import 'package:orion/model/group.dart';
@@ -21,12 +22,8 @@ class SubscriptionsPreview extends StatelessWidget {
     if (subCount == 0) {
       return SliverToBoxAdapter(
         child: ListTile(
-          title: Text(
-            'Não existem usuários cadastrados neste grupo.',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey.shade600,
-            ),
+          title: EmptyWarning(
+            messsage: 'Nenhum estudante cadastrado neste grupo.',
           ),
           enabled: false,
         ),

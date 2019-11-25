@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:orion/controllers/post_controller.dart';
 import 'package:orion/api/resources/post_classification_resource.dart';
-import 'package:orion/api/resources/post_resource.dart';
 import 'package:orion/components/posts/post_dialog.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
 import 'package:orion/model/user.dart';
-import 'package:orion/provider/group_posts_provider.dart';
-import 'package:provider/provider.dart';
 
 class PostItem extends StatefulWidget {
   final Post post;
@@ -40,15 +38,11 @@ class _PostItemState extends State<PostItem> {
     if (action == 'Editar') {
       await _editPost(post);
     } else if (action == 'Deletar') {
-      await PostResource.delete(post.id.toString()).then((response) {
-        Provider.of<GroupPostsProvider>(context).removePost(post);
-      });
+      PostController.remove(context, post: post);
     }
   }
 
   Future _editPost(Post post) async {
-    GroupPostsProvider provider = Provider.of<GroupPostsProvider>(context);
-
     Navigator.of(context)
         .push(MaterialPageRoute(
       builder: (context) {
@@ -58,9 +52,7 @@ class _PostItemState extends State<PostItem> {
     ))
         .then((resultPost) {
       if (resultPost != null) {
-        PostResource.updateObject(resultPost).then((response) {
-          provider.fetchPosts(group.id.toString());
-        });
+        PostController.update(context, post: resultPost);
       }
     });
   }

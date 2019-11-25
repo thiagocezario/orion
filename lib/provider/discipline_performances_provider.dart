@@ -16,6 +16,13 @@ class DisciplinePerformancesProvider with ChangeNotifier {
     return PerformanceResource.list(data).then(handleResponse);
   }
 
+  void removePerformance(Performance performance) {
+    disciplinePerformances.removeWhere((Performance i) {
+      return i.id == performance.id;
+    });
+    notifyListeners();
+  }
+
   void handleResponse(dynamic response) {
     _disciplinePerformances = performanceFromJson(response.body);
     notifyListeners();

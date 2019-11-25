@@ -3,18 +3,16 @@ import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/groups/group_preview/group_events_preview.dart';
 import 'package:orion/components/groups/group_preview/group_preview_posts.dart';
 import 'package:orion/components/groups/tabs/group_info/subscriptions_preview.dart';
+import 'package:orion/controllers/group_controller.dart';
 import 'package:orion/main.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/group/group_page.dart';
-import 'package:orion/provider/discipline_performances_provider.dart';
-import 'package:orion/provider/group_events_provider.dart';
-import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
-import 'package:orion/provider/subscriptions_provider.dart';
+import 'package:orion/provider/preview_provider.dart';
 import 'package:provider/provider.dart';
 
 class GroupPreviewPage extends StatefulWidget {
@@ -34,17 +32,11 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
   void _joinGroup(Group group) {
     SubscriptionResource.subscribe(group.id.toString()).then((response) async {
       if (response.statusCode == 201) {
+        GroupController.refreshAll(context, group: group);
+
         Provider.of<GroupRecomendationsProvider>(context)
             .refreshMyRecomendations();
         Provider.of<MyGroupsProvider>(context).refreshMyGroups();
-        Provider.of<GroupPostsProvider>(context)
-            .fetchPosts(group.id.toString());
-        Provider.of<SubscriptionsProvider>(context)
-            .fetchSubscriptions(group.id.toString());
-        Provider.of<GroupEventsProvider>(context)
-            .fetchEvents(group.id.toString());
-        Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.discipline.id.toString());
 
         var data = {
           'group_id': group.id.toString(),
@@ -68,70 +60,69 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GroupPostsProvider>(
-      builder: (context, groupPostsProvider, _) =>
-          Consumer<SubscriptionsProvider>(
-        builder: (context, subscriptionsProvider, _) =>
-            Consumer<GroupEventsProvider>(
-          builder: (context, groupEventsProvider, _) => Scaffold(
-            appBar: AppBar(
-              backgroundColor: themeColor,
-              title: Text(group.name),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.add_circle),
-                  onPressed: () => _joinGroup(group),
-                ),
-              ],
-            ),
-            body: CustomScrollView(
-              slivers: <Widget>[
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text('Membros', style: intraySubTitleStyle),
-                      ),
-                    ],
-                  ),
-                ),
-                SliverPadding(
-                  padding: EdgeInsets.only(bottom: 15),
-                  sliver: SubscriptionsPreview(
-                    subscriptionsProvider.subscriptions,
-                    3,
-                    group,
-                    false,
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text('Eventos', style: intraySubTitleStyle),
-                      ),
-                    ],
-                  ),
-                ),
-                SliverPadding(
-                  padding: EdgeInsets.only(bottom: 15),
-                  sliver: GroupEventsPreview(groupEventsProvider.groupEvents),
-                ),
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        title: Text('Publicações', style: intraySubTitleStyle),
-                      ),
-                    ],
-                  ),
-                ),
-                GroupPreviewPosts(groupPostsProvider.groupPosts, group),
-              ],
-            ),
+    return Consumer<PreviewProvider>(
+      builder: (context, previewProvider, _) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: themeColor,
+            title: Text(group.name),
           ),
-        ),
-      ),
+          floatingActionButton: FloatingActionButton(
+            heroTag: 'subscribe',
+            tooltip: 'Ingressar',
+            onPressed: () {
+              _joinGroup(group);
+            },
+            backgroundColor: themeColor,
+            child: Icon(Icons.add_circle_outline),
+          ),
+          body: CustomScrollView(
+            slivers: <Widget>[
+              SliverToBoxAdapter(
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text('Membros', style: intraySubTitleStyle),
+                    ),
+                  ],
+                ),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.only(bottom: 15),
+                sliver: SubscriptionsPreview(
+                  previewProvider.subscriptions,
+                  10,
+                  group,
+                  false,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text('Eventos', style: intraySubTitleStyle),
+                    ),
+                  ],
+                ),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.only(bottom: 15),
+                sliver: GroupEventsPreview(previewProvider.events),
+              ),
+              SliverToBoxAdapter(
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text('Publicações', style: intraySubTitleStyle),
+                    ),
+                  ],
+                ),
+              ),
+              GroupPreviewPosts(previewProvider.posts, group),
+            ],
+          ),
+        );
+      },
     );
   }
 }

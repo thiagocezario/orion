@@ -8,8 +8,15 @@ class GroupEventsProvider with ChangeNotifier {
   get groupEvents => _groupEvents;
 
   void fetchEvents(String groupId) async {
-    var data = { 'group_id': groupId };
+    var data = {'group_id': groupId};
     return await EventResource.list(data).then(handleResponse);
+  }
+
+  void removeEvent(Event event) {
+    _groupEvents.removeWhere((Event i) {
+      return i.id == event.id;
+    });
+    notifyListeners();
   }
 
   void handleResponse(dynamic response) {

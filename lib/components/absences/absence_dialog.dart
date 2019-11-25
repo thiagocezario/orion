@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/resources/absence_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/events/evet_dialog.dart';
+import 'package:orion/controllers/absence_controller.dart';
 import 'package:orion/model/absence.dart';
 import 'package:orion/model/global.dart';
-import 'package:orion/provider/discipline_absences_provider.dart';
-import 'package:provider/provider.dart';
 
 class AbsenceDialog extends StatefulWidget {
   final Absence grade;
@@ -75,12 +73,7 @@ class _AbsenceDialogState extends State<AbsenceDialog> {
               FlatButton(
                 child: const Text('EXCLUIR'),
                 onPressed: () async {
-                  await AbsenceResource.delete(absence.id.toString())
-                      .then((response) {
-                    // Navigator.of(context).pop("delete");
-                    Provider.of<DisciplineAbsencesProvider>(context)
-                        .fetchAbsences(absence.discipline.id.toString());
-                  });
+                  AbsenceController.remove(context, absence: absence);
 
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();

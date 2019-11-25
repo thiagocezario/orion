@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/empty_warning.dart';
 import 'package:orion/components/posts/post_item.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
@@ -14,12 +15,8 @@ class GroupPreviewPosts extends StatelessWidget {
     if (posts.length == 0) {
       return SliverToBoxAdapter(
         child: ListTile(
-          title: Text(
-            'Não existem publicações feitas neste grupo.',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey.shade600,
-            ),
+          title: EmptyWarning(
+            messsage: 'Não existem publicações feitas neste grupo.',
           ),
         ),
       );
@@ -28,11 +25,16 @@ class GroupPreviewPosts extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          return PostItem(
-            UniqueKey(),
-            posts[index],
-            group,
-            true,
+          return Column(
+            children: <Widget>[
+              PostItem(
+                UniqueKey(),
+                posts[index],
+                group,
+                true,
+              ),
+              Divider()
+            ],
           );
         },
         childCount: posts.length > 3 ? 3 : posts.length,

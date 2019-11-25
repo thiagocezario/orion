@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:orion/api/resources/event_resource.dart';
+import 'package:orion/controllers/event_controller.dart';
 import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/model/event.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/student.dart';
-import 'package:orion/provider/my_events_provider.dart';
-import 'package:provider/provider.dart';
 
 class EventItem extends StatelessWidget {
   final Event _event;
@@ -23,19 +21,21 @@ class EventItem extends StatelessWidget {
 
   void showEvent(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(
-      builder: (context) {
-        return EventDialog(_event);
+        .push(
+      MaterialPageRoute(
+        builder: (context) {
+          return EventDialog(_event);
+        },
+        fullscreenDialog: true,
+      ),
+    )
+        .then(
+      (result) {
+        if (result != null) {
+          EventController.update(context, event: result);
+        }
       },
-      fullscreenDialog: true,
-    ))
-        .then((result) {
-      if (result != null) {
-        EventResource.updateObject(result).then((response) {
-          Provider.of<MyEventsProvider>(context).fetchEvents();
-        });
-      }
-    });
+    );
   }
 
   @override

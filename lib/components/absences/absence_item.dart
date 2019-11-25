@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:orion/api/resources/absence_resource.dart';
 import 'package:orion/components/absences/absence_dialog.dart';
+import 'package:orion/controllers/absence_controller.dart';
+import 'package:orion/model/absence.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/model/absence.dart';
-import 'package:orion/provider/discipline_absences_provider.dart';
-import 'package:provider/provider.dart';
 
 class AbsenceItem extends StatefulWidget {
   final Absence absence;
@@ -34,12 +31,8 @@ class _AbsenceItemState extends State<AbsenceItem> {
     ))
         .then((result) {
       if (result != null) {
-        AbsenceResource.updateObject(result).then((response) {
-          Provider.of<DisciplineAbsencesProvider>(context)
-              .fetchAbsences(group.discipline.id.toString());
-        });
+        AbsenceController.update(context, absence: result);
       }
-      // Navigator.of(context).pop(true);
     });
   }
 

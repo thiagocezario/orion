@@ -12,6 +12,13 @@ class SubscriptionsProvider with ChangeNotifier {
     return await SubscriptionResource.list(data).then(handleResponse);
   }
 
+  void removeSubscription(Subscription subscription) {
+    subscriptions.removeWhere((Subscription i) {
+      return i.id == subscription.id;
+    });
+    notifyListeners();
+  }
+
   void handleResponse(dynamic response) {
     _subscriptions = subscriptionFromJson(response.body);
     notifyListeners();

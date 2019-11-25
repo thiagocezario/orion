@@ -9,8 +9,15 @@ class MyEventsProvider with ChangeNotifier {
   get myEvents => _myEvents;
 
   void fetchEvents() async {
-    var data = { 'user_id': Singleton().user.id.toString() };
+    var data = {'user_id': Singleton().user.id.toString()};
     return await EventResource.list(data).then(handleResponse);
+  }
+
+  void removeEvent(Event event) {
+    _myEvents.removeWhere((Event i) {
+      return i.id == event.id;
+    });
+    notifyListeners();
   }
 
   void handleResponse(dynamic response) {

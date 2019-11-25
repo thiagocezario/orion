@@ -105,14 +105,7 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
         title: Text(_screenName),
         centerTitle: true,
         actions: <Widget>[
-          FlatButton(
-            child: Text(
-              'Salvar',
-              style: Theme.of(context)
-                  .textTheme
-                  .subhead
-                  .copyWith(color: Colors.white),
-            ),
+          IconButton(
             onPressed: () {
               if (post == null) {
                 post = Post();
@@ -123,7 +116,11 @@ class _GroupPostDialogState extends State<GroupPostDialog> {
 
               Navigator.of(context).pop<Post>(post);
             },
-          )
+            icon: Icon(
+              Icons.save,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
       body: Form(

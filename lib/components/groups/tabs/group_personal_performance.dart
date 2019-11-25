@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:orion/api/resources/absence_resource.dart';
-import 'package:orion/api/resources/performance_resource.dart';
 import 'package:orion/components/absences/absence_dialog.dart';
 import 'package:orion/components/absences/absence_item.dart';
 import 'package:orion/components/empty_warning.dart';
 import 'package:orion/components/groups/tabs/tab_subtitle.dart';
 import 'package:orion/components/groups/tabs/tab_title.dart';
 import 'package:orion/components/performances/performance_dialog.dart';
+import 'package:orion/controllers/absence_controller.dart';
+import 'package:orion/controllers/performance_controller.dart';
 import 'package:orion/model/absence.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
@@ -44,10 +44,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
     if (result != null) {
       result.discipline = group.discipline;
 
-      await PerformanceResource.createObject(result).then((response) {
-        Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.discipline.id.toString());
-      });
+      PerformanceController.create(context, performance: result);
     }
   }
 
@@ -65,11 +62,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
     if (result != null) {
       result.discipline = group.discipline;
 
-      await AbsenceResource.createObject(result).then((response) {
-        print(response.body);
-        Provider.of<DisciplineAbsencesProvider>(context)
-            .fetchAbsences(group.discipline.id.toString());
-      });
+      AbsenceController.create(context, absence: result);
     }
   }
 
@@ -82,10 +75,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
     ));
 
     if (result != null) {
-      await PerformanceResource.updateObject(result).then((response) {
-        Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.discipline.id.toString());
-      });
+      PerformanceController.update(context, performance: result);
     }
   }
 

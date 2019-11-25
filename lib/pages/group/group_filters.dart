@@ -9,9 +9,7 @@ import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/pages/group/group_preview_page.dart';
-import 'package:orion/provider/group_events_provider.dart';
-import 'package:orion/provider/group_posts_provider.dart';
-import 'package:orion/provider/subscriptions_provider.dart';
+import 'package:orion/provider/preview_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewGroupFilter extends StatefulWidget {
@@ -66,12 +64,7 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
           return Material(
             child: InkWell(
               onTap: () {
-                Provider.of<GroupPostsProvider>(context)
-                    .fetchPosts(groups[index].id.toString());
-                Provider.of<SubscriptionsProvider>(context)
-                    .fetchSubscriptions(groups[index].id.toString());
-                Provider.of<GroupEventsProvider>(context)
-                    .fetchEvents(groups[index].id.toString());
+                Provider.of<PreviewProvider>(context).refreshAll(groups[index]);
 
                 Navigator.push(
                     context,

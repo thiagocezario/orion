@@ -17,6 +17,13 @@ class DisciplineAbsencesProvider with ChangeNotifier {
     return AbsenceResource.list(data).then(handleResponse);
   }
 
+  void removeAbsence(Absence absence) {
+    disciplineAbsences.removeWhere((Absence i) {
+      return i.id == absence.id;
+    });
+    notifyListeners();
+  }
+
   void handleResponse(dynamic response) {
     _disciplineAbsences = absenceFromJson(response.body);
     notifyListeners();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/resources/performance_resource.dart';
 import 'package:orion/components/groups/tabs/tab_title.dart';
 import 'package:orion/components/performances/performance_dialog.dart';
+import 'package:orion/controllers/performance_controller.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/performance.dart';
@@ -34,10 +34,7 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
     ));
 
     if (result != null) {
-      await PerformanceResource.updateObject(result).then((response) {
-        Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.discipline.id.toString());
-      });
+      PerformanceController.update(context, performance: result);
     }
   }
 

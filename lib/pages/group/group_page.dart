@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/resources/event_resource.dart';
-import 'package:orion/api/resources/post_resource.dart';
+import 'package:orion/controllers/event_controller.dart';
+import 'package:orion/controllers/post_controller.dart';
 import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/components/groups/tabs/group_personal_performance.dart';
 import 'package:orion/components/posts/post_dialog.dart';
@@ -12,10 +12,7 @@ import 'package:orion/components/groups/tabs/group_post.dart';
 import 'package:orion/model/post.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/group/group_info_page.dart';
-import 'package:orion/provider/group_events_provider.dart';
-import 'package:orion/provider/group_posts_provider.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 
 class GroupPage extends StatefulWidget {
   final group;
@@ -118,15 +115,12 @@ class _GroupPageState extends State<GroupPage>
             tabs: <Widget>[
               Tab(
                 icon: Icon(Icons.home),
-                // text: 'Posts',
               ),
               Tab(
                 icon: Icon(Icons.event_note),
-                // text: 'Eventos',
               ),
               Tab(
                 icon: Icon(Icons.equalizer),
-                // text: 'Notas',
               ),
             ],
           ),
@@ -175,10 +169,7 @@ class _GroupPageState extends State<GroupPage>
       result.group = group;
       result.student = Singleton().user;
 
-      await PostResource.createObject(result).then((response) {
-        Provider.of<GroupPostsProvider>(context)
-            .fetchPosts(group.id.toString());
-      });
+      PostController.create(context, post: result);
     }
   }
 
@@ -193,10 +184,7 @@ class _GroupPageState extends State<GroupPage>
     if (result != null) {
       result.student = Singleton().user;
       result.group = group;
-      await EventResource.createObject(result).then((response) {
-        Provider.of<GroupEventsProvider>(context)
-            .fetchEvents(group.id.toString());
-      });
+      EventController.create(context, event: result);
     }
   }
 }
