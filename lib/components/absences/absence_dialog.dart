@@ -69,7 +69,6 @@ class _AbsenceDialogState extends State<AbsenceDialog> {
               FlatButton(
                 child: const Text('CANCELAR'),
                 onPressed: () {
-                  // TODO: change to pop until
                   Navigator.of(context).pop(false);
                 },
               ),
@@ -83,7 +82,6 @@ class _AbsenceDialogState extends State<AbsenceDialog> {
                         .fetchAbsences(absence.discipline.id.toString());
                   });
 
-                  // TODO: change to pop until
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },

@@ -19,6 +19,47 @@ class _GroupEventState extends State<GroupEvent> {
 
   _GroupEventState(this.group);
 
+  Widget eventsList(GroupEventsProvider groupEventsProvider) {
+    int length = groupEventsProvider.groupEvents.length;
+    if (length == 0) {
+      return SliverToBoxAdapter(
+        child: Container(
+          padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
+          child: Text(
+            'Este grupo ainda não possui eventos registrados!',
+            style: TextStyle(
+              fontFamily: 'Avenir',
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+              fontSize: 14,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return Column(
+            key: UniqueKey(),
+            children: <Widget>[
+              EventItem(
+                  UniqueKey(), groupEventsProvider.groupEvents[index], false),
+              Divider(
+                height: 5,
+                thickness: 2,
+                indent: 10,
+                endIndent: 10,
+              ),
+            ],
+          );
+        },
+        childCount: groupEventsProvider.groupEvents.length,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GroupEventsProvider>(
@@ -28,26 +69,7 @@ class _GroupEventState extends State<GroupEvent> {
           SliverToBoxAdapter(
             child: TabTitle(title: 'Eventos'),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Column(
-                  key: UniqueKey(),
-                  children: <Widget>[
-                    EventItem(UniqueKey(),
-                        groupEventsProvider.groupEvents[index], false),
-                    Divider(
-                      height: 5,
-                      thickness: 2,
-                      indent: 10,
-                      endIndent: 10,
-                    ),
-                  ],
-                );
-              },
-              childCount: groupEventsProvider.groupEvents.length,
-            ),
-          )
+          eventsList(groupEventsProvider),
         ],
       ),
     );

@@ -18,7 +18,10 @@ class GroupInfoSliverList extends StatelessWidget {
               textAlign: TextAlign.justify,
             ),
           ),
-          Divider(),
+          Divider(
+            thickness: 1,
+            height: 1,
+          ),
           ListTile(
             leading: Icon(Icons.computer),
             title: Text(
@@ -26,7 +29,10 @@ class GroupInfoSliverList extends StatelessWidget {
               textAlign: TextAlign.justify,
             ),
           ),
-          Divider(),
+          Divider(
+            thickness: 1,
+            height: 1,
+          ),
           ListTile(
             leading: Icon(Icons.class_),
             title: Text(

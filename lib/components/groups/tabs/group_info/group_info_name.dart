@@ -3,45 +3,45 @@ import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 
-class GroupInfoDescription extends StatefulWidget {
+class GroupInfoName extends StatefulWidget {
   final Group group;
 
-  GroupInfoDescription(this.group);
+  GroupInfoName(this.group);
 
   @override
-  _GroupInfoDescriptionState createState() => _GroupInfoDescriptionState(group);
+  _GroupInfoNameState createState() => _GroupInfoNameState(group);
 }
 
-class _GroupInfoDescriptionState extends State<GroupInfoDescription> {
-  final TextEditingController _descriptionTextController =
+class _GroupInfoNameState extends State<GroupInfoName> {
+  final TextEditingController _nameTextController =
       TextEditingController();
 
-  final FocusNode _descriptionFocusNode = FocusNode();
+  final FocusNode _nameFocusNode = FocusNode();
   final Group group;
 
-  _GroupInfoDescriptionState(this.group) {
-    _descriptionTextController.text = group.description;
+  _GroupInfoNameState(this.group) {
+    _nameTextController.text = group.name;
   }
 
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: ListTile(
-        leading: Icon(Icons.description),
+        leading: Icon(Icons.people),
         title: EditableText(
           onSubmitted: (value) {
-            _editDescription(value);
+            _editName(value);
             FocusScopeNode currentFocus = FocusScope.of(context);
 
             if (!currentFocus.hasPrimaryFocus) {
               currentFocus.unfocus();
             }
           },
-          backgroundCursorColor: themeColor,
+         backgroundCursorColor: themeColor,
           textAlign: TextAlign.justify,
-          controller: _descriptionTextController,
+          controller: _nameTextController,
           cursorColor: themeColor,
-          focusNode: _descriptionFocusNode,
+          focusNode: _nameFocusNode,
           style: TextStyle(color: Colors.black, fontSize: 16),
         ),
         trailing: Icon(Icons.arrow_forward_ios),
@@ -49,8 +49,8 @@ class _GroupInfoDescriptionState extends State<GroupInfoDescription> {
     );
   }
 
-  void _editDescription(String description) async {
-    group.description = description;
+  void _editName(String name) async {
+    group.name = name;
     await GroupResource.updateObject(group);
   }
 }

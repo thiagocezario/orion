@@ -54,7 +54,7 @@ class _PerformanceItemState extends State<PerformanceItem> {
     //     .then((resultPerformance) {
     //   if (resultPerformance != null) {
     //     PerformanceResource.updateObject(resultPerformance).then((response) {
-    //       provider.fetchPerformances(group.id.toString());
+    //       provider.fetchPerformances(group.discipline.id.toString());
     //     });
     //   }
     // });

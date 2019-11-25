@@ -9,6 +9,7 @@ import 'package:orion/components/groups/tabs/tab_title.dart';
 import 'package:orion/components/performances/performance_dialog.dart';
 import 'package:orion/model/absence.dart';
 import 'package:orion/model/discipline.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/performance.dart';
 import 'package:orion/provider/discipline_absences_provider.dart';
@@ -45,7 +46,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
 
       await PerformanceResource.createObject(result).then((response) {
         Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.id.toString());
+            .fetchPerformances(group.discipline.id.toString());
       });
     }
   }
@@ -58,12 +59,16 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
       fullscreenDialog: true,
     ));
 
+    print(result);
+    print(group.discipline.name);
+
     if (result != null) {
       result.discipline = group.discipline;
 
       await AbsenceResource.createObject(result).then((response) {
+        print(response.body);
         Provider.of<DisciplineAbsencesProvider>(context)
-            .fetchAbsences(group.id.toString());
+            .fetchAbsences(group.discipline.id.toString());
       });
     }
   }
@@ -79,7 +84,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
     if (result != null) {
       await PerformanceResource.updateObject(result).then((response) {
         Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.id.toString());
+            .fetchPerformances(group.discipline.id.toString());
       });
     }
   }
@@ -147,7 +152,15 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
             children: <Widget>[
               ListTile(
                 onTap: () => _editPerformance(performance),
-                leading: Text("${performance.percentage.toString()} %"),
+                // trailing: Text("${performance.percentage.toString()} %"),
+                trailing: Column(
+                  children: <Widget>[
+                    Text("${performance.percentage.toString()}"),
+                    double.parse(performance.percentage) >= 60
+                        ? Icon(Icons.call_made, color: Colors.green[300])
+                        : Icon(Icons.call_received, color: Colors.red[300]),
+                  ],
+                ),
                 title: Text(performancesProvider
                     .disciplinePerformances[index].description),
                 subtitle: Text(
@@ -185,28 +198,23 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
       );
     }
 
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          Absence absence = absencesProvider.disciplineAbsences[index];
-
-          return Column(
-            key: UniqueKey(),
-            children: <Widget>[
-              AbsenceItem(
-                absence: absence,
-                group: group,
-              ),
-              Divider(
-                height: 1,
-                thickness: 2,
-                indent: 10,
-                endIndent: 10,
-              ),
-            ],
-          );
-        },
-        childCount: absencesProvider.disciplineAbsences.length,
+    return SliverPadding(
+      padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 120.0,
+          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 10.0,
+          // childAspectRatio: 4.0,
+        ),
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            return AbsenceItem(
+              absence: absencesProvider.disciplineAbsences[index],
+            );
+          },
+          childCount: absencesProvider.disciplineAbsences.length,
+        ),
       ),
     );
   }
@@ -217,6 +225,11 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
         builder: (context, performancesProvider, _) {
       return Consumer<DisciplineAbsencesProvider>(
           builder: (context, absencesProvider, _) {
+        int absences = (absencesProvider.disciplineAbsences as List<Absence>)
+            .fold(0, (sum, item) {
+          return sum + item.quantity;
+        }) as int;
+
         return CustomScrollView(
           physics: BouncingScrollPhysics(),
           slivers: <Widget>[
@@ -232,23 +245,10 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
               padding: EdgeInsets.only(bottom: 15),
             ),
             SliverToBoxAdapter(
-              child: TabSubtitle(title: 'Faltas', onAddPressed: _createAbsence),
+              child: TabSubtitle(
+                  title: 'Faltas $absences', onAddPressed: _createAbsence),
             ),
             absencesList(absencesProvider),
-            // SliverGrid(
-            //   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            //     maxCrossAxisExtent: 250.0,
-            //     mainAxisSpacing: 10.0,
-            //     crossAxisSpacing: 10.0,
-            //     childAspectRatio: 4.0,
-            //   ),
-            //   delegate: SliverChildBuilderDelegate(
-            //     (BuildContext context, int index) {
-            //       return buildEvent(context);
-            //     },
-            //     childCount: 12,
-            //   ),
-            // )
           ],
         );
       });

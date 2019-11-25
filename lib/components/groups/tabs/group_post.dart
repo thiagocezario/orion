@@ -19,6 +19,51 @@ class _GroupPostState extends State<GroupPost> {
 
   _GroupPostState(this.group);
 
+  Widget postsList(GroupPostsProvider groupPostsProvider) {
+    int length = groupPostsProvider.groupPosts.length;
+    if (length == 0) {
+      return SliverToBoxAdapter(
+        child: Container(
+          padding: EdgeInsets.only(left: 20, bottom: 10, top: 10),
+          child: Text(
+            'Este grupo ainda não possui posts registrados!',
+            style: TextStyle(
+              fontFamily: 'Avenir',
+              fontWeight: FontWeight.bold,
+              color: Colors.grey,
+              fontSize: 14,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return Column(
+            key: UniqueKey(),
+            children: <Widget>[
+              PostItem(
+                UniqueKey(),
+                groupPostsProvider.groupPosts[index],
+                group,
+                false,
+              ),
+              Divider(
+                height: 5,
+                thickness: 2,
+                indent: 10,
+                endIndent: 10,
+              ),
+            ],
+          );
+        },
+        childCount: groupPostsProvider.groupPosts.length,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<GroupPostsProvider>(
@@ -29,49 +74,10 @@ class _GroupPostState extends State<GroupPost> {
             SliverToBoxAdapter(
               child: TabTitle(title: 'Posts'),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Column(
-                    key: UniqueKey(),
-                    children: <Widget>[
-                      PostItem(
-                        UniqueKey(),
-                        groupPostsProvider.groupPosts[index],
-                        group,
-                        false,
-                      ),
-                      Divider(
-                        height: 5,
-                        thickness: 2,
-                        indent: 10,
-                        endIndent: 10,
-                      ),
-                    ],
-                  );
-                },
-                childCount: groupPostsProvider.groupPosts.length,
-              ),
-            )
+            postsList(groupPostsProvider),
           ],
         );
       },
     );
   }
 }
-
-  // SliverAppBar(
-  //   backgroundColor: darkGreyColor,
-  //   pinned: true,
-  //   automaticallyImplyLeading: false,
-  //   title: PreferredSize(
-  //     preferredSize: Size.fromHeight(300.0), // here the desired height
-  //     child: Container(height: 300,),
-  //   ),
-  //   actions: <Widget>[
-  //     IconButton(
-  //       icon: Icon(Icons.add),
-  //       onPressed: () {},
-  //     )
-  //   ],
-  // ),

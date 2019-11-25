@@ -36,7 +36,7 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
     if (result != null) {
       await PerformanceResource.updateObject(result).then((response) {
         Provider.of<DisciplinePerformancesProvider>(context)
-            .fetchPerformances(group.id.toString());
+            .fetchPerformances(group.discipline.id.toString());
       });
     }
   }

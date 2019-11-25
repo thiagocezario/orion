@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/event_resource.dart';
-import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/api/resources/post_resource.dart';
 import 'package:orion/components/events/evet_dialog.dart';
 import 'package:orion/components/groups/tabs/group_personal_performance.dart';
@@ -9,13 +8,13 @@ import 'package:orion/model/event.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/components/groups/tabs/group_event.dart';
-import 'package:orion/components/groups/tabs/group_info.dart';
 import 'package:orion/components/groups/tabs/group_post.dart';
 import 'package:orion/model/post.dart';
 import 'package:orion/model/user.dart';
+import 'package:orion/pages/group/group_info_page.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/group_posts_provider.dart';
-import 'package:orion/provider/my_groups_provider.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class GroupPage extends StatefulWidget {
@@ -37,7 +36,7 @@ class _GroupPageState extends State<GroupPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this, initialIndex: 0);
+    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabChange);
   }
 
@@ -59,7 +58,7 @@ class _GroupPageState extends State<GroupPage>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         body: Stack(
           children: <Widget>[
@@ -71,13 +70,13 @@ class _GroupPageState extends State<GroupPage>
                   GroupPost(group),
                   GroupEvent(group),
                   PersonalPerformance(group.discipline, group),
-                  GroupInfo(group),
+                  //GroupInfo(group),
                 ],
               ),
             ),
             Container(
               height: 90,
-              padding: EdgeInsets.only(top: 28, left: 10, right: 10),
+              padding: EdgeInsets.only(top: 28, left: 20, right: 20),
               decoration: BoxDecoration(
                 color: themeColor,
                 borderRadius: BorderRadius.only(
@@ -85,14 +84,12 @@ class _GroupPageState extends State<GroupPage>
                   bottomRight: Radius.circular(50),
                 ),
               ),
-              child: // Column(
-                  //   children: <Widget>[
-                  Row(
+              child: Row(
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () {
-                       Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     },
                   ),
                   Expanded(
@@ -132,10 +129,10 @@ class _GroupPageState extends State<GroupPage>
                 icon: Icon(Icons.equalizer),
                 // text: 'Notas',
               ),
-              Tab(
-                icon: Icon(Icons.info),
-                // text: 'Grupo',
-              ),
+              // Tab(
+              //   icon: Icon(Icons.info),
+              //   // text: 'Grupo',
+              // ),
             ],
           ),
         ),
@@ -170,8 +167,6 @@ class _GroupPageState extends State<GroupPage>
         return null;
     }
   }
-
-
 
   Future _createPost() async {
     Post result = await Navigator.of(context).push(MaterialPageRoute(
@@ -222,7 +217,6 @@ class _GroupName extends StatefulWidget {
 
 class _GroupNameState extends State<_GroupName> {
   final TextEditingController _nameTextController = TextEditingController();
-  final FocusNode _descriptionFocusNode = FocusNode();
 
   final Group group;
 
@@ -232,28 +226,29 @@ class _GroupNameState extends State<_GroupName> {
 
   @override
   Widget build(BuildContext context) {
-    return EditableText(
-      onSubmitted: (value) {
-        _editGroupName(value);
-        FocusScopeNode currentFocus = FocusScope.of(context);
-
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
-      backgroundCursorColor: Colors.black,
-      textAlign: TextAlign.center,
-      controller: _nameTextController,
-      cursorColor: Colors.white,
-      focusNode: _descriptionFocusNode,
-      style: TextStyle(
-          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+    return InkWell(
+      child: Text(
+        group.name,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Avenir',
+        ),
+      ),
+      onTap: eita,
     );
   }
 
-  Future<void> _editGroupName(String name) async {
-    group.name = name;
-    await GroupResource.updateObject(group);
-    Provider.of<MyGroupsProvider>(context).refreshMyGroups();
+  void eita() {
+    Navigator.push(
+      context,
+      PageTransition(
+        type: PageTransitionType.upToDown,
+        child: Material(
+          child: GroupInfoPage(group),
+        ),
+      ),
+    );
   }
 }
