@@ -6,14 +6,18 @@ import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/components/groups/search/course/course_search.dart';
 import 'package:orion/components/groups/search/discipline/discipline_search.dart';
 import 'package:orion/components/groups/search/institution/institution_search.dart';
+import 'package:orion/controllers/group_controller.dart';
 import 'package:orion/main.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
+import 'package:orion/provider/group_events_provider.dart';
+import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/search_groups_provider.dart';
+import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewGroupPage extends StatefulWidget {
@@ -92,7 +96,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
       controller: _groupNameController,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: 'Grupo',
+        hintText: 'Nome do Grupo',
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -214,6 +218,8 @@ class _NewGroupPageState extends State<NewGroupPage> {
 
                         Provider.of<MyGroupsProvider>(context)
                             .refreshMyGroups();
+                        GroupController.refreshAll(context, group: group);
+
                         Navigator.of(context)
                             .popAndPushNamed(GroupPageRoute, arguments: group);
                       } else {

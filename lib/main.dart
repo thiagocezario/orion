@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:orion/landing_page.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
@@ -27,7 +28,8 @@ const String RecoverPasswordRoute = '/recover_password';
 const String NewAccountRoute = '/new_account';
 const String LoginPageRoute = '/login';
 
-void main() => runApp(Orion());
+void main() =>
+    initializeDateFormatting("pt_BR", null).then((_) => runApp(Orion()));
 
 class Orion extends StatelessWidget {
   @override

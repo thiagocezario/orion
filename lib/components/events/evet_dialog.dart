@@ -267,8 +267,8 @@ class DateTimeItem extends StatelessWidget {
                     showDatePicker(
                       context: context,
                       initialDate: date,
-                      firstDate: date.subtract(const Duration(days: 30)),
-                      lastDate: date.add(const Duration(days: 30)),
+                      firstDate: date.subtract(const Duration(days: 0)),
+                      lastDate: date.add(const Duration(days: 365)),
                     ).then<void>((DateTime value) {
                       if (value != null)
                         onChanged(
@@ -286,7 +286,7 @@ class DateTimeItem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(DateFormat('EEE, MMM d yyyy').format(date)),
+                    Text(DateFormat.E("pt_BR").add_yMMMd().format(date)),
                     const Icon(Icons.arrow_drop_down, color: Colors.black54),
                   ],
                 ),
@@ -308,9 +308,9 @@ class DateTimeItem extends StatelessWidget {
                     if (value != null)
                       onChanged(
                         DateTime(
-                          date.day,
-                          date.month,
                           date.year,
+                          date.month,
+                          date.day,
                           value.hour,
                           value.minute,
                         ),
@@ -382,7 +382,7 @@ class DateItem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(DateFormat('EEE, MMM d yyyy').format(date)),
+                    Text(DateFormat.E("pt_BR").add_yMMMd().format(date)),
                     const Icon(Icons.arrow_drop_down, color: Colors.black54),
                   ],
                 ),
