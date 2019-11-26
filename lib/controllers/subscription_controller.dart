@@ -1,3 +1,5 @@
+import 'package:orion/api/resources/ban_resource.dart';
+import 'package:orion/api/resources/manager_resource.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
@@ -30,12 +32,42 @@ class SubscriptionController {
     remove(context, subscription: subscription);
   }
 
+  static ban(context, {Subscription subscription}) {
+    BanResource.createObject(subscription).then(
+      (response) {
+        refresh(context, group: subscription.group);
+      },
+    );
+  }
+
+  static unban(context, {Subscription subscription}) {
+    BanResource.deleteObject(subscription).then(
+      (response) {
+        refresh(context, group: subscription.group);
+      },
+    );
+  }
+
+  static createManager(context, {Subscription subscription}) {
+    ManagerResource.createObject(subscription).then(
+      (response) {
+        refresh(context, group: subscription.group);
+      },
+    );
+  }
+
+  static removeManager(context, {Subscription subscription}) {
+    ManagerResource.deleteObject(subscription).then(
+      (response) {
+        refresh(context, group: subscription.group);
+      },
+    );
+  }
+
   static remove(context, {Subscription subscription}) {
     SubscriptionResource.delete(subscription.id.toString()).then(
       (response) {
-        Provider.of<MyGroupsProvider>(context).removeGroup(subscription.group);
-        Provider.of<SubscriptionsProvider>(context)
-            .removeSubscription(subscription);
+        refresh(context, group: subscription.group);
       },
     );
   }

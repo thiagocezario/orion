@@ -82,7 +82,6 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
               CustomMaterialButton('Redefinir senha', () {
                 if (_formKey.currentState.validate()) {
                   PasswordResource.recover(_controller.text).then((response) {
-                    print(response.body);
                   });
                   Scaffold.of(context).showSnackBar(emailSentConfirmation());
                 }

@@ -49,15 +49,14 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
   }
 
   Future _createAbsence() async {
-    Absence result = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return AbsenceDialog(null);
-      },
-      fullscreenDialog: true,
-    ));
-
-    print(result);
-    print(group.discipline.name);
+    Absence result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return AbsenceDialog(null);
+        },
+        fullscreenDialog: true,
+      ),
+    );
 
     if (result != null) {
       result.discipline = group.discipline;

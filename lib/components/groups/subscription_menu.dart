@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/resources/ban_resource.dart';
-import 'package:orion/api/resources/manager_resource.dart';
-import 'package:orion/api/resources/subscription_resource.dart';
+import 'package:orion/controllers/subscription_controller.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/provider/my_groups_provider.dart';
-import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionMenu extends StatelessWidget {
@@ -34,30 +31,15 @@ class SubscriptionMenu extends StatelessWidget {
   Future _popUpMenuActions(
       BuildContext context, String action, Subscription sub) async {
     if (action == 'Tornar admin') {
-      ManagerResource.createObject(sub).then((response) {
-        Provider.of<SubscriptionsProvider>(context)
-            .fetchSubscriptions(group.id.toString());
-      });
+      SubscriptionController.createManager(context, subscription: subscription);
     } else if (action == 'Banir') {
-      BanResource.createObject(sub).then((response) {
-        Provider.of<SubscriptionsProvider>(context)
-            .fetchSubscriptions(group.id.toString());
-      });
+      SubscriptionController.ban(context, subscription: subscription);
     } else if (action == 'Expulsar') {
-      SubscriptionResource.unsubscribe(sub.id.toString()).then((response) {
-        Provider.of<SubscriptionsProvider>(context)
-            .fetchSubscriptions(group.id.toString());
-      });
+      SubscriptionController.remove(context, subscription: subscription);
     } else if (action == "Desbanir") {
-      BanResource.deleteObject(sub).then((response) {
-        Provider.of<SubscriptionsProvider>(context)
-            .fetchSubscriptions(group.id.toString());
-      });
+      SubscriptionController.unban(context, subscription: subscription);
     } else if (action == "Remover admin") {
-      ManagerResource.deleteObject(sub).then((response) {
-        Provider.of<SubscriptionsProvider>(context)
-            .fetchSubscriptions(group.id.toString());
-      });
+      SubscriptionController.removeManager(context, subscription: subscription);
     }
   }
 

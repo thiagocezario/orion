@@ -60,7 +60,10 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
               SliverPadding(
                 padding: EdgeInsets.only(bottom: 15),
                 sliver: SubscriptionsPreview(
-                    previewProvider.subscriptions, 10, group),
+                    subscriptions: previewProvider.subscriptions,
+                    previewSize: 10,
+                    group: group,
+                    showOptions: false),
               ),
               SliverToBoxAdapter(
                 child: Column(
