@@ -286,7 +286,7 @@ class DateTimeItem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(DateFormat('EEE, MMM d yyyy').format(date)),
+                    Text(DateFormat.E("pt_BR").add_yMMMd().format(date)),
                     const Icon(Icons.arrow_drop_down, color: Colors.black54),
                   ],
                 ),
@@ -382,7 +382,7 @@ class DateItem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(DateFormat('EEE, MMM d yyyy').format(date)),
+                    Text(DateFormat.E("pt_BR").add_yMMMd().format(date)),
                     const Icon(Icons.arrow_drop_down, color: Colors.black54),
                   ],
                 ),

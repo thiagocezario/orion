@@ -106,7 +106,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
           child: Align(
             alignment: Alignment.center,
             child: Text(
-              DateFormat.MMM().format(date),
+              DateFormat.MMM("pt_BR").format(date),
             ),
           ),
         ),

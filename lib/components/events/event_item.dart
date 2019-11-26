@@ -49,7 +49,7 @@ class EventItem extends StatelessWidget {
           }
         },
         leading: _LeadingEventDay(_event),
-        trailing: Text(DateFormat('HH:mm').format(_event.date)),
+        trailing: Text(DateFormat.Hm("pt_BR").format(_event.date)),
         title: Text(_event.title),
         subtitle: Text(_event.content),
       ),
@@ -74,8 +74,7 @@ class _LeadingEventDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime date =
-        DateFormat("yyyy-MM-dd hh:mm:ss").parse(_event.date.toString());
+    DateTime date = _event.date;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -100,7 +99,7 @@ class _LeadingEventDay extends StatelessWidget {
           child: Align(
             alignment: Alignment.center,
             child: Text(
-              DateFormat.MMM().format(date),
+              DateFormat.MMM("pt_BR").format(date).toUpperCase(),
             ),
           ),
         ),
