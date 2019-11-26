@@ -41,6 +41,10 @@ class _NewGroupPageState extends State<NewGroupPage> {
 
   TextFormField groupField;
 
+  Institution initialInstitution = Institution(name: "Nenhum selecionado");
+  Course initialCourse = Course(name: "Nenhum selecionado");
+  Discipline initialDiscipline = Discipline(name: "Nenhum selecionado");
+
   Institution institution;
   Course course;
   Discipline discipline;
@@ -57,6 +61,53 @@ class _NewGroupPageState extends State<NewGroupPage> {
 
       _isPrivate = !_isPrivate;
     });
+  }
+
+  void _createGroup(BuildContext context) {
+    if (_groupNameController.text.length > 3 &&
+        institution.id != null &&
+        course.id != null &&
+        discipline.id != null) {
+      Group group = Group(
+        name: _groupNameController.text,
+        institution: institution,
+        course: course,
+        discipline: discipline,
+        isPrivate: _isPrivate,
+      );
+
+      GroupResource.createObject(group).then(
+        (response) {
+          if (response.statusCode == 201) {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Grupo criado com sucesso!'),
+              ),
+            );
+            var body = json.decode(response.body);
+            group = Group.fromJson(body);
+
+            Provider.of<MyGroupsProvider>(context).refreshMyGroups();
+            GroupController.refreshAll(context, group: group);
+
+            Navigator.of(context)
+                .popAndPushNamed(GroupPageRoute, arguments: group);
+          } else {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text('O Grupo não foi criado!'),
+              ),
+            );
+          }
+        },
+      );
+    } else {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Existem informações faltando ou inválidas.'),
+        ),
+      );
+    }
   }
 
   @override
@@ -86,7 +137,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
           ),
         ],
       ),
-      body: _buildList(context),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        color: themeColor,
+        child: _buildList(context),
+      ),
     );
   }
 
@@ -105,7 +160,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
     );
 
     var horizontal = MediaQuery.of(context).size.width / 20;
-    var vertical = MediaQuery.of(context).size.height / 7;
+    var vertical = MediaQuery.of(context).size.height / 12;
 
     return SingleChildScrollView(
       child: Padding(
@@ -118,7 +173,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
               Card(
                 elevation: 5,
                 child: ListTile(
-                  leading: Icon(Icons.school),
+                  isThreeLine: true,
+                  leading: Icon(
+                    Icons.school,
+                    color: institution.id == null ? Colors.grey : themeColor,
+                  ),
                   title: Text('Instituição'),
                   subtitle: Text(institution.name),
                   trailing: Icon(Icons.arrow_forward_ios),
@@ -133,6 +192,8 @@ class _NewGroupPageState extends State<NewGroupPage> {
                         institution = result;
                         Provider.of<SearchGroupsProvider>(context)
                             .refreshCourses(institution.id);
+                        course = initialCourse;
+                        discipline = initialDiscipline;
                       });
                     }
                   },
@@ -144,7 +205,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
               Card(
                 elevation: 5,
                 child: ListTile(
-                  leading: Icon(Icons.computer),
+                  isThreeLine: true,
+                  leading: Icon(
+                    Icons.computer,
+                    color: course.id == null ? Colors.grey : themeColor,
+                  ),
                   title: Text('Curso'),
                   subtitle: Text(course.name),
                   trailing: Icon(Icons.arrow_forward_ios),
@@ -159,6 +224,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                         course = result;
                         Provider.of<SearchGroupsProvider>(context)
                             .refreshDisciplines(course.id);
+                        discipline = initialDiscipline;
                       });
                     }
                   },
@@ -170,7 +236,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
               Card(
                 elevation: 5,
                 child: ListTile(
-                  leading: Icon(Icons.class_),
+                  isThreeLine: true,
+                  leading: Icon(
+                    Icons.class_,
+                    color: discipline.id == null ? Colors.grey : themeColor,
+                  ),
                   title: Text('Disciplina'),
                   subtitle: Text(discipline.name),
                   trailing: Icon(Icons.arrow_forward_ios),
@@ -196,48 +266,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 height: 25.0,
               ),
               CustomMaterialButton('Criar', () {
-                if (_groupNameController.text.length > 3) {
-                  Group group = Group(
-                    name: _groupNameController.text,
-                    institution: institution,
-                    course: course,
-                    discipline: discipline,
-                    isPrivate: _isPrivate,
-                  );
-
-                  GroupResource.createObject(group).then(
-                    (response) {
-                      if (response.statusCode == 201) {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Grupo criado com sucesso!'),
-                          ),
-                        );
-                        var body = json.decode(response.body);
-                        group = Group.fromJson(body);
-
-                        Provider.of<MyGroupsProvider>(context)
-                            .refreshMyGroups();
-                        GroupController.refreshAll(context, group: group);
-
-                        Navigator.of(context)
-                            .popAndPushNamed(GroupPageRoute, arguments: group);
-                      } else {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('O Grupo não foi criado!'),
-                          ),
-                        );
-                      }
-                    },
-                  );
-                } else {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Nome de grupo vazio ou muito curto.'),
-                    ),
-                  );
-                }
+                _createGroup(context);
               }),
             ],
           ),
