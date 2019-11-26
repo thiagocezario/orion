@@ -1,4 +1,5 @@
 import 'package:orion/api/resources/subscription_resource.dart';
+import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
@@ -14,12 +15,19 @@ class SubscriptionController {
     Provider.of<GroupRecomendationsProvider>(context).refreshMyRecomendations();
   }
 
-  static create(context, {Subscription subscription}) {
-    SubscriptionResource.createObject(subscription).then(
+  static create(context, {Group group}) {
+    SubscriptionResource.subscribe(group.id.toString()).then(
       (response) {
-        refresh(context, group: subscription.group);
+        refresh(context, group: group);
       },
     );
+  }
+
+  static removeFromGroup(context, {Group group}) {
+    MyGroupsProvider provider = Provider.of<MyGroupsProvider>(context);
+    Subscription subscription = provider.subscriptionForGroup(group);
+
+    remove(context, subscription: subscription);
   }
 
   static remove(context, {Subscription subscription}) {

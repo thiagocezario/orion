@@ -9,10 +9,8 @@ class SubscriptionsPreview extends StatelessWidget {
   final List<Subscription> subscriptions;
   final int previewSize;
   final Group group;
-  final bool isUserManager;
 
-  SubscriptionsPreview(
-      this.subscriptions, this.previewSize, this.group, this.isUserManager);
+  SubscriptionsPreview(this.subscriptions, this.previewSize, this.group);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,7 @@ class SubscriptionsPreview extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          if (!subscriptions[index].banned) {
+          if (!subscriptions[index].banned && subscriptions[index].active) {
             return ListTile(
               leading: SubscriptionIcon(subscriptions[index]),
               title: Text(
@@ -42,8 +40,7 @@ class SubscriptionsPreview extends StatelessWidget {
               subtitle: Text(
                 subscriptions[index].student.email,
               ),
-              trailing:
-                  SubscriptionMenu(group, isUserManager, subscriptions[index]),
+              trailing: SubscriptionMenu(group, subscriptions[index]),
             );
           }
 

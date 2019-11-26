@@ -12,6 +12,15 @@ class MyGroupsProvider extends ChangeNotifier {
   get myGroups => _myGroups;
   get mySubscriptions => _mySubscriptions;
 
+  Subscription subscriptionForGroup(Group group) {
+    print(_mySubscriptions.length);
+
+    //return null;
+    return _mySubscriptions.singleWhere((subscription) {
+      return subscription.group != null && subscription.group.id == group.id;
+    }, orElse: () => null);
+  }
+
   void refreshMySubscriptions() async {
     var data = {'user_id': Singleton().user.id.toString()};
     await SubscriptionResource.list(data).then(handleSubscriptionsResponse);

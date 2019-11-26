@@ -51,8 +51,8 @@ class GroupInfoPage extends StatelessWidget {
               group: group,
               subscriptions: subscriptionsState.subscriptions,
             ),
-            SubscriptionsPreview(subscriptionsState.subscriptions, 10, group,
-                GroupPage.isUserManager),
+            SubscriptionsPreview(
+                subscriptionsState.subscriptions, 10, group),
             SliverToBoxAdapter(
               child: Divider(
                 thickness: 20,

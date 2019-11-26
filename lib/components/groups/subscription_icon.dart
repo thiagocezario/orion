@@ -12,7 +12,7 @@ class SubscriptionIcon extends StatelessWidget {
   }
 
   Color _statusColor() {
-    if (sub.banned) return Colors.red;
+    if (sub.banned) return Colors.red[300];
     if (sub.manager) return Colors.green;
     return Colors.black;
   }
@@ -22,11 +22,11 @@ class SubscriptionIcon extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Icon(
-          Icons.person,
+          sub.banned? Icons.block : Icons.person,
           color: _statusColor(),
         ),
         Text(
-          'Admin',
+          sub.banned? 'Banido' : 'Admin',
           style: TextStyle(color: _statusColor()),
           textAlign: TextAlign.center,
         )
@@ -39,11 +39,11 @@ class SubscriptionIcon extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Icon(
-          Icons.person,
+          sub.banned? Icons.block : Icons.person,
           color: _statusColor(),
         ),
         Text(
-          'Membro',
+          sub.banned? 'Banido' : 'Membro',
           textAlign: TextAlign.center,
           style: TextStyle(color: _statusColor()),
         )

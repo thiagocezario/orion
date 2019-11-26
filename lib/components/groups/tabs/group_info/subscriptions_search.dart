@@ -50,17 +50,15 @@ class SubscriptionsSearch extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     return Consumer<SubscriptionsProvider>(
       builder: (context, subProvider, _) => SubscriptionList(
-          _filterSubscriptions(query, subProvider.subscriptions),
-          group,
-          GroupPage.isUserManager),
+          _filterSubscriptions(query, subProvider.subscriptions), group),
     );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     return Consumer<SubscriptionsProvider>(
-      builder: (context, subProvider, _) => SubscriptionList(
-          subProvider.subscriptions, group, GroupPage.isUserManager),
+      builder: (context, subProvider, _) =>
+          SubscriptionList(subProvider.subscriptions, group),
     );
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:orion/model/group.dart';
 import 'package:orion/components/groups/tabs/group_info/group_info_description.dart';
 import 'package:orion/components/groups/tabs/group_info/group_info_sliver_list.dart';
-import 'package:orion/pages/group/group_page.dart';
+import 'package:orion/model/group.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -44,8 +43,7 @@ class GroupInfo extends StatelessWidget {
             group: group,
             subscriptions: subscriptionsState.subscriptions,
           ),
-          SubscriptionsPreview(subscriptionsState.subscriptions, 10, group,
-              GroupPage.isUserManager),
+          SubscriptionsPreview(subscriptionsState.subscriptions, 10, group),
           SliverToBoxAdapter(
             child: Divider(
               thickness: 20,

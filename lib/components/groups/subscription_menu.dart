@@ -4,23 +4,32 @@ import 'package:orion/api/resources/manager_resource.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
+import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionMenu extends StatelessWidget {
   final Group group;
-  final bool isUserManager;
   final Subscription subscription;
 
-  final List<PopupMenuItem<String>> _popUpMenuItems =
-      <String>['Tornar admin', 'Banir', 'Expulsar']
-          .map((String value) => PopupMenuItem<String>(
-                value: value,
-                child: Text(value),
-              ))
-          .toList();
+  final List<String> _normalOptions = <String>[
+    'Expulsar',
+    'Banir',
+  ];
 
-  SubscriptionMenu(this.group, this.isUserManager, this.subscription);
+  final List<String> _bannedOptions = <String>[
+    'Desbanir',
+  ];
+
+  final List<String> _managerOptions = <String>[
+    'Remover admin',
+  ];
+
+  final List<String> _notManagerOptions = <String>[
+    'Tornar admin',
+  ];
+
+  SubscriptionMenu(this.group, this.subscription);
 
   Future _popUpMenuActions(
       BuildContext context, String action, Subscription sub) async {
@@ -44,35 +53,57 @@ class SubscriptionMenu extends StatelessWidget {
         Provider.of<SubscriptionsProvider>(context)
             .fetchSubscriptions(group.id.toString());
       });
+    } else if (action == "Remover admin") {
+      ManagerResource.deleteObject(sub).then((response) {
+        Provider.of<SubscriptionsProvider>(context)
+            .fetchSubscriptions(group.id.toString());
+      });
     }
   }
 
-  Widget _subscriptionAction(
-      BuildContext context, Subscription sub) {
-    if (isUserManager) {
-      if (sub.banned) {
-        return PopupMenuButton<String>(
-          onSelected: (String actionSelected) =>
-              _popUpMenuActions(context, actionSelected, sub),
-          itemBuilder: (BuildContext context) {
-            return <String>['Desbanir', 'Expulsar']
-                .map((String value) => PopupMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ))
-                .toList();
-          },
-        );
+  bool isUserManager(BuildContext context) {
+    MyGroupsProvider provider = Provider.of<MyGroupsProvider>(context);
+    Subscription subscription = provider.subscriptionForGroup(group);
+
+    return subscription != null && subscription.manager;
+  }
+
+  List<PopupMenuItem<String>> _popupOptions(Subscription subscription) {
+    List<String> base = List<String>();
+
+    if (subscription.banned) {
+      base..addAll(_bannedOptions);
+    } else {
+      base..addAll(_normalOptions);
+      if (subscription.manager) {
+        base..addAll(_managerOptions);
       } else {
-        return PopupMenuButton<String>(
-          onSelected: (String actionSelected) =>
-              _popUpMenuActions(context, actionSelected, sub),
-          itemBuilder: (BuildContext context) => _popUpMenuItems,
-        );
+        base..addAll(_notManagerOptions);
       }
     }
 
-    return SizedBox();
+    return base
+        .map(
+          (String value) => PopupMenuItem<String>(
+            value: value,
+            child: Text(value),
+          ),
+        )
+        .toList();
+  }
+
+  Widget _subscriptionAction(BuildContext context, Subscription sub) {
+    if (!isUserManager(context)) {
+      return SizedBox();
+    }
+
+    return PopupMenuButton<String>(
+      onSelected: (String actionSelected) =>
+          _popUpMenuActions(context, actionSelected, subscription),
+      itemBuilder: (BuildContext context) {
+        return _popupOptions(subscription);
+      },
+    );
   }
 
   @override

@@ -6,11 +6,10 @@ import 'package:orion/model/subscriptions.dart';
 import '../../subscription_icon.dart';
 
 class SubscriptionList extends StatelessWidget {
-  final bool isUserManager;
-  final List<Subscription> subscriptions;
   final Group group;
+  final List<Subscription> subscriptions;
 
-  SubscriptionList(this.subscriptions, this.group, this.isUserManager);
+  SubscriptionList(this.subscriptions, this.group);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,9 @@ class SubscriptionList extends StatelessWidget {
                   title: Text(subscriptions[index].student.name),
                   subtitle: Text(subscriptions[index].student.email),
                   trailing: SubscriptionMenu(
-                      group, isUserManager, subscriptions[index]),
+                    group,
+                    subscriptions[index],
+                  ),
                 );
               }
 
@@ -43,18 +44,17 @@ class SubscriptionList extends StatelessWidget {
                   title: Text(
                     subscriptions[index].student.name,
                     style: TextStyle(
-                      color: Colors.red,
+                      color: Colors.red[300],
                     ),
                   ),
                   subtitle: Text(
                     subscriptions[index].student.email,
                     style: TextStyle(
-                      color: Colors.red,
+                      color: Colors.red[300],
                     ),
                   ),
                   trailing: SubscriptionMenu(
                     group,
-                    isUserManager,
                     subscriptions[index],
                   ),
                 );

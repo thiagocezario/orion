@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/resources/subscription_resource.dart';
 import 'package:orion/components/groups/group_preview/group_events_preview.dart';
 import 'package:orion/components/groups/group_preview/group_preview_posts.dart';
 import 'package:orion/components/groups/tabs/group_info/subscriptions_preview.dart';
-import 'package:orion/controllers/group_controller.dart';
+import 'package:orion/controllers/subscription_controller.dart';
 import 'package:orion/main.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/model/subscriptions.dart';
-import 'package:orion/model/user.dart';
-import 'package:orion/pages/group/group_page.dart';
-import 'package:orion/provider/group_recomendations_provider.dart';
-import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/preview_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -30,32 +24,8 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
   _GroupPreviewPageState(this.group);
 
   void _joinGroup(Group group) {
-    SubscriptionResource.subscribe(group.id.toString()).then((response) async {
-      if (response.statusCode == 201) {
-        GroupController.refreshAll(context, group: group);
-
-        Provider.of<GroupRecomendationsProvider>(context)
-            .refreshMyRecomendations();
-        Provider.of<MyGroupsProvider>(context).refreshMyGroups();
-
-        var data = {
-          'group_id': group.id.toString(),
-          'user_id': Singleton().user.id.toString()
-        };
-        await SubscriptionResource.list(data).then((response) {
-          var sub = subscriptionFromJson(response.body);
-
-          if (sub.first.student.id == Singleton().user.id &&
-              sub.first.manager) {
-            GroupPage.isUserManager = true;
-          } else {
-            GroupPage.isUserManager = false;
-          }
-        });
-
-        Navigator.of(context).popAndPushNamed(GroupPageRoute, arguments: group);
-      }
-    });
+    SubscriptionController.create(context, group: group);
+    Navigator.of(context).popAndPushNamed(GroupPageRoute, arguments: group);
   }
 
   @override
@@ -90,11 +60,7 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
               SliverPadding(
                 padding: EdgeInsets.only(bottom: 15),
                 sliver: SubscriptionsPreview(
-                  previewProvider.subscriptions,
-                  10,
-                  group,
-                  false,
-                ),
+                    previewProvider.subscriptions, 10, group),
               ),
               SliverToBoxAdapter(
                 child: Column(
