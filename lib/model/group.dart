@@ -47,15 +47,15 @@ class Group {
 
     factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json["id"],
-        name: json["name"],
-        description: json["description"],
-        colleagues: json["colleagues"] == null ? null : json["colleagues"],
+        name: json["name"] == null ? "" : json["name"],
+        description: json["description"] == null ? "" : json["description"],
+        colleagues: json["colleagues"] == null ? 0 : json["colleagues"],
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
         metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
-        institution: json["institution"] == null ? null : Institution.fromJson(json["institution"]),
-        course: json["course"] == null ? null : Course.fromJson(json["course"]),
-        discipline: json["discipline"] == null ? null : Discipline.fromJson(json["discipline"]),
+        institution: json["institution"] == null ? Institution() : Institution.fromJson(json["institution"]),
+        course: json["course"] == null ? Course() : Course.fromJson(json["course"]),
+        discipline: json["discipline"] == null ? Discipline() : Discipline.fromJson(json["discipline"]),
         isPrivate: json["private"] ?? false,
     );
 

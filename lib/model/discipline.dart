@@ -12,14 +12,14 @@ String disciplineToJson(List<Discipline> data) => json.encode(new List<dynamic>.
 
 class Discipline {
     int id;
-    String name;
+    String name = "";
     DateTime createdAt;
     DateTime updatedAt;
     Metadata metadata;
 
     Discipline({
         this.id,
-        this.name,
+        this.name = "",
         this.createdAt,
         this.updatedAt,
         this.metadata
@@ -27,7 +27,7 @@ class Discipline {
 
     factory Discipline.fromJson(Map<String, dynamic> json) => new Discipline(
         id: json["id"],
-        name: json["name"],
+        name: json["name"] == null ? "" : json["name"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         metadata: json["metadata"] == null ? Metadata(subscriptions: 0) : Metadata.fromJson(json["metadata"]),

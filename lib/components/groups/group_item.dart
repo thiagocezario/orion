@@ -8,6 +8,9 @@ class GroupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _privateIcon =
+        group.isPrivate ? Icon(Icons.lock, size: 20,) : Icon(Icons.lock_open, size: 20,);
+
     return ListTile(
       title: Text(group.name),
       subtitle: Text(group.discipline.name),
@@ -15,7 +18,8 @@ class GroupCard extends StatelessWidget {
       trailing: Column(
         children: <Widget>[
           Icon(Icons.person),
-          Text(group.metadata.subscriptions.toString())
+          Text(group.metadata.subscriptions.toString()),
+          Expanded(child: _privateIcon)
         ],
       ),
     );

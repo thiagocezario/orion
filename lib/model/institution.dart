@@ -12,7 +12,7 @@ String institutionToJson(List<Institution> data) => json.encode(new List<dynamic
 
 class Institution {
     int id;
-    String name;
+    String name = "";
     DateTime createdAt;
     DateTime updatedAt;
     Metadata metadata;
@@ -27,7 +27,7 @@ class Institution {
 
     factory Institution.fromJson(Map<String, dynamic> json) => Institution(
         id: json["id"],
-        name: json["name"],
+        name: json["name"] == null ? "" : json["name"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         metadata: json["metadata"] == null ? Metadata(subscriptions: 0) : Metadata.fromJson(json["metadata"]),
