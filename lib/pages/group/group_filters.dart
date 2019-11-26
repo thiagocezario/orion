@@ -51,7 +51,7 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
 
   void _buildList(List<Group> groups) {
     setState(() {
-      _groupCards = ListView.builder(
+      _groupCards = ListView.separated(
         physics: BouncingScrollPhysics(),
         itemCount: groups.length,
         itemBuilder: (context, index) {
@@ -68,6 +68,9 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
               child: GroupCard(group: groups[index]),
             ),
           );
+        },
+        separatorBuilder: (context, index) {
+          return Divider();
         },
       );
     });
