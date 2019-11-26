@@ -96,7 +96,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
       controller: _groupNameController,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: 'Grupo',
+        hintText: 'Nome do Grupo',
         fillColor: Colors.white,
         filled: true,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
