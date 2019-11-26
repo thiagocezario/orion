@@ -34,6 +34,7 @@ class _GroupPageState extends State<GroupPage>
     super.initState();
     _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     _tabController.addListener(_handleTabChange);
+    _fabButton = _bottomButtons();
   }
 
   @override
