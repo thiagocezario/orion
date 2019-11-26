@@ -69,5 +69,6 @@ class Group {
         "institution": institution.toJson(),
         "course": course.toJson(),
         "discipline": discipline.toJson(),
+        "private_group": isPrivate
     };
 }
