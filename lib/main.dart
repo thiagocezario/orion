@@ -27,6 +27,7 @@ const String GroupPageRoute = '/group_page';
 const String RecoverPasswordRoute = '/recover_password';
 const String NewAccountRoute = '/new_account';
 const String LoginPageRoute = '/login';
+const String HomePageRoute = '/home';
 
 void main() =>
     initializeDateFormatting("pt_BR", null).then((_) => runApp(Orion()));
@@ -57,7 +58,7 @@ class Orion extends StatelessWidget {
         ],
         child: MaterialApp(
           color: themeColor,
-          initialRoute: '/',
+          initialRoute: LoginPageRoute,
           onGenerateRoute: generateRoute,
           debugShowCheckedModeBanner: false,
           title: 'Orion',
@@ -68,7 +69,7 @@ class Orion extends StatelessWidget {
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
-    case '/':
+    case HomePageRoute:
       return MaterialPageRoute(builder: (context) => HomePage());
     case GroupPageRoute:
       var arguments = settings.arguments;
@@ -80,6 +81,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case LoginPageRoute:
       return MaterialPageRoute(builder: (context) => LoginPage());
     default:
-      return MaterialPageRoute(builder: (context) => HomePage());
+      return MaterialPageRoute(builder: (context) => LoginPage());
   }
 }

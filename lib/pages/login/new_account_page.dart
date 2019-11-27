@@ -1,11 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:orion/actions/store_user.dart';
 import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/components/commom_items/custom_text_form_field.dart';
 import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/components/commom_items/orion_logo.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
+import 'package:orion/provider/group_recomendations_provider.dart';
+import 'package:orion/provider/my_events_provider.dart';
+import 'package:orion/provider/my_groups_provider.dart';
+import 'package:orion/provider/search_groups_provider.dart';
+import 'package:provider/provider.dart';
+
+import '../../main.dart';
 
 class NewAccountPage extends StatefulWidget {
   @override
@@ -22,14 +32,23 @@ class _NewAccountPageState extends State<NewAccountPage> {
   final RegExp _emailRegex = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
+  void loadHomePage(BuildContext context) {
+    Provider.of<MyGroupsProvider>(context).refreshMyGroups();
+    Provider.of<GroupRecomendationsProvider>(context).refreshMyRecomendations();
+    Provider.of<MyEventsProvider>(context).fetchEvents();
+    Provider.of<SearchGroupsProvider>(context).refreshInstitutions();
+  }
+
   void _createAccount(BuildContext context, User user) {
     StudentResource.createObject(user).then((response) {
+      var result = jsonDecode(response.body);
+      Singleton().user = User.fromJson(result['student']);
+      Singleton().jwtToken = result['token'];
       if (response != null) {
-        Scaffold.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Conta criada com sucesso!'),
-          ),
-        );
+        Navigator.of(context).pushNamed(HomePageRoute);
+        loadHomePage(context);
+        storeUser(Singleton().user, Singleton().jwtToken);
+
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(
