@@ -28,6 +28,7 @@ const String RecoverPasswordRoute = '/recover_password';
 const String NewAccountRoute = '/new_account';
 const String LoginPageRoute = '/login';
 const String HomePageRoute = '/home';
+const String LandingPageRoute = '/landing_page';
 
 void main() =>
     initializeDateFormatting("pt_BR", null).then((_) => runApp(Orion()));
@@ -80,6 +81,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => RecoverPasswordPage());
     case LoginPageRoute:
       return MaterialPageRoute(builder: (context) => LoginPage());
+    case LandingPageRoute:
+      return MaterialPageRoute(builder: (context) => LandingPage());
     default:
       return MaterialPageRoute(builder: (context) => LoginPage());
   }

@@ -7,6 +7,7 @@ import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/components/commom_items/custom_text_form_field.dart';
 import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/components/commom_items/orion_logo.dart';
+import 'package:orion/landing_page.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
@@ -32,23 +33,12 @@ class _NewAccountPageState extends State<NewAccountPage> {
   final RegExp _emailRegex = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
-  void loadHomePage(BuildContext context) {
-    Provider.of<MyGroupsProvider>(context).refreshMyGroups();
-    Provider.of<GroupRecomendationsProvider>(context).refreshMyRecomendations();
-    Provider.of<MyEventsProvider>(context).fetchEvents();
-    Provider.of<SearchGroupsProvider>(context).refreshInstitutions();
-  }
-
   void _createAccount(BuildContext context, User user) {
     StudentResource.createObject(user).then((response) {
-      var result = jsonDecode(response.body);
-      Singleton().user = User.fromJson(result['student']);
-      Singleton().jwtToken = result['token'];
       if (response != null) {
-        Navigator.of(context).pushNamed(HomePageRoute);
-        loadHomePage(context);
-        storeUser(Singleton().user, Singleton().jwtToken);
-
+        var result = jsonDecode(response.body);
+        Singleton().jwtToken = result['token'];
+        Navigator.of(context).pushNamed(LandingPageRoute);
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -156,7 +146,10 @@ class _NewAccountPageState extends State<NewAccountPage> {
     return Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.only(left: 20, right: 20,),
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+          ),
           child: Column(
             children: <Widget>[
               OrionLogo(),
