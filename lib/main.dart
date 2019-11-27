@@ -3,6 +3,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:orion/landing_page.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
+import 'package:orion/pages/change_password_page.dart';
 import 'package:orion/pages/group/group_page.dart';
 import 'package:orion/pages/home_page.dart';
 import 'package:orion/pages/login/login_page.dart';
@@ -29,6 +30,7 @@ const String NewAccountRoute = '/new_account';
 const String LoginPageRoute = '/login';
 const String HomePageRoute = '/home';
 const String LandingPageRoute = '/landing_page';
+const String ChangePasswordPageRoute = '/change_password';
 
 void main() =>
     initializeDateFormatting("pt_BR", null).then((_) => runApp(Orion()));
@@ -83,6 +85,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => LoginPage());
     case LandingPageRoute:
       return MaterialPageRoute(builder: (context) => LandingPage());
+    case ChangePasswordPageRoute:
+      return MaterialPageRoute(builder: (context) => ChangePasswordPage());
     default:
       return MaterialPageRoute(builder: (context) => LoginPage());
   }
