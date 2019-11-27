@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:orion/components/groups/tabs/group_info/subscription_list.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
-import 'package:orion/pages/group/group_page.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 

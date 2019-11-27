@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:orion/api/resources/password_resource.dart';
 import 'package:orion/components/commom_items/custom_text_form_field.dart';
 import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/model/global.dart';
-import 'package:orion/model/user.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   @override

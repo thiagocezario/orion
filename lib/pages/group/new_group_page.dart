@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
@@ -13,11 +14,8 @@ import 'package:orion/model/discipline.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
-import 'package:orion/provider/group_events_provider.dart';
-import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/search_groups_provider.dart';
-import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewGroupPage extends StatefulWidget {

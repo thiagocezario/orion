@@ -135,6 +135,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
               ListTile(
                 onTap: () => _editPerformance(performance),
                 trailing: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text("${performance.percentage.toString()}"),
                     double.parse(performance.percentage) >= 60

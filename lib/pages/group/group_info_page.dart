@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:orion/components/groups/tabs/group_info/group_info_description.dart';
 import 'package:orion/components/groups/tabs/group_info/group_info_exit.dart';
 import 'package:orion/components/groups/tabs/group_info/group_info_name.dart';
+import 'package:orion/components/groups/tabs/group_info/group_info_sliver_list.dart';
 import 'package:orion/components/groups/tabs/group_info/subscriptions_preview.dart';
 import 'package:orion/components/groups/tabs/group_info/subscriptions_preview_header.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/components/groups/tabs/group_info/group_info_description.dart';
-import 'package:orion/components/groups/tabs/group_info/group_info_sliver_list.dart';
-import 'package:orion/pages/group/group_page.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 

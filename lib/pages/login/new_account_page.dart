@@ -2,19 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:orion/actions/store_user.dart';
 import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/components/commom_items/custom_text_form_field.dart';
 import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/components/commom_items/orion_logo.dart';
-import 'package:orion/landing_page.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
-import 'package:orion/provider/group_recomendations_provider.dart';
-import 'package:orion/provider/my_events_provider.dart';
-import 'package:orion/provider/my_groups_provider.dart';
-import 'package:orion/provider/search_groups_provider.dart';
-import 'package:provider/provider.dart';
 
 import '../../main.dart';
 

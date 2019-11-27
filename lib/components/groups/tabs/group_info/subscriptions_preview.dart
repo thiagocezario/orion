@@ -35,6 +35,7 @@ class SubscriptionsPreview extends StatelessWidget {
         (context, index) {
           if (!subscriptions[index].banned && subscriptions[index].active) {
             return ListTile(
+              key: UniqueKey(),
               leading: SubscriptionIcon(subscriptions[index]),
               title: Text(
                 subscriptions[index].student.name,

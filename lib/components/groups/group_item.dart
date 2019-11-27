@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 
 class GroupCard extends StatelessWidget {
@@ -6,20 +7,39 @@ class GroupCard extends StatelessWidget {
 
   GroupCard({this.group});
 
+  Widget name() {
+    return Text(group.name);
+  }
+
+  Widget title() {
+    if (group.isPrivate) {
+      return Row(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 5),
+            child: Icon(
+              Icons.lock_outline,
+              color: themeColor,
+              size: 15,
+            ),
+          ),
+          Expanded(child: name(),)
+        ],
+      );
+    }
+
+    return name();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var _privateIcon =
-        group.isPrivate ? Icon(Icons.lock, size: 20,) : Icon(Icons.lock_open, size: 20,);
-
     return ListTile(
-      title: Text(group.name),
+      title: title(),
       subtitle: Text(group.discipline.name),
-      //isThreeLine: true,
       trailing: Column(
         children: <Widget>[
           Icon(Icons.person),
           Text(group.metadata.subscriptions.toString()),
-          Expanded(child: _privateIcon)
         ],
       ),
     );

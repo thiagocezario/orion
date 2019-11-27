@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:orion/actions/store_user.dart';
-import 'package:orion/landing_page.dart';
+import 'package:orion/components/origin_consumer.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
 import 'package:orion/pages/event/events_page.dart';
 import 'package:orion/pages/group/groups_page.dart';
 import 'package:orion/pages/group/search_group_page.dart';
-import 'package:orion/components/origin_consumer.dart';
 
 import '../main.dart';
-import 'login/login_page.dart';
 
 class HomePage extends StatefulWidget {
   @override

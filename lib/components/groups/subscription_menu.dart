@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orion/controllers/subscription_controller.dart';
+import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
 import 'package:orion/provider/my_groups_provider.dart';
@@ -43,11 +44,10 @@ class SubscriptionMenu extends StatelessWidget {
     }
   }
 
-  bool isUserManager(BuildContext context) {
+  Subscription mySubscription(BuildContext context) {
     MyGroupsProvider provider = Provider.of<MyGroupsProvider>(context);
-    Subscription subscription = provider.subscriptionForGroup(group);
 
-    return subscription != null && subscription.manager;
+    return provider.subscriptionForGroup(group);
   }
 
   List<PopupMenuItem<String>> _popupOptions(Subscription subscription) {
@@ -75,16 +75,37 @@ class SubscriptionMenu extends StatelessWidget {
   }
 
   Widget _subscriptionAction(BuildContext context, Subscription sub) {
-    if (!isUserManager(context)) {
+    Subscription my = mySubscription(context);
+    bool isUserManager = my != null && my.manager;
+
+    if (subscription.id == my.id) {
+      // return Text('Você', textAlign: TextAlign.center, style: TextStyle(),);
+      return Container(
+        // color: Colors.black,
+        padding: EdgeInsets.only(right: 8, left: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.fingerprint, color: themeColor),
+            Text('Você')
+          ],
+        ),
+      );
+    }
+    if (!isUserManager) {
       return SizedBox();
     }
 
-    return PopupMenuButton<String>(
-      onSelected: (String actionSelected) =>
-          _popUpMenuActions(context, actionSelected, subscription),
-      itemBuilder: (BuildContext context) {
-        return _popupOptions(subscription);
-      },
+    return Container(
+      child: PopupMenuButton<String>(
+        onSelected: (String actionSelected) =>
+            _popUpMenuActions(context, actionSelected, subscription),
+        itemBuilder: (BuildContext context) {
+          return _popupOptions(subscription);
+        },
+      ),
     );
   }
 
