@@ -61,7 +61,7 @@ class Orion extends StatelessWidget {
         ],
         child: MaterialApp(
           color: themeColor,
-          initialRoute: LoginPageRoute,
+          initialRoute: LandingPageRoute,
           onGenerateRoute: generateRoute,
           debugShowCheckedModeBanner: false,
           title: 'Orion',

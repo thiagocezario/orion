@@ -47,7 +47,7 @@ class _LandingPageState extends State<LandingPage> {
 
       setState(() {
         //page = LoginPage();
-        page = token != null ? toHome() : LoginPage();
+        page = token != null && token.length > 0 ? toHome() : LoginPage();
       });
     });
   }
