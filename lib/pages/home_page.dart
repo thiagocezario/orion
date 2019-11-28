@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage>
             actions: <Widget>[
               PopupMenuButton<String>(
                 itemBuilder: (BuildContext context) {
-                  return ["Alterar Senha", "Deslogar"]
+                  return ["Deslogar"]
                       .map(
                         (String value) => PopupMenuItem<String>(
                           value: value,
@@ -101,9 +101,7 @@ class _HomePageState extends State<HomePage>
                       .toList();
                 },
                 onSelected: (String selection) {
-                  if (selection == "Alterar Senha") {
-                    Navigator.of(context).pushNamed(ChangePasswordPageRoute);
-                  } else if (selection == "Deslogar") {
+                  if (selection == "Deslogar") {
                     storeUser(User(), "");
                     Navigator.of(context).pushNamed(LoginPageRoute);
                   }
