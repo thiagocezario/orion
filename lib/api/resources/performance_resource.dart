@@ -23,12 +23,13 @@ class PerformanceResource {
     return Base.deleteResource(path(), resourceId);
   }
 
-  static Future createObject(Performance performance) async {
+  static Future createObject(Performance performance, String year) async {
     var data = {
       "discipline_id": performance.discipline.id.toString(),
       "description": performance.description,
       "value": performance.value.toString(),
-      "max_value": performance.maxValue.toString()
+      "max_value": performance.maxValue.toString(),
+      "year": year,
     };
     return create(data);
   }

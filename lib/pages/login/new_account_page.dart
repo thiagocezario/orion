@@ -9,7 +9,6 @@ import 'package:orion/components/commom_items/material_button.dart';
 import 'package:orion/components/commom_items/orion_logo.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/user.dart';
-
 import '../../main.dart';
 
 class NewAccountPage extends StatefulWidget {

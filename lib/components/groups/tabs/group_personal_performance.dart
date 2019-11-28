@@ -44,7 +44,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
     if (result != null) {
       result.discipline = group.discipline;
 
-      PerformanceController.create(context, performance: result);
+      PerformanceController.create(context, performance: result, year: group.year);
     }
   }
 

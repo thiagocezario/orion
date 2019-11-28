@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:orion/components/commom_items/material_button.dart';
+import 'package:orion/components/commom_items/year_picker.dart';
 import 'package:orion/components/groups/search/course/course_search.dart';
 import 'package:orion/components/groups/search/discipline/discipline_search.dart';
 import 'package:orion/components/groups/search/institution/institution_search.dart';
 import 'package:orion/model/course.dart';
 import 'package:orion/model/discipline.dart';
 import 'package:orion/model/global.dart';
+import 'package:orion/model/group.dart';
 import 'package:orion/model/institution.dart';
 import 'package:orion/provider/search_groups_provider.dart';
 import 'package:provider/provider.dart';
@@ -34,9 +36,12 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
   static Course initialCourse = Course(name: "Nenhum selecionado");
   static Discipline initialDiscipline = Discipline(name: "Nenhum selecionado");
 
-  static Institution institution = initialInstitution;
-  static Course course = initialCourse;
-  static Discipline discipline = initialDiscipline;
+  Group group = Group(
+    institution: initialInstitution,
+    course: initialCourse,
+    discipline: initialDiscipline,
+    year: DateTime.now().year.toString(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +66,17 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
               child: ListTile(
                 isThreeLine: true,
                 leading: Icon(Icons.school,
-                    color: institution.id == null ? Colors.grey : themeColor),
+                    color: group.institution.id == null
+                        ? Colors.grey
+                        : themeColor),
                 title: Text('Instituição'),
-                subtitle: Text(institution.name),
+                subtitle: Text(group.institution.name),
                 trailing: Column(
                   children: <Widget>[
                     Icon(Icons.arrow_forward_ios,
-                        color:
-                            institution.id == null ? Colors.grey : themeColor),
+                        color: group.institution.id == null
+                            ? Colors.grey
+                            : themeColor),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
@@ -80,11 +88,11 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
 
                   if (result != null) {
                     setState(() {
-                      institution = result;
+                      group.institution = result;
                       Provider.of<SearchGroupsProvider>(context)
                           .refreshCourses(result.id);
-                      course = initialCourse;
-                      discipline = initialDiscipline;
+                      group.course = initialCourse;
+                      group.discipline = initialDiscipline;
                     });
                   }
                 },
@@ -98,28 +106,29 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
               child: ListTile(
                 isThreeLine: true,
                 leading: Icon(Icons.computer,
-                    color: course.id == null ? Colors.grey : themeColor),
+                    color: group.course.id == null ? Colors.grey : themeColor),
                 title: Text('Curso'),
-                subtitle: Text(course.name),
+                subtitle: Text(group.course.name),
                 trailing: Column(
                   children: <Widget>[
                     Icon(Icons.arrow_forward_ios,
-                        color: course.id == null ? Colors.grey : themeColor),
+                        color:
+                            group.course.id == null ? Colors.grey : themeColor),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
                 onTap: () async {
                   Course result = await showSearch(
                     context: context,
-                    delegate: CourseSearch(items.courses, institution),
+                    delegate: CourseSearch(items.courses, group.institution),
                   );
 
                   if (result != null) {
                     setState(() {
-                      course = result;
+                      group.course = result;
                       Provider.of<SearchGroupsProvider>(context)
-                          .refreshDisciplines(course.id);
-                      discipline = initialDiscipline;
+                          .refreshDisciplines(group.course.id);
+                      group.discipline = initialDiscipline;
                     });
                   }
                 },
@@ -133,29 +142,62 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
               child: ListTile(
                 isThreeLine: true,
                 leading: Icon(Icons.class_,
-                    color: discipline.id == null ? Colors.grey : themeColor),
+                    color:
+                        group.discipline.id == null ? Colors.grey : themeColor),
                 title: Text('Disciplina'),
-                subtitle: Text(discipline.name),
+                subtitle: Text(group.discipline.name),
                 trailing: Column(
                   children: <Widget>[
                     Icon(Icons.arrow_forward_ios,
-                        color:
-                            discipline.id == null ? Colors.grey : themeColor),
+                        color: group.discipline.id == null
+                            ? Colors.grey
+                            : themeColor),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
                 onTap: () async {
                   Discipline result = await showSearch(
                     context: context,
-                    delegate: DisciplineSearch(items.disciplines, course),
+                    delegate: DisciplineSearch(items.disciplines, group.course),
                   );
 
                   if (result != null) {
                     setState(() {
-                      discipline = result;
+                      group.discipline = result;
                     });
                   }
                 },
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Card(
+              elevation: 5,
+              child: ListTile(
+                leading: Icon(
+                  Icons.calendar_today,
+                  color: group.year == null ? Colors.grey : themeColor,
+                ),
+                title: Text("Ano"),
+                subtitle: Text(group.year),
+                trailing: IconButton(
+                  icon: Icon(Icons.keyboard_arrow_down),
+                  onPressed: () async {
+                    var year = await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return YearPickerDialog(group.year);
+                      },
+                    );
+
+                    if (year != null) {
+                      setState(() {
+                        group.year = year;
+                      });
+                    }
+                  },
+                ),
               ),
             ),
             SizedBox(
@@ -168,9 +210,8 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => NewGroupFilter(
-                          institution: institution,
-                          course: course,
-                          discipline: discipline)),
+                            group: group,
+                          )),
                 );
               },
             ),

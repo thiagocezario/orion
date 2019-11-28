@@ -8,10 +8,11 @@ class DisciplinePerformancesProvider with ChangeNotifier {
 
   get disciplinePerformances => _disciplinePerformances;
 
-  void fetchPerformances(String disciplineId) async {
+  void fetchPerformances(String disciplineId, String year) async {
     var data = {
       'discipline_id': disciplineId.toString(),
-      'user_id': Singleton().user.id.toString()
+      'user_id': Singleton().user.id.toString(),
+      'year': year,
     };
     return PerformanceResource.list(data).then(handleResponse);
   }

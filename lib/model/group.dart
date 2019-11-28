@@ -26,6 +26,7 @@ class Group {
     Course course;
     Discipline discipline;
     bool isPrivate;
+    String year;
 
     Group({
         this.id,
@@ -39,6 +40,7 @@ class Group {
         this.course,
         this.discipline,
         this.isPrivate,
+        this.year,
     });
 
     String link() {
@@ -57,6 +59,7 @@ class Group {
         course: json["course"] == null ? Course() : Course.fromJson(json["course"]),
         discipline: json["discipline"] == null ? Discipline() : Discipline.fromJson(json["discipline"]),
         isPrivate: json["private"] ?? false,
+        year: json["year"].toString() ?? DateTime.now().year.toString(),
     );
 
     Map<String, dynamic> toJson() => {
@@ -69,6 +72,7 @@ class Group {
         "institution": institution.toJson(),
         "course": course.toJson(),
         "discipline": discipline.toJson(),
-        "private_group": isPrivate
+        "private_group": isPrivate,
+        "year": year,
     };
 }

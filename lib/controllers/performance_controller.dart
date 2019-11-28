@@ -4,12 +4,12 @@ import 'package:orion/provider/discipline_performances_provider.dart';
 import 'package:provider/provider.dart';
 
 class PerformanceController {
-  static refresh(context, {discipline}) {
-    Provider.of<DisciplinePerformancesProvider>(context).fetchPerformances(discipline.id.toString());
+  static refresh(context, {discipline, year}) {
+    Provider.of<DisciplinePerformancesProvider>(context).fetchPerformances(discipline.id.toString(), year);
   }
 
-  static create(context, {Performance performance}) {
-    PerformanceResource.createObject(performance).then(
+  static create(context, {Performance performance, String year}) {
+    PerformanceResource.createObject(performance, year).then(
       (response) {
         refresh(context, discipline: performance.discipline);
       },

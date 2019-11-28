@@ -12,7 +12,8 @@ class GroupResource {
   }
 
   static Future list(dynamic data) async {
-    return Base.listResources(path(), data..addAll({'exclude_privates': 'true'}));
+    return Base.listResources(
+        path(), data..addAll({'exclude_privates': 'true'}));
   }
 
   static Future listAll(dynamic data) async {
@@ -40,6 +41,7 @@ class GroupResource {
       "course_id": group.course.id,
       "discipline_id": group.discipline.id,
       "private_group": group.isPrivate,
+      "year": group.year,
     };
 
     return create(data);

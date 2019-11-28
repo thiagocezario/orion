@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/components/commom_items/commom_items.dart';
 import 'package:orion/components/commom_items/material_button.dart';
+import 'package:orion/components/commom_items/year_picker.dart';
 import 'package:orion/components/groups/search/course/course_search.dart';
 import 'package:orion/components/groups/search/discipline/discipline_search.dart';
 import 'package:orion/components/groups/search/institution/institution_search.dart';
@@ -19,16 +20,12 @@ import 'package:orion/provider/search_groups_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewGroupPage extends StatefulWidget {
-  final institution;
-  final course;
-  final discipline;
+  final group;
 
-  NewGroupPage({Key key, this.institution, this.course, this.discipline})
-      : super(key: key);
+  NewGroupPage({Key key, this.group}) : super(key: key);
 
   @override
-  _NewGroupPageState createState() =>
-      _NewGroupPageState(institution, course, discipline);
+  _NewGroupPageState createState() => _NewGroupPageState(group);
 }
 
 class _NewGroupPageState extends State<NewGroupPage> {
@@ -43,11 +40,9 @@ class _NewGroupPageState extends State<NewGroupPage> {
   Course initialCourse = Course(name: "Nenhum selecionado");
   Discipline initialDiscipline = Discipline(name: "Nenhum selecionado");
 
-  Institution institution;
-  Course course;
-  Discipline discipline;
+  Group group;
 
-  _NewGroupPageState(this.institution, this.course, this.discipline);
+  _NewGroupPageState(this.group);
 
   void _changeGroupType() {
     setState(() {
@@ -63,25 +58,15 @@ class _NewGroupPageState extends State<NewGroupPage> {
 
   void _createGroup(BuildContext context) {
     if (_groupNameController.text.length > 3 &&
-        institution.id != null &&
-        course.id != null &&
-        discipline.id != null) {
-      Group group = Group(
-        name: _groupNameController.text,
-        institution: institution,
-        course: course,
-        discipline: discipline,
-        isPrivate: _isPrivate,
-      );
+        group.institution.id != null &&
+        group.course.id != null &&
+        group.discipline.id != null) {
+      group.name = _groupNameController.text;
+      group.isPrivate = _isPrivate;
 
       GroupResource.createObject(group).then(
         (response) {
           if (response.statusCode == 201) {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Grupo criado com sucesso!'),
-              ),
-            );
             var body = json.decode(response.body);
             group = Group.fromJson(body);
 
@@ -174,10 +159,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   isThreeLine: true,
                   leading: Icon(
                     Icons.school,
-                    color: institution.id == null ? Colors.grey : themeColor,
+                    color:
+                        group.institution.id == null ? Colors.grey : themeColor,
                   ),
                   title: Text('Instituição'),
-                  subtitle: Text(institution.name),
+                  subtitle: Text(group.institution.name),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () async {
                     Institution result = await showSearch(
@@ -187,11 +173,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
 
                     if (result != null) {
                       setState(() {
-                        institution = result;
+                        group.institution = result;
                         Provider.of<SearchGroupsProvider>(context)
-                            .refreshCourses(institution.id);
-                        course = initialCourse;
-                        discipline = initialDiscipline;
+                            .refreshCourses(group.institution.id);
+                        group.course = initialCourse;
+                        group.discipline = initialDiscipline;
                       });
                     }
                   },
@@ -206,23 +192,23 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   isThreeLine: true,
                   leading: Icon(
                     Icons.computer,
-                    color: course.id == null ? Colors.grey : themeColor,
+                    color: group.course.id == null ? Colors.grey : themeColor,
                   ),
                   title: Text('Curso'),
-                  subtitle: Text(course.name),
+                  subtitle: Text(group.course.name),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () async {
                     Course result = await showSearch(
                       context: context,
-                      delegate: CourseSearch(items.courses, institution),
+                      delegate: CourseSearch(items.courses, group.institution),
                     );
 
                     if (result != null) {
                       setState(() {
-                        course = result;
+                        group.course = result;
                         Provider.of<SearchGroupsProvider>(context)
-                            .refreshDisciplines(course.id);
-                        discipline = initialDiscipline;
+                            .refreshDisciplines(group.course.id);
+                        group.discipline = initialDiscipline;
                       });
                     }
                   },
@@ -237,23 +223,56 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   isThreeLine: true,
                   leading: Icon(
                     Icons.class_,
-                    color: discipline.id == null ? Colors.grey : themeColor,
+                    color:
+                        group.discipline.id == null ? Colors.grey : themeColor,
                   ),
                   title: Text('Disciplina'),
-                  subtitle: Text(discipline.name),
+                  subtitle: Text(group.discipline.name),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () async {
                     Discipline result = await showSearch(
                       context: context,
-                      delegate: DisciplineSearch(items.disciplines, course),
+                      delegate:
+                          DisciplineSearch(items.disciplines, group.course),
                     );
 
                     if (result != null) {
                       setState(() {
-                        discipline = result;
+                        group.discipline = result;
                       });
                     }
                   },
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.calendar_today,
+                    color: group.year == null ? Colors.grey : themeColor,
+                  ),
+                  title: Text("Ano"),
+                  subtitle: Text(group.year),
+                  trailing: IconButton(
+                    icon: Icon(Icons.keyboard_arrow_down),
+                    onPressed: () async {
+                      var year = await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return YearPickerDialog(group.year);
+                        },
+                      );
+
+                      if (year != null) {
+                        setState(() {
+                          group.year = year;
+                        });
+                      }
+                    },
+                  ),
                 ),
               ),
               SizedBox(

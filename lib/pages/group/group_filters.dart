@@ -3,44 +3,36 @@ import 'package:flutter/widgets.dart';
 import 'package:orion/api/resources/group_resource.dart';
 import 'package:orion/components/groups/filter_fab.dart';
 import 'package:orion/components/groups/group_item.dart';
-import 'package:orion/model/course.dart';
-import 'package:orion/model/discipline.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
-import 'package:orion/model/institution.dart';
 import 'package:orion/pages/group/group_preview_page.dart';
 import 'package:orion/provider/preview_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewGroupFilter extends StatefulWidget {
-  final Institution institution;
-  final Course course;
-  final Discipline discipline;
+  final Group group;
 
-  NewGroupFilter({Key key, this.institution, this.course, this.discipline})
-      : super(key: key);
+  NewGroupFilter({Key key, this.group}) : super(key: key);
 
   @override
-  _NewGroupFilterState createState() =>
-      _NewGroupFilterState(institution, course, discipline);
+  _NewGroupFilterState createState() => _NewGroupFilterState(group);
 }
 
 class _NewGroupFilterState extends State<NewGroupFilter> {
-  Institution institution;
-  Course course;
-  Discipline discipline;
+  Group group;
 
   Widget _groupCards;
 
-  _NewGroupFilterState(this.institution, this.course, this.discipline) {
+  _NewGroupFilterState(this.group) {
     _listGroups();
   }
 
   void _listGroups() async {
     Map<String, String> data = {
-      "institution_id": (institution.id ?? '').toString(),
-      "course_id": (course.id ?? '').toString(),
-      "discipline_id": (discipline.id ?? '').toString(),
+      "institution_id": (group.institution.id ?? '').toString(),
+      "course_id": (group.course.id ?? '').toString(),
+      "discipline_id": (group.discipline.id ?? '').toString(),
+      "year": (group.year ?? ''),
     };
 
     GroupResource.list(data).then((response) {
@@ -96,8 +88,7 @@ class _NewGroupFilterState extends State<NewGroupFilter> {
         ),
       ),
       body: _groupCards,
-      floatingActionButton:
-          FilterFloatingButton(institution, course, discipline),
+      floatingActionButton: FilterFloatingButton(group),
     );
   }
 }

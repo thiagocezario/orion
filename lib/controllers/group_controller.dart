@@ -32,7 +32,7 @@ class GroupController {
 
   static refreshPerformances(context, {group}) {
     Provider.of<DisciplinePerformancesProvider>(context)
-        .fetchPerformances(group.discipline.id.toString());
+        .fetchPerformances(group.discipline.id.toString(), group.year);
   }
 
   static refreshAbsences(context, {group}) {
