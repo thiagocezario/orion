@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:orion/actions/store_user.dart';
 import 'package:orion/api/resources/student_resource.dart';
 import 'package:orion/components/commom_items/custom_text_form_field.dart';
 import 'package:orion/components/commom_items/material_button.dart';
@@ -30,7 +31,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
     StudentResource.createObject(user).then((response) {
       if (response != null) {
         var result = jsonDecode(response.body);
-        Singleton().jwtToken = result['token'];
+        storeUser(user, result['token']);
         Navigator.of(context).pushNamed(LandingPageRoute);
       } else {
         Scaffold.of(context).showSnackBar(
