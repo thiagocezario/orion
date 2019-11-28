@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:orion/controllers/group_controller.dart';
 import 'package:orion/controllers/subscription_controller.dart';
 import 'package:orion/model/global.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/model/subscriptions.dart';
-import 'package:orion/provider/my_groups_provider.dart';
-import 'package:provider/provider.dart';
 
 class SubscriptionMenu extends StatelessWidget {
   final Group group;
@@ -45,9 +44,7 @@ class SubscriptionMenu extends StatelessWidget {
   }
 
   Subscription mySubscription(BuildContext context) {
-    MyGroupsProvider provider = Provider.of<MyGroupsProvider>(context);
-
-    return provider.subscriptionForGroup(group);
+    return GroupController.mySubscription(context, group: group);
   }
 
   List<PopupMenuItem<String>> _popupOptions(Subscription subscription) {

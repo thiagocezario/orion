@@ -1,9 +1,11 @@
 import 'package:orion/model/event.dart';
+import 'package:orion/model/subscriptions.dart';
 import 'package:orion/provider/discipline_absences_provider.dart';
 import 'package:orion/provider/discipline_performances_provider.dart';
 import 'package:orion/provider/group_events_provider.dart';
 import 'package:orion/provider/group_posts_provider.dart';
 import 'package:orion/provider/my_events_provider.dart';
+import 'package:orion/provider/my_groups_provider.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -43,5 +45,11 @@ class GroupController {
   static removeEvent(context, {Event event}) {
     Provider.of<GroupEventsProvider>(context).removeEvent(event);
     Provider.of<MyEventsProvider>(context).removeEvent(event);
+  }
+
+  static Subscription mySubscription(context, {group}) {
+    MyGroupsProvider provider = Provider.of<MyGroupsProvider>(context);
+
+    return provider.subscriptionForGroup(group);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orion/components/groups/group_preview/group_events_preview.dart';
 import 'package:orion/components/groups/group_preview/group_preview_posts.dart';
 import 'package:orion/components/groups/tabs/group_info/subscriptions_preview.dart';
+import 'package:orion/controllers/group_controller.dart';
 import 'package:orion/controllers/subscription_controller.dart';
 import 'package:orion/main.dart';
 import 'package:orion/model/global.dart';
@@ -24,7 +25,8 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
   _GroupPreviewPageState(this.group);
 
   void _joinGroup(Group group) {
-    SubscriptionController.create(context, group: group);
+    SubscriptionController.create(context, group: group); 
+    GroupController.refreshAll(context, group: group);
     Navigator.of(context).popAndPushNamed(GroupPageRoute, arguments: group);
   }
 

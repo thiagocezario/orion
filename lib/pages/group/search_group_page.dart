@@ -175,15 +175,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
             Card(
               elevation: 5,
               child: ListTile(
-                leading: Icon(
-                  Icons.calendar_today,
-                  color: group.year == null ? Colors.grey : themeColor,
-                ),
-                title: Text("Ano"),
-                subtitle: Text(group.year),
-                trailing: IconButton(
-                  icon: Icon(Icons.keyboard_arrow_down),
-                  onPressed: () async {
+                  onTap: () async {
                     var year = await showDialog(
                       context: context,
                       builder: (context) {
@@ -197,8 +189,13 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
                       });
                     }
                   },
-                ),
-              ),
+                  leading: Icon(
+                    Icons.calendar_today,
+                    color: group.year == null ? Colors.grey : themeColor,
+                  ),
+                  title: Text("Ano"),
+                  subtitle: Text(group.year),
+                  trailing: Icon(Icons.keyboard_arrow_down)),
             ),
             SizedBox(
               height: 25.0,

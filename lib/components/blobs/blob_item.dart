@@ -61,7 +61,7 @@ class _BlobItemState extends State<BlobItem> {
   }
 
   Future download() async {
-    Uri uri = Base.collectionPath('/api/blobs/download');
+    Uri uri = Base.collectionPath('/api/blobs/${blob.id}/download');
     launch(uri.toString());
   }
 

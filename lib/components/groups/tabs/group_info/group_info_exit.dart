@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:orion/controllers/group_controller.dart';
 import 'package:orion/controllers/subscription_controller.dart';
 import 'package:orion/model/group.dart';
 import 'package:orion/provider/group_recomendations_provider.dart';
