@@ -20,18 +20,19 @@ class _YearPickerDialogState extends State<YearPickerDialog> {
       title: Text("Selecione o ano:"),
       content: Container(
         height: 250,
-        child: YearPicker(
-          firstDate: DateTime.now().subtract(const Duration(days: 365 * 2)),
-          lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
-          selectedDate: DateTime(int.parse(year)),
-          onChanged: (DateTime value) {
-            setState(
-              () {
-                year = value.year.toString();
-              },
-            );
-          },
-        ),
+        width: double.maxFinite,
+          child: YearPicker(
+            firstDate: DateTime.now().subtract(const Duration(days: 365 * 2)),
+            lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
+            selectedDate: DateTime(int.parse(year)),
+            onChanged: (DateTime value) {
+              setState(
+                () {
+                  year = value.year.toString();
+                },
+              );
+            },
+          ),
       ),
       actions: <Widget>[
         FlatButton(
