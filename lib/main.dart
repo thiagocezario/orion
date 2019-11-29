@@ -24,6 +24,8 @@ import 'package:orion/provider/search_groups_provider.dart';
 import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'components/posts/post_information.dart';
+
 const String GroupPageRoute = '/group_page';
 const String RecoverPasswordRoute = '/recover_password';
 const String NewAccountRoute = '/new_account';
@@ -31,6 +33,7 @@ const String LoginPageRoute = '/login';
 const String HomePageRoute = '/home';
 const String LandingPageRoute = '/landing_page';
 const String ChangePasswordPageRoute = '/change_password';
+const String PostInformationPageRoute = '/post_information';
 
 void main() =>
     initializeDateFormatting("pt_BR", null).then((_) => runApp(Orion()));
@@ -87,6 +90,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => LandingPage());
     case ChangePasswordPageRoute:
       return MaterialPageRoute(builder: (context) => ChangePasswordPage());
+    case PostInformationPageRoute:
+      var arguments = settings.arguments;
+      return MaterialPageRoute(
+          builder: (context) => PostInformation(arguments));
     default:
       return MaterialPageRoute(builder: (context) => LoginPage());
   }

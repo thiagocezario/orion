@@ -76,25 +76,30 @@ class _BlobItemState extends State<BlobItem> {
   }
 }
 
-// Future download() async {
-//     Directory tempDir = await getApplicationDocumentsDirectory();
-//     String tempPath = tempDir.path;
+class BlobItemPreview extends StatelessWidget {
+  final Blob blob;
 
-//     var _downloadData = List<int>();
-//     var fileSave = new File('$tempPath/logo_pipe.png');
+  BlobItemPreview(this.blob);
+  Future download() async {
+    Uri uri = Base.collectionPath('/api/blobs/${blob.id}/download');
+    launch(uri.toString());
+  }
 
-//     HttpClient client = new HttpClient();
-//     client
-//         .getUrl(Uri.parse(
-//             "https://fluttermaster.com/wp-content/uploads/2018/08/fluttermaster.com-logo-web-header.png"))
-//         .then((HttpClientRequest request) {
-//       return request.close();
-//     }).then((HttpClientResponse response) {
-//       response.listen((d) => _downloadData.addAll(d), onDone: () {
-//         print(_downloadData);
-//         fileSave.writeAsBytes(_downloadData);
-//         print('ok');
-//         print(fileSave.readAsString());
-//       });
-//     });
-//   }
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(Icons.attachment),
+      title: Text(
+        blob.filename,
+        style: TextStyle(color: blob.toRemove ? Colors.grey : Colors.black),
+      ),
+      trailing: IconButton(
+        icon: Icon(
+          Icons.file_download,
+          color: Colors.lightBlueAccent,
+        ),
+        onPressed: () => download(),
+      ),
+    );
+  }
+}

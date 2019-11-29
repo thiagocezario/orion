@@ -8,6 +8,8 @@ import 'package:orion/model/group.dart';
 import 'package:orion/model/post.dart';
 import 'package:orion/model/user.dart';
 
+import '../../main.dart';
+
 class PostItem extends StatefulWidget {
   final Post post;
   final Group group;
@@ -72,7 +74,9 @@ class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(PostInformationPageRoute, arguments: post);
+      },
       child: Column(
         children: <Widget>[
           ListTile(
@@ -80,12 +84,12 @@ class _PostItemState extends State<PostItem> {
             subtitle: Text(DateFormat('dd/MM/yyyy H:m').format(post.createdAt)),
             trailing: eventActions(post),
           ),
-          _PostContets(post),
+          PostContets(post),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              _PostAttachmentsIcon(post),
-              _PostRating(post, isPreview),
+              PostAttachmentsIcon(post),
+              PostRating(post, isPreview),
             ],
           )
         ],
@@ -94,10 +98,10 @@ class _PostItemState extends State<PostItem> {
   }
 }
 
-class _PostContets extends StatelessWidget {
+class PostContets extends StatelessWidget {
   final Post post;
 
-  _PostContets(this.post);
+  PostContets(this.post);
 
   @override
   Widget build(BuildContext context) {
@@ -113,10 +117,10 @@ class _PostContets extends StatelessWidget {
   }
 }
 
-class _PostAttachmentsIcon extends StatelessWidget {
+class PostAttachmentsIcon extends StatelessWidget {
   final Post post;
 
-  _PostAttachmentsIcon(this.post);
+  PostAttachmentsIcon(this.post);
 
   @override
   Widget build(BuildContext context) {
@@ -132,17 +136,17 @@ class _PostAttachmentsIcon extends StatelessWidget {
   }
 }
 
-class _PostRating extends StatefulWidget {
+class PostRating extends StatefulWidget {
   final Post post;
   final bool isPreview;
 
-  _PostRating(this.post, this.isPreview);
+  PostRating(this.post, this.isPreview);
 
   @override
   _PostRatingState createState() => _PostRatingState(post, isPreview);
 }
 
-class _PostRatingState extends State<_PostRating> {
+class _PostRatingState extends State<PostRating> {
   bool isPreview = false;
   bool liked = false;
   bool unliked = false;
