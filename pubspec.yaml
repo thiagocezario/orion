@@ -66,15 +66,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/icon.png
-   - assets/background/orion.jpg
-   - assets/logo/orionlogo.png
    - assets/logo/logo.png
-   - assets/logo/orion_logo.png
-   - assets/icons/group.pdf
-   - assets/json/groups.json
-   - assets/json/institution.json
-   - assets/json/classes.json
-   - assets/json/courses.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
