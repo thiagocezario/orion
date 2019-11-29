@@ -1,33 +1,46 @@
+import 'package:flutter/material.dart';
 import 'package:orion/api/resources/absence_resource.dart';
 import 'package:orion/model/absence.dart';
 import 'package:orion/provider/discipline_absences_provider.dart';
 import 'package:provider/provider.dart';
 
 class AbsenceController {
-  static refresh(context, {discipline}) {
-    Provider.of<DisciplineAbsencesProvider>(context).fetchAbsences(discipline.id.toString());
+  DisciplineAbsencesProvider disciplineAbsencesProvider;
+
+   setProviders(BuildContext context) {
+     disciplineAbsencesProvider = Provider.of<DisciplineAbsencesProvider>(context);
   }
 
-  static create(context, {Absence absence}) {
+  refresh({discipline}) {
+    disciplineAbsencesProvider.fetchAbsences(discipline.id.toString());
+  }
+
+  create(context, {Absence absence}) {
+    setProviders(context);
+
     AbsenceResource.createObject(absence).then(
       (response) {
-        refresh(context, discipline: absence.discipline);
+        refresh(discipline: absence.discipline);
       },
     );
   }
 
-  static update(context, {Absence absence}) {
+  update(context, {Absence absence}) {
+    setProviders(context);
+
     AbsenceResource.updateObject(absence).then(
       (response) {
-        refresh(context, discipline: absence.discipline);
+        refresh(discipline: absence.discipline);
       },
     );
   }
 
-  static remove(context, {Absence absence}) {
+  remove(context, {Absence absence}) {
+    setProviders(context);
+
     AbsenceResource.delete(absence.id.toString()).then(
       (response) {
-        Provider.of<DisciplineAbsencesProvider>(context).removeAbsence(absence);
+        disciplineAbsencesProvider.removeAbsence(absence);
       },
     );
   }

@@ -73,7 +73,7 @@ class _AbsenceDialogState extends State<AbsenceDialog> {
               FlatButton(
                 child: const Text('EXCLUIR'),
                 onPressed: () async {
-                  AbsenceController.remove(context, absence: absence);
+                  AbsenceController().remove(context, absence: absence);
 
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();

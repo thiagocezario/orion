@@ -31,15 +31,15 @@ class SubscriptionMenu extends StatelessWidget {
   Future _popUpMenuActions(
       BuildContext context, String action, Subscription sub) async {
     if (action == 'Tornar admin') {
-      SubscriptionController.createManager(context, subscription: subscription);
+      SubscriptionController().createManager(context, subscription: subscription);
     } else if (action == 'Banir') {
-      SubscriptionController.ban(context, subscription: subscription);
+      SubscriptionController().ban(context, subscription: subscription);
     } else if (action == 'Expulsar') {
-      SubscriptionController.remove(context, subscription: subscription);
+      SubscriptionController().remove(context, subscription: subscription);
     } else if (action == "Desbanir") {
-      SubscriptionController.unban(context, subscription: subscription);
+      SubscriptionController().unban(context, subscription: subscription);
     } else if (action == "Remover admin") {
-      SubscriptionController.removeManager(context, subscription: subscription);
+      SubscriptionController().removeManager(context, subscription: subscription);
     }
   }
 

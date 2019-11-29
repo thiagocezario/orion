@@ -25,8 +25,9 @@ class _GroupPreviewPageState extends State<GroupPreviewPage> {
   _GroupPreviewPageState(this.group);
 
   void _joinGroup(Group group) {
-    SubscriptionController.create(context, group: group); 
+    SubscriptionController().create(context, group: group);
     GroupController.refreshAll(context, group: group);
+
     Navigator.of(context).popAndPushNamed(GroupPageRoute, arguments: group);
   }
 

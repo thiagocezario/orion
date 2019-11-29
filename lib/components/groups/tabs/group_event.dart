@@ -39,7 +39,7 @@ class _GroupEventState extends State<GroupEvent> {
             key: UniqueKey(),
             children: <Widget>[
               EventItem(
-                  UniqueKey(), groupEventsProvider.groupEvents[index], false),
+                  UniqueKey(), groupEventsProvider.groupEvents[index], false, false),
               Divider(
                 height: 5,
                 thickness: 2,

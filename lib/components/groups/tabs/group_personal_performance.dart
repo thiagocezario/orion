@@ -44,7 +44,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
     if (result != null) {
       result.discipline = group.discipline;
 
-      PerformanceController.create(context, performance: result, year: group.year);
+      PerformanceController().create(context, performance: result, year: group.year);
     }
   }
 
@@ -61,7 +61,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
     if (result != null) {
       result.discipline = group.discipline;
 
-      AbsenceController.create(context, absence: result);
+      AbsenceController().create(context, absence: result);
     }
   }
 
@@ -74,7 +74,7 @@ class _PersonalPerformanceState extends State<PersonalPerformance> {
     ));
 
     if (result != null) {
-      PerformanceController.update(context, performance: result);
+      PerformanceController().update(context, performance: result);
     }
   }
 

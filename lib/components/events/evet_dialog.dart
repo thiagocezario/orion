@@ -78,7 +78,7 @@ class _EventDialogState extends State<EventDialog> {
               FlatButton(
                 child: const Text('EXCLUIR'),
                 onPressed: () {
-                  EventController.remove(context, event: event);
+                  EventController().remove(context, event: event);
 
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();

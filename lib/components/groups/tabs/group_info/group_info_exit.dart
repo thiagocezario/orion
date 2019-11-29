@@ -36,7 +36,7 @@ class GroupInfoExit extends StatelessWidget {
     );
 
     if (isExiting) {
-      await SubscriptionController.removeFromGroup(context, group: group);
+      await SubscriptionController().removeFromGroup(context, group: group);
       Provider.of<MyGroupsProvider>(context).refreshMyGroups();
       Provider.of<GroupRecomendationsProvider>(context)
           .refreshMyRecomendations();

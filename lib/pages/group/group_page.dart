@@ -169,7 +169,7 @@ class _GroupPageState extends State<GroupPage>
       result.group = group;
       result.student = Singleton().user;
 
-      PostController.create(context, post: result);
+      PostController().create(context, post: result);
     }
   }
 
@@ -184,7 +184,7 @@ class _GroupPageState extends State<GroupPage>
     if (result != null) {
       result.student = Singleton().user;
       result.group = group;
-      EventController.create(context, event: result);
+      EventController().create(context, event: result);
     }
   }
 }

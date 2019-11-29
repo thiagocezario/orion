@@ -10,9 +10,10 @@ class EventItem extends StatelessWidget {
   final Event _event;
   final Student currentStudent;
   final bool isPreview;
+  final bool isGeneral;
   // Color _tileColor;
 
-  EventItem(Key key, this._event, this.isPreview, {this.currentStudent})
+  EventItem(Key key, this._event, this.isPreview, this.isGeneral, {this.currentStudent})
       : super(key: key) {
     // _tileColor = _event.student.id == Singleton().user.id
     //     ? Colors.grey.shade200
@@ -32,7 +33,7 @@ class EventItem extends StatelessWidget {
         .then(
       (result) {
         if (result != null) {
-          EventController.update(context, event: result);
+          EventController().update(context, event: result);
         }
       },
     );
@@ -51,7 +52,7 @@ class EventItem extends StatelessWidget {
         leading: _LeadingEventDay(_event),
         trailing: Text(DateFormat.Hm("pt_BR").format(_event.date)),
         title: Text(_event.title),
-        subtitle: Text(_event.content),
+        subtitle: isGeneral ? Text(_event.group.name) : Text(_event.content),
       ),
     );
   }

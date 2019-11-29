@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:orion/api/resources/ban_resource.dart';
 import 'package:orion/api/resources/manager_resource.dart';
 import 'package:orion/api/resources/subscription_resource.dart';
@@ -9,65 +10,88 @@ import 'package:orion/provider/subscriptions_provider.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionController {
-  static refresh(context, {group}) {
-    Provider.of<SubscriptionsProvider>(context)
-        .fetchSubscriptions(group.id.toString());
+  SubscriptionsProvider subscriptionsProvider;
+  MyGroupsProvider myGroupsProvider;
+  GroupRecomendationsProvider groupRecomendationsProvider;
 
-    Provider.of<MyGroupsProvider>(context).refreshMyGroups();
-    Provider.of<GroupRecomendationsProvider>(context).refreshMyRecomendations();
+  setProviders(BuildContext context) {
+    subscriptionsProvider = Provider.of<SubscriptionsProvider>(context);
+    myGroupsProvider = Provider.of<MyGroupsProvider>(context);
+    groupRecomendationsProvider =
+        Provider.of<GroupRecomendationsProvider>(context);
   }
 
-  static create(context, {Group group}) {
-    SubscriptionResource.subscribe(group.id.toString()).then(
+  refresh({group}) {
+    subscriptionsProvider.fetchSubscriptions(group.id.toString());
+
+    myGroupsProvider.refreshMyGroups();
+    groupRecomendationsProvider.refreshMyRecomendations();
+  }
+
+  Future create(context, {Group group}) {
+    setProviders(context);
+
+    return SubscriptionResource.subscribe(group.id.toString()).then(
       (response) {
-        refresh(context, group: group);
+        print(response.body);
+        refresh(group: group);
       },
     );
   }
 
-  static removeFromGroup(context, {Group group}) {
+  removeFromGroup(context, {Group group}) {
     MyGroupsProvider provider = Provider.of<MyGroupsProvider>(context);
     Subscription subscription = provider.subscriptionForGroup(group);
 
     remove(context, subscription: subscription);
   }
 
-  static ban(context, {Subscription subscription}) {
+  ban(context, {Subscription subscription}) {
+    setProviders(context);
+
     BanResource.createObject(subscription).then(
       (response) {
-        refresh(context, group: subscription.group);
+        refresh(group: subscription.group);
       },
     );
   }
 
-  static unban(context, {Subscription subscription}) {
+  unban(context, {Subscription subscription}) {
+    setProviders(context);
+
     BanResource.deleteObject(subscription).then(
       (response) {
-        refresh(context, group: subscription.group);
+        refresh(group: subscription.group);
       },
     );
   }
 
-  static createManager(context, {Subscription subscription}) {
+  createManager(context, {Subscription subscription}) {
+    setProviders(context);
+
     ManagerResource.createObject(subscription).then(
       (response) {
-        refresh(context, group: subscription.group);
+        refresh(group: subscription.group);
       },
     );
   }
 
-  static removeManager(context, {Subscription subscription}) {
+  removeManager(context, {Subscription subscription}) {
+    setProviders(context);
+
     ManagerResource.deleteObject(subscription).then(
       (response) {
-        refresh(context, group: subscription.group);
+        refresh(group: subscription.group);
       },
     );
   }
 
-  static remove(context, {Subscription subscription}) {
+  remove(context, {Subscription subscription}) {
+    setProviders(context);
+
     SubscriptionResource.delete(subscription.id.toString()).then(
       (response) {
-        refresh(context, group: subscription.group);
+        refresh(group: subscription.group);
       },
     );
   }

@@ -42,7 +42,7 @@ class _EventsPageState extends State<EventsPage> {
       itemCount: myEventsProvider.myEvents.length,
       itemBuilder: (context, index) {
         Event event = myEventsProvider.myEvents[index];
-        return EventItem(UniqueKey(), event, false);
+        return EventItem(UniqueKey(), event, false, true);
       },
     );
   }

@@ -31,7 +31,7 @@ class _AbsenceItemState extends State<AbsenceItem> {
     ))
         .then((result) {
       if (result != null) {
-        AbsenceController.update(context, absence: result);
+        AbsenceController().update(context, absence: result);
       }
     });
   }

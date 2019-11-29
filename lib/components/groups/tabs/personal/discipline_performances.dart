@@ -34,7 +34,7 @@ class _DisciplinePerformanceState extends State<DisciplinePerformance> {
     ));
 
     if (result != null) {
-      PerformanceController.update(context, performance: result);
+      PerformanceController().update(context, performance: result);
     }
   }
 

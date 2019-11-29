@@ -38,7 +38,7 @@ class _PostItemState extends State<PostItem> {
     if (action == 'Editar') {
       await _editPost(post);
     } else if (action == 'Deletar') {
-      PostController.remove(context, post: post);
+      PostController().remove(context, post: post);
     }
   }
 
@@ -52,7 +52,7 @@ class _PostItemState extends State<PostItem> {
     ))
         .then((resultPost) {
       if (resultPost != null) {
-        PostController.update(context, post: resultPost);
+        PostController().update(context, post: resultPost);
       }
     });
   }

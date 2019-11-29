@@ -71,7 +71,7 @@ class _PerformanceDialogState extends State<PerformanceDialog> {
               FlatButton(
                 child: const Text('EXCLUIR'),
                 onPressed: () async {
-                  PerformanceController.remove(context,
+                  PerformanceController().remove(context,
                       performance: performance);
 
                   Navigator.of(context).pop();

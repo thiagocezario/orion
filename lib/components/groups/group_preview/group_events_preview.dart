@@ -26,7 +26,7 @@ class GroupEventsPreview extends StatelessWidget {
         (context, index) {
           return Column(
             children: <Widget>[
-              EventItem(UniqueKey(), events[index], true),
+              EventItem(UniqueKey(), events[index], true, false),
             ],
           );
         },
