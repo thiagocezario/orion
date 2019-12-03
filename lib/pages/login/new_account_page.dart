@@ -30,6 +30,7 @@ class _NewAccountPageState extends State<NewAccountPage> {
     StudentResource.createObject(user).then((response) {
       if (response != null) {
         var result = jsonDecode(response.body);
+        user.id = result['student']['id'];
         storeUser(user, result['token']);
         Navigator.of(context).pushNamed(LandingPageRoute);
       } else {
