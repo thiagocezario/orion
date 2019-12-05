@@ -6,6 +6,11 @@ import 'package:orion/model/user.dart';
 import 'package:orion/pages/event/events_page.dart';
 import 'package:orion/pages/group/groups_page.dart';
 import 'package:orion/pages/group/search_group_page.dart';
+import 'package:orion/provider/group_recomendations_provider.dart';
+import 'package:orion/provider/my_events_provider.dart';
+import 'package:orion/provider/my_groups_provider.dart';
+import 'package:orion/provider/search_groups_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../main.dart';
 
@@ -127,8 +132,16 @@ class _HomePageState extends State<HomePage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   HomeTile(
-                    controller: _tabController,
-                  ),
+                      controller: _tabController,
+                      onTap: () {
+                        Provider.of<MyGroupsProvider>(context)
+                            .refreshMyGroups();
+                        Provider.of<GroupRecomendationsProvider>(context)
+                            .refreshMyRecomendations();
+                        Provider.of<MyEventsProvider>(context).fetchEvents();
+                        Provider.of<SearchGroupsProvider>(context)
+                            .refreshInstitutions();
+                      }),
                   Container()
                 ],
               ),
@@ -150,8 +163,9 @@ class _HomePageState extends State<HomePage>
 
 class HomeTile extends StatefulWidget {
   final TabController controller;
+  Function onTap;
 
-  HomeTile({Key key, this.controller}) : super(key: key);
+  HomeTile({Key key, this.controller, this.onTap}) : super(key: key);
 
   @override
   HomeTileState createState() => HomeTileState(controller: controller);
@@ -217,6 +231,9 @@ class HomeTileState extends State<HomeTile> {
 
   @override
   Widget build(BuildContext context) {
-    return tabTitles[_currentIndex];
+    return InkWell(
+      onTap: widget.onTap,
+      child: tabTitles[_currentIndex],
+    );
   }
 }
